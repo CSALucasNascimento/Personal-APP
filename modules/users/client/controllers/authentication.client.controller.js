@@ -17,6 +17,29 @@
     vm.callOauthProvider = callOauthProvider;
     vm.usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
 
+
+    vm.previousStep = previousStep;
+    vm.nextStep = nextStep;
+    vm.setSelectedIndex = setSelectedIndex;
+    vm.isFirstStep = true;
+    vm.isLastStep = false;
+    vm.currentStepInvalid = false;
+    vm.formsIncomplete = true;
+    vm.selectedIndex = 0;
+    vm.steps = [];
+
+    function setSelectedIndex(index) {
+      vm.selectedIndex = index;
+    }
+
+    function previousStep() {
+
+    }
+
+    function nextStep() {
+      vm.selectedIndex++;
+    }
+
     // Get an eventual error defined in the URL query string:
     if ($location.search().err) {
       Notification.error({ message: $location.search().err });
