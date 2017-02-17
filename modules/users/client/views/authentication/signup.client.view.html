@@ -1,11 +1,10 @@
 <div layout="row" layout-wrap flex>
   <div layout="column" flex="50" flex-offset="25">
-
     <div layout="row" layout-align="center center" layout-wrap>
       <div flex="25">
         <div layout="row" layout-align="center">
-          <md-button class="md-primary md-fab md-mini" ng-click="vm.setSelectedIndex(1)">1</md-button>
-          <md-button md-no-ink class="md-primary md-mini" ng-click="vm.setSelectedIndex(1)">
+          <md-button class="md-primary md-fab md-mini" ng-click="vm.setCurrentStep(0)">1</md-button>
+          <md-button md-no-ink class="md-primary md-mini" ng-click="vm.setCurrentStep(0)">
             <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
               <i class="material-icons md-12">done</i>
             </span> Phone</md-button>
@@ -13,12 +12,20 @@
       </div>
       <div flex="25">
         <div layout="row" layout-align="center">
-          <md-button md-no-ink ng-disabled="!vm.formStep1.$valid" class="md-primary">Email</md-button>
+          <md-button class="md-primary md-fab md-mini" ng-disabled="!vm.formStep1.$valid" ng-click="vm.setCurrentStep(1)">2</md-button>
+          <md-button md-no-ink ng-disabled="!vm.formStep1.$valid" class="md-primary md-mini" ng-click="vm.setCurrentStep(1)">
+            <span class="md-accent-bg" ng-if="vm.formStep2.$valid">
+              <i class="material-icons md-12">done</i>
+            </span> Email</md-button>
         </div>
       </div>
       <div flex="25">
         <div layout="row" layout-align="center">
-          <md-button md-no-ink ng-disabled="true" class="md-primary">Password</md-button>
+          <md-button class="md-primary md-fab md-mini" ng-disabled="!vm.formStep2.$valid" ng-click="vm.setCurrentStep(2)">3</md-button>
+          <md-button md-no-ink ng-disabled="!vm.formStep1.$valid && !vm.formStep2.$valid" class="md-primary md-mini" ng-click="vm.setCurrentStep(2)">
+            <span class="md-accent-bg" ng-if="vm.formStep3.$valid">
+              <i class="material-icons md-12">done</i>
+            </span> Password</md-button>
         </div>
       </div>
       <div flex="25">
@@ -28,98 +35,14 @@
       </div>
     </div>
     <div layout="row" layout-wrap>
-      <md-progress-linear md-mode="determinate" value="25"></md-progress-linear>
+      <md-progress-linear md-mode="determinate" value="{{vm.step * 25}}"></md-progress-linear>
     </div>
-    <!--
-    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true">
-      <md-tab>
-        <md-tab-label>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$invalid">
-            1
-          </span>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
-            <i class="material-icons md-12">done</i>
-          </span>
-          <span>Personal Information</span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep1">
-            <div layout-gt-sm="row">
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Phone Number</label>
-                <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-                <div class="hint" ng-show="showHints">(###) ###-####</div>
-                <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
-                  <div ng-message="required">Phone is required.</div>
-                  <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-                </div>
-              </md-input-container>
-            </div>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$invalid">2</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Address</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep2" novalidate>
-            <md-input-container class="md-block">
-              <label>Address</label>
-              <textarea ng-model="vm.formWizard.address" columns="1" md-maxlength="150" rows="5" required></textarea>
-              <div ng-messages="wizardStep2.address.$error" ng-show="wizardStep2.address.$touched" role="alert" multiple>
-                <div ng-message="required"><span>Address field is required.</span></div>
-                <div ng-message="md-maxlength">
-                  <span>Address can't be longer than 150 characters.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid || vm.formStep2.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$invalid">3</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Payment Method</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep3" novalidate>
-            <md-input-container class="md-block">
-              <input type="text" name="cardholder" ng-model="vm.formWizard.cardholder" placeholder="Card Holder" required>
-              <div ng-messages="wizardStep3.cardholder.$error" ng-show="wizardStep3.cardholder.$dirty" role="alert">
-                <div ng-message="required">
-                  <span>Card holder field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab>
-        <md-tab-label>
-          <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
-        </md-tab-label>
-      </md-tab>
-    </md-tabs>
-    -->
   </div>
   <div layout="column" flex="25">
   </div>
-  <div layout="column" flex="50" flex-offset="25">
-
-    <div layout="row" layout-align="center center">
-      <form name="vm.formStep1">
+  <div layout="column" flex="50" flex-offset="25" layout-align="center center" layout-wrap>
+    <div layout="row" layout-align="center center" data-ng-switch="vm.getCurrentStep()">
+      <form name="vm.formStep1" data-ng-switch-when="1">
         <div layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Phone Number</label>
@@ -132,102 +55,34 @@
           </md-input-container>
         </div>
       </form>
-    </div>
-    <!--
-    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true">
-      <md-tab>
-        <md-tab-label>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$invalid">
-            1
-          </span>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
-            <i class="material-icons md-12">done</i>
-          </span>
-          <span>Personal Information</span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep1">
-            <div layout-gt-sm="row">
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Phone Number</label>
-                <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-                <div class="hint" ng-show="showHints">(###) ###-####</div>
-                <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
-                  <div ng-message="required">Phone is required.</div>
-                  <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-                </div>
-              </md-input-container>
+      <form name="vm.formStep2" data-ng-switch-when="2">
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Email</label>
+            <input name="email" ng-model="vm.user.email"
+                   required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+            <div class="hint" ng-show="showHints">How can we reach you?</div>
+            <div ng-messages="vm.userForm.email.$error" ng-hide="showHints">
+              <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                Your email must be between 10 and 100 characters long and look like an e-mail address.
+              </div>
             </div>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$invalid">2</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Address</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep2" novalidate>
-            <md-input-container class="md-block">
-              <label>Address</label>
-              <textarea ng-model="vm.formWizard.address" columns="1" md-maxlength="150" rows="5" required></textarea>
-              <div ng-messages="wizardStep2.address.$error" ng-show="wizardStep2.address.$touched" role="alert" multiple>
-                <div ng-message="required"><span>Address field is required.</span></div>
-                <div ng-message="md-maxlength">
-                  <span>Address can't be longer than 150 characters.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid || vm.formStep2.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$invalid">3</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Payment Method</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep3" novalidate>
-            <md-input-container class="md-block">
-              <input type="text" name="cardholder" ng-model="vm.formWizard.cardholder" placeholder="Card Holder" required>
-              <div ng-messages="wizardStep3.cardholder.$error" ng-show="wizardStep3.cardholder.$dirty" role="alert">
-                <div ng-message="required">
-                  <span>Card holder field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab>
-        <md-tab-label>
-          <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
-        </md-tab-label>
-      </md-tab>
-    </md-tabs>
-    -->
+          </md-input-container>
+        </div>
+      </form>
+    </div>
   </div>
   <div layout="column" flex="25">
   </div>
-  <div layout="column" flex="50" flex-offset="25">
-    <div layout="row" layout-align="space-around end">
-      <md-button class="md-fab" ng-click="vm.previousStep()" ng-hide="vm.isFirstStep">
+  <div layout="column" flex="50" flex-offset="25" layout-align="end" layout-wrap>
+    <div layout="row" layout-align="space-around end" flex>
+      <md-button class="md-fab" ng-click="vm.previousStep()" ng-hide="vm.isFirstStep()">
         <i class="material-icons md-36">navigate_before</i>
       </md-button>
-      <md-button class="md-fab" ng-click="vm.nextStep()" ng-hide="vm.isLastStep" ng-disabled="vm.currentStepInvalid">
+      <md-button class="md-fab" ng-click="vm.nextStep()" ng-hide="vm.isLastStep()" ng-disabled="vm.currentStepInvalid">
         <i class="material-icons md-36">navigate_next</i>
       </md-button>
-      <md-button class="md-fab" ng-click="vm.sendForm(); vm.resetForm();" ng-show="vm.isLastStep" ng-disabled="vm.formsIncomplete">
+      <md-button class="md-fab" ng-click="vm.sendForm(); vm.resetForm();" ng-show="vm.isLastStep()" ng-disabled="vm.formsIncomplete">
         <i class="material-icons md-36">send</i>
       </md-button>
     </div>
@@ -461,3 +316,174 @@
   </div>
 </div>
 -->
+
+
+<!--
+    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true">
+      <md-tab>
+        <md-tab-label>
+          <span class="md-accent-bg" ng-if="vm.formStep1.$invalid">
+            1
+          </span>
+          <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
+            <i class="material-icons md-12">done</i>
+          </span>
+          <span>Personal Information</span>
+        </md-tab-label>
+        <md-tab-body>
+          <form name="vm.formStep1">
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Phone Number</label>
+                <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
+                <div class="hint" ng-show="showHints">(###) ###-####</div>
+                <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
+                  <div ng-message="required">Phone is required.</div>
+                  <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
+                </div>
+              </md-input-container>
+            </div>
+          </form>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-disabled="vm.formStep1.$invalid">
+        <md-tab-label>
+            <span class="ms-form-wizard-step-label">
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$invalid">2</span>
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
+                    <i class="icon-check s16"></i>
+                </span>
+                <span class="ms-form-wizard-step-text">Address</span>
+            </span>
+        </md-tab-label>
+        <md-tab-body>
+          <form name="vm.formStep2" novalidate>
+            <md-input-container class="md-block">
+              <label>Address</label>
+              <textarea ng-model="vm.formWizard.address" columns="1" md-maxlength="150" rows="5" required></textarea>
+              <div ng-messages="wizardStep2.address.$error" ng-show="wizardStep2.address.$touched" role="alert" multiple>
+                <div ng-message="required"><span>Address field is required.</span></div>
+                <div ng-message="md-maxlength">
+                  <span>Address can't be longer than 150 characters.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </form>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-disabled="vm.formStep1.$invalid || vm.formStep2.$invalid">
+        <md-tab-label>
+            <span class="ms-form-wizard-step-label">
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$invalid">3</span>
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
+                    <i class="icon-check s16"></i>
+                </span>
+                <span class="ms-form-wizard-step-text">Payment Method</span>
+            </span>
+        </md-tab-label>
+        <md-tab-body>
+          <form name="vm.formStep3" novalidate>
+            <md-input-container class="md-block">
+              <input type="text" name="cardholder" ng-model="vm.formWizard.cardholder" placeholder="Card Holder" required>
+              <div ng-messages="wizardStep3.cardholder.$error" ng-show="wizardStep3.cardholder.$dirty" role="alert">
+                <div ng-message="required">
+                  <span>Card holder field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </form>
+        </md-tab-body>
+      </md-tab>
+      <md-tab>
+        <md-tab-label>
+          <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
+        </md-tab-label>
+      </md-tab>
+    </md-tabs>
+    -->
+
+<!--
+    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true">
+      <md-tab>
+        <md-tab-label>
+          <span class="md-accent-bg" ng-if="vm.formStep1.$invalid">
+            1
+          </span>
+          <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
+            <i class="material-icons md-12">done</i>
+          </span>
+          <span>Personal Information</span>
+        </md-tab-label>
+        <md-tab-body>
+          <form name="vm.formStep1">
+            <div layout-gt-sm="row">
+              <md-input-container class="md-block" flex-gt-sm>
+                <label>Phone Number</label>
+                <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
+                <div class="hint" ng-show="showHints">(###) ###-####</div>
+                <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
+                  <div ng-message="required">Phone is required.</div>
+                  <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
+                </div>
+              </md-input-container>
+            </div>
+          </form>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-disabled="vm.formStep1.$invalid">
+        <md-tab-label>
+            <span class="ms-form-wizard-step-label">
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$invalid">2</span>
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
+                    <i class="icon-check s16"></i>
+                </span>
+                <span class="ms-form-wizard-step-text">Address</span>
+            </span>
+        </md-tab-label>
+        <md-tab-body>
+          <form name="vm.formStep2" novalidate>
+            <md-input-container class="md-block">
+              <label>Address</label>
+              <textarea ng-model="vm.formWizard.address" columns="1" md-maxlength="150" rows="5" required></textarea>
+              <div ng-messages="wizardStep2.address.$error" ng-show="wizardStep2.address.$touched" role="alert" multiple>
+                <div ng-message="required"><span>Address field is required.</span></div>
+                <div ng-message="md-maxlength">
+                  <span>Address can't be longer than 150 characters.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </form>
+        </md-tab-body>
+      </md-tab>
+      <md-tab ng-disabled="vm.formStep1.$invalid || vm.formStep2.$invalid">
+        <md-tab-label>
+            <span class="ms-form-wizard-step-label">
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$invalid">3</span>
+                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
+                    <i class="icon-check s16"></i>
+                </span>
+                <span class="ms-form-wizard-step-text">Payment Method</span>
+            </span>
+        </md-tab-label>
+        <md-tab-body>
+          <form name="vm.formStep3" novalidate>
+            <md-input-container class="md-block">
+              <input type="text" name="cardholder" ng-model="vm.formWizard.cardholder" placeholder="Card Holder" required>
+              <div ng-messages="wizardStep3.cardholder.$error" ng-show="wizardStep3.cardholder.$dirty" role="alert">
+                <div ng-message="required">
+                  <span>Card holder field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </form>
+        </md-tab-body>
+      </md-tab>
+      <md-tab>
+        <md-tab-label>
+          <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
+        </md-tab-label>
+      </md-tab>
+    </md-tabs>
+    -->
+
+

@@ -20,24 +20,42 @@
 
     vm.previousStep = previousStep;
     vm.nextStep = nextStep;
-    vm.setSelectedIndex = setSelectedIndex;
-    vm.isFirstStep = true;
-    vm.isLastStep = false;
+    vm.isCurrentStep = isCurrentStep;
+    vm.isFirstStep = isFirstStep;
+    vm.isLastStep = isLastStep;
+    vm.setCurrentStep = setCurrentStep;
+    vm.getCurrentStep = getCurrentStep;
     vm.currentStepInvalid = false;
     vm.formsIncomplete = true;
-    vm.selectedIndex = 0;
-    vm.steps = [];
+    vm.steps = [1, 2, 3, 4];
+    vm.step = 0;
 
-    function setSelectedIndex(index) {
-      vm.selectedIndex = index;
+    function isCurrentStep(step) {
+      return vm.step === step;
+    }
+
+    function isFirstStep() {
+      return vm.step === 0;
+    }
+
+    function isLastStep() {
+      return vm.step === vm.steps.length - 1;
+    }
+
+    function setCurrentStep(step) {
+      vm.step = step;
+    }
+
+    function getCurrentStep() {
+      return vm.steps[vm.step];
     }
 
     function previousStep() {
-
+      vm.step -= (vm.isFirstStep()) ? 0 : 1;
     }
 
-    function nextStep() {
-      vm.selectedIndex++;
+    function nextStep(dismiss) {
+      vm.isLastStep() ? dismiss() : vm.step++;
     }
 
     // Get an eventual error defined in the URL query string:
