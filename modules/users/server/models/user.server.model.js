@@ -30,6 +30,17 @@ var validateLocalStrategyEmail = function (email) {
 };
 
 /**
+ * A Validation function for local strategy phone
+ */
+var validateLocalStrategyPhone = function (phone) {
+  var userPhoneRegex = /^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/;
+  return (
+    this.provider !== 'local' ||
+    (phone && userPhoneRegex.test(phone))
+  );
+};
+
+/**
  * A Validation function for username
  * - at least 3 characters
  * - only a-z0-9_-.
@@ -41,9 +52,10 @@ var validateLocalStrategyEmail = function (email) {
 
 var validateUsername = function(username) {
   var usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
+  var userPhoneRegex = /^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/;
   return (
     this.provider !== 'local' ||
-    (username && usernameRegex.test(username) && config.illegalUsernames.indexOf(username) < 0)
+    (username && (usernameRegex.test(username) || userPhoneRegex.test(username)) && config.illegalUsernames.indexOf(username) < 0)
   );
 };
 
@@ -66,6 +78,16 @@ var UserSchema = new Schema({
   displayName: {
     type: String,
     trim: true
+  },
+  phone: {
+    type: String,
+    unique: 'Phone already exists',
+    trim: true,
+    index: {
+      unique: true,
+      sparse: true // For this to work on a previously indexed field, the index must be dropped & the application restarted.
+    },
+    validate: [validateLocalStrategyPhone, 'Please fill a valid phone number']
   },
   email: {
     type: String,
@@ -134,6 +156,9 @@ UserSchema.pre('save', function (next) {
   if (this.password && this.isModified('password')) {
     this.salt = crypto.randomBytes(16).toString('base64');
     this.password = this.hashPassword(this.password);
+  }
+  if (this.phone.length > 0) {
+    this.username = this.phone;
   }
 
   next();
