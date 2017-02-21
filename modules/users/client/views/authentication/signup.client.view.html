@@ -73,7 +73,7 @@
         <div data-ng-switch-when="3" layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Password</label>
-            <input name="password" ng-model="vm.credentials.password" required minlength="10" ng-pattern="vm.usernameRegex" />
+            <input name="password" ng-model="vm.credentials.password" required minlength="10" ng-pattern="vm.passwordRegex" />
             <div class="hint" ng-show="showHints">Need more protection?</div>
             <div ng-messages="vm.userForm.password.$error" ng-hide="showHints">
               <div ng-message-exp="['required', 'minlength', 'pattern']">

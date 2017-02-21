@@ -36,10 +36,14 @@
 </head>
 
 <body ng-cloak layout="column">
-  <div layout="row" flex>
-  <!-- <header ng-include="'/modules/core/client/views/header.client.view.html'" class="navbar navbar-fixed-top navbar-inverse"></header> -->
+  <md-button class="md-fab md-primary md-hue-2" aria-label="Profile" ng-click="vm.showSidebar()" ng-controller="HeaderController as vm">
+    <i class="material-icons md-24">menu</i>
+  </md-button>
+
+  <md-sidenav class="md-sidenav-left" md-component-id="left"
+              ng-include="'/modules/core/client/views/sidebar.client.view.html'" ng-controller="SidebarController as vm">
+  </md-sidenav>
   {{{block "content"}}}
-  </div>
   <noscript>
     <style>
       [ng\:cloak], [ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

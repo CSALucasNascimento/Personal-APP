@@ -92,6 +92,7 @@
 .bounce {
   -webkit-animation-name: bounce;
   animation-name: bounce;
+	-ms-transform-origin: center bottom;
   -webkit-transform-origin: center bottom;
   transform-origin: center bottom;
 }
@@ -345,10 +346,10 @@
 }
 
 .headShake {
-  -webkit-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-  -webkit-animation-name: headShake;
-  animation-name: headShake;
+	animation-name: headShake;
+	-webkit-animation-name: headShake;
+	animation-timing-function: ease-in-out;
+	-webkit-animation-timing-function: ease-in-out;
 }
 
 @-webkit-keyframes swing {

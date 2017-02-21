@@ -3,23 +3,20 @@
 
   angular
     .module('core')
-    .controller('HeaderController', HeaderController);
+    .controller('SidebarController', SidebarController);
 
-  HeaderController.$inject = ['$scope', '$state', 'Authentication', 'menuService'];
+  SidebarController.$inject = ['$scope', '$mdSidenav', 'Authentication'];
 
-  function HeaderController($scope, $state, Authentication, menuService) {
+  function SidebarController($scope, $mdSidenav, Authentication) {
     var vm = this;
-
-    vm.accountMenu = menuService.getMenu('account').items[0];
+    vm.showSidebar = showSidebar('left');
     vm.authentication = Authentication;
-    vm.isCollapsed = false;
-    vm.menu = menuService.getMenu('topbar');
 
-    $scope.$on('$stateChangeSuccess', stateChangeSuccess);
-
-    function stateChangeSuccess() {
-      // Collapsing the menu after navigation
-      vm.isCollapsed = false;
+    function showSidebar(componentId) {
+      return function() {
+        $mdSidenav(componentId).toggle();
+      };
     }
+
   }
 }());
