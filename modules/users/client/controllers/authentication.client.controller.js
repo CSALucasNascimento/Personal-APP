@@ -15,8 +15,7 @@
     vm.signup = signup;
     vm.signin = signin;
     vm.callOauthProvider = callOauthProvider;
-    vm.usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
-
+    vm.passwordRegex = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?!.*(.)\1{2,}).{5,20}$/;
 
     vm.previousStep = previousStep;
     vm.nextStep = nextStep;
@@ -25,7 +24,7 @@
     vm.isLastStep = isLastStep;
     vm.setCurrentStep = setCurrentStep;
     vm.getCurrentStep = getCurrentStep;
-    vm.currentStepInvalid = false;
+    vm.isCurrentFormValid = isCurrentFormValid;
     vm.formsIncomplete = true;
     vm.steps = [1, 2, 3, 4];
     vm.step = 0;
@@ -56,6 +55,11 @@
 
     function nextStep(dismiss) {
       vm.isLastStep() ? dismiss() : vm.step++;
+    }
+
+    function isCurrentFormValid(form) {
+      // console.log(form);
+      // return form.$valid;
     }
 
     // Get an eventual error defined in the URL query string:

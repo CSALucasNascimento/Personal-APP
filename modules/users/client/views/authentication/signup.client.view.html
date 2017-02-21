@@ -1,36 +1,40 @@
 <div layout="row" layout-wrap flex>
-  <div layout="column" flex="50" flex-offset="25">
+  <div layout="column" flex-gt-sm="50" flex-md="70" flex="100" flex-offset-gt-sm="25" flex-offset-md="15">
     <div layout="row" layout-align="center center" layout-wrap>
       <div flex="25">
         <div layout="row" layout-align="center">
           <md-button class="md-primary md-fab md-mini" ng-click="vm.setCurrentStep(0)">1</md-button>
           <md-button md-no-ink class="md-primary md-mini" ng-click="vm.setCurrentStep(0)">
-            <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
+            <span class="md-accent-bg" ng-if="vm.getCurrentStep() > 1">
               <i class="material-icons md-12">done</i>
             </span> Phone</md-button>
         </div>
       </div>
       <div flex="25">
         <div layout="row" layout-align="center">
-          <md-button class="md-primary md-fab md-mini" ng-disabled="!vm.formStep1.$valid" ng-click="vm.setCurrentStep(1)">2</md-button>
-          <md-button md-no-ink ng-disabled="!vm.formStep1.$valid" class="md-primary md-mini" ng-click="vm.setCurrentStep(1)">
-            <span class="md-accent-bg" ng-if="vm.formStep2.$valid">
+          <md-button class="md-primary md-fab md-mini" ng-disabled="vm.getCurrentStep() < 2" ng-click="vm.setCurrentStep(1)">2</md-button>
+          <md-button md-no-ink ng-disabled="vm.getCurrentStep() < 2" class="md-primary md-mini" ng-click="vm.setCurrentStep(1)">
+            <span class="md-accent-bg" ng-if="vm.getCurrentStep() > 2">
               <i class="material-icons md-12">done</i>
             </span> Email</md-button>
         </div>
       </div>
       <div flex="25">
         <div layout="row" layout-align="center">
-          <md-button class="md-primary md-fab md-mini" ng-disabled="!vm.formStep2.$valid" ng-click="vm.setCurrentStep(2)">3</md-button>
-          <md-button md-no-ink ng-disabled="!vm.formStep1.$valid && !vm.formStep2.$valid" class="md-primary md-mini" ng-click="vm.setCurrentStep(2)">
-            <span class="md-accent-bg" ng-if="vm.formStep3.$valid">
+          <md-button class="md-primary md-fab md-mini" ng-disabled="vm.getCurrentStep() < 3" ng-click="vm.setCurrentStep(2)">3</md-button>
+          <md-button md-no-ink ng-disabled="vm.getCurrentStep() < 3" class="md-primary md-mini" ng-click="vm.setCurrentStep(2)">
+            <span class="md-accent-bg" ng-if="vm.getCurrentStep() > 3">
               <i class="material-icons md-12">done</i>
             </span> Password</md-button>
         </div>
       </div>
       <div flex="25">
         <div layout="row" layout-align="center">
-          <md-button md-no-ink ng-disabled="true" class="md-primary">Full Name</md-button>
+          <md-button class="md-primary md-fab md-mini" ng-disabled="vm.getCurrentStep() < 4" ng-click="vm.setCurrentStep(3)">4</md-button>
+          <md-button md-no-ink ng-disabled="vm.getCurrentStep() < 4" class="md-primary md-mini" ng-click="vm.setCurrentStep(3)">
+            <span class="md-accent-bg" ng-if="vm.getCurrentStep() > 4">
+              <i class="material-icons md-12">done</i>
+            </span> Full Name</md-button>
         </div>
       </div>
     </div>
@@ -38,29 +42,26 @@
       <md-progress-linear md-mode="determinate" value="{{vm.step * 25}}"></md-progress-linear>
     </div>
   </div>
-  <div layout="column" flex="25">
+  <div layout="column" flex="25" hide show-md>
   </div>
-  <div layout="column" flex="50" flex-offset="25" layout-align="center center" layout-wrap>
-    <div layout="row" layout-align="center center" data-ng-switch="vm.getCurrentStep()">
-      <form name="vm.formStep1" data-ng-switch-when="1">
-        <div layout-gt-sm="row">
+  <div layout="column" flex-gt-sm="50" flex-md="70" flex="100" flex-offset-gt-sm="25" flex-offset-md="15" layout-align="center center" layout-wrap>
+    <form name="vm.userForm" novalidate autocomplete="off">
+      <div ng-switch layout="row" layout-align="center center" on="vm.getCurrentStep()">
+        <div data-ng-switch-when="1" layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Phone Number</label>
-            <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
+            <input name="phone" ng-model="vm.credentials.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
             <div class="hint" ng-show="showHints">(###) ###-####</div>
-            <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
+            <div ng-messages="vm.userForm.phone.$error" ng-hide="showHints">
               <div ng-message="required">Phone is required.</div>
               <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
             </div>
           </md-input-container>
         </div>
-      </form>
-      <form name="vm.formStep2" data-ng-switch-when="2">
-        <div layout-gt-sm="row">
+        <div data-ng-switch-when="2" layout-gt-sm="row">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Email</label>
-            <input name="email" ng-model="vm.user.email"
-                   required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+            <input name="email" ng-model="vm.credentials.email" required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
             <div class="hint" ng-show="showHints">How can we reach you?</div>
             <div ng-messages="vm.userForm.email.$error" ng-hide="showHints">
               <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
@@ -69,192 +70,59 @@
             </div>
           </md-input-container>
         </div>
-      </form>
-    </div>
+        <div data-ng-switch-when="3" layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Password</label>
+            <input name="password" ng-model="vm.credentials.password" required minlength="10" ng-pattern="vm.passwordRegex" />
+            <div class="hint" ng-show="showHints">Need more protection?</div>
+            <div ng-messages="vm.userForm.password.$error" ng-hide="showHints">
+              <div ng-message-exp="['required', 'minlength', 'pattern']">
+                Please enter a valid username: 3+ characters long, non restricted word, characters "_-.", no consecutive dots, does not begin or end with dots, letters a-z and numbers 0-9.
+              </div>
+            </div>
+          </md-input-container>
+        </div>
+        <div data-ng-switch-when="4" layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>First Name</label>
+            <input md-maxlength="30" required name="firstName" ng-model="vm.credentials.firstName" />
+            <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
+            <div ng-messages="vm.userForm.firstName.$error" ng-if="!showHints">
+              <div ng-message="required">Name is required.</div>
+              <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Last Name</label>
+            <input md-maxlength="30" required name="lastName" ng-model="vm.credentials.lastName" />
+            <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
+            <div ng-messages="vm.userForm.lastName.$error" ng-if="!showHints">
+              <div ng-message="required">Last name is required.</div>
+              <div ng-message="md-maxlength">The last name has to be less than 30 characters long.</div>
+            </div>
+          </md-input-container>
+        </div>
+      </div>
+    </form>
   </div>
-  <div layout="column" flex="25">
+  <div layout="column" flex="25" hide show-md>
   </div>
-  <div layout="column" flex="50" flex-offset="25" layout-align="end" layout-wrap>
+  <div layout="column" flex-gt-sm="50" flex-md="70" flex="100" flex-offset-gt-sm="25" flex-offset-md="15" layout-align="end" layout-wrap>
     <div layout="row" layout-align="space-around end" flex>
       <md-button class="md-fab" ng-click="vm.previousStep()" ng-hide="vm.isFirstStep()">
         <i class="material-icons md-36">navigate_before</i>
       </md-button>
-      <md-button class="md-fab" ng-click="vm.nextStep()" ng-hide="vm.isLastStep()" ng-disabled="vm.currentStepInvalid">
+      <md-button class="md-fab" ng-click="vm.nextStep()" ng-hide="vm.isLastStep()" ng-disabled="!vm.userForm.$valid">
         <i class="material-icons md-36">navigate_next</i>
       </md-button>
-      <md-button class="md-fab" ng-click="vm.sendForm(); vm.resetForm();" ng-show="vm.isLastStep()" ng-disabled="vm.formsIncomplete">
-        <i class="material-icons md-36">send</i>
+      <md-button class="md-fab" ng-click="vm.signup(vm.userForm.$valid);" ng-show="vm.isLastStep()" ng-disabled="!vm.userForm.$valid">
+        <i class="material-icons md-36">navigate_next</i>
       </md-button>
     </div>
   </div>
-  <div layout="column" flex="25">
+  <div layout="column" flex="25" hide show-mdm>
   </div>
 </div>
-
-
-<!--
-<div class="steps">
-  <span ng-repeat="form in vm.forms" ng-class="{'selected md-accent-bg':vm.selectedIndex === $index}"></span>
-</div>
--->
-<!-- <md-content layout-padding>
-  <form name="vm.userForm">
-    <div layout="row">
-      <div flex="25">
-        Step 1
-        <md-progress-linear md-mode="determinate" value="100"></md-progress-linear>
-      </div>
-      <div flex="25">
-        Step 2
-      </div>
-      <div flex="25">
-        Step 3
-      </div>
-      <div flex="25">
-        Step 4
-      </div>
-    </div>
-
-    <md-tabs md-dynamic-height md-border-bottom>
-      <md-tab label="one">
-        <md-content class="md-padding">
-          <md-input-container class="md-block" flex-gt-sm>
-            <label>Phone Number</label>
-            <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-            <div class="hint" ng-show="showHints">(###) ###-####</div>
-            <div ng-messages="vm.userForm.phone.$error" ng-hide="showHints">
-              <div ng-message="required">Phone is required.</div>
-              <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-            </div>
-          </md-input-container>
-        </md-content>
-      </md-tab>
-      <md-tab label="two">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Tab Two</h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi. Aliquam erat volutpat. Nam placerat, tortor in ultrices porttitor, orci enim rutrum enim, vel tempor sapien arcu a tellus. Vivamus convallis sodales ante varius gravida. Curabitur a purus vel augue ultrices ultricies id a nisl. Nullam malesuada consequat diam, a facilisis tortor volutpat et. Sed urna dolor, aliquet vitae posuere vulputate, euismod ac lorem. Sed felis risus, pulvinar at interdum quis, vehicula sed odio. Phasellus in enim venenatis, iaculis tortor eu, bibendum ante. Donec ac tellus dictum neque volutpat blandit. Praesent efficitur faucibus risus, ac auctor purus porttitor vitae. Phasellus ornare dui nec orci posuere, nec luctus mauris semper.</p>
-          <p>Morbi viverra, ante vel aliquet tincidunt, leo dolor pharetra quam, at semper massa orci nec magna. Donec posuere nec sapien sed laoreet. Etiam cursus nunc in condimentum facilisis. Etiam in tempor tortor. Vivamus faucibus egestas enim, at convallis diam pulvinar vel. Cras ac orci eget nisi maximus cursus. Nunc urna libero, viverra sit amet nisl at, hendrerit tempor turpis. Maecenas facilisis convallis mi vel tempor. Nullam vitae nunc leo. Cras sed nisl consectetur, rhoncus sapien sit amet, tempus sapien.</p>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-      <md-tab label="three">
-        <md-content class="md-padding">
-          <h1 class="md-display-2">Tab Three</h1>
-          <p>Integer turpis erat, porttitor vitae mi faucibus, laoreet interdum tellus. Curabitur posuere molestie dictum. Morbi eget congue risus, quis rhoncus quam. Suspendisse vitae hendrerit erat, at posuere mi. Cras eu fermentum nunc. Sed id ante eu orci commodo volutpat non ac est. Praesent ligula diam, congue eu enim scelerisque, finibus commodo lectus.</p>
-        </md-content>
-      </md-tab>
-    </md-tabs>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div layout="row" layout-xs="column" layout-sm="column" layout-align="space-between center">
-      <md-input-container>
-        <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
-      </md-input-container>
-    </div>
-
-    <div layout-gt-sm="row">
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>First Name</label>
-        <input md-maxlength="30" required name="firstName" ng-model="vm.credentials.firstName" />
-        <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
-        <div ng-messages="vm.userForm.firstName.$error" ng-if="!showHints">
-          <div ng-message="required">Name is required.</div>
-          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-        </div>
-      </md-input-container>
-
-      <div flex="5" hide-xs hide-sm>
-        <!-- Spacer //
-      </div>
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Last Name</label>
-        <input md-maxlength="30" required name="lastName" ng-model="vm.credentials.lastName" />
-        <div class="hint" ng-if="showHints">Tell us what we should call you!</div>
-        <div ng-messages="vm.userForm.firstName.$error" ng-if="!showHints">
-          <div ng-message="required">Name is required.</div>
-          <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
-        </div>
-      </md-input-container>
-
-      <div flex="5" hide-xs hide-sm>
-        <!-- Spacer //
-      </div>
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Social Security Number</label>
-        <input name="social" ng-model="user.social" ng-pattern="/^[0-9]{3}-[0-9]{2}-[0-9]{4}$/" />
-
-        <div class="hint" ng-if="showHints">###-##-####</div>
-
-        <div ng-messages="userForm.social.$error" ng-if="!showHints">
-          <div ng-message="pattern">###-##-#### - Please enter a valid SSN.</div>
-        </div>
-      </md-input-container>
-
-    </div>
-
-    <div layout-gt-sm="row">
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Email</label>
-        <input name="email" ng-model="user.email"
-               required minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
-
-        <div class="hint" ng-show="showHints">How can we reach you?</div>
-
-        <div ng-messages="vm.userForm.email.$error" ng-hide="showHints">
-          <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-            Your email must be between 10 and 100 characters long and look like an e-mail address.
-          </div>
-        </div>
-      </md-input-container>
-
-      <div flex="5" hide-xs hide-sm>
-        <!-- Spacer //
-      </div>
-
-      <md-input-container class="md-block" flex-gt-sm>
-        <label>Phone Number</label>
-        <input name="phone" ng-model="user.phone" ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-
-        <div class="hint" ng-show="showHints">(###) ###-####</div>
-
-        <div ng-messages="userForm.phone.$error" ng-hide="showHints">
-          <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-        </div>
-      </md-input-container>
-
-      <style>
-        /*
-         * The Material demos system does not currently allow targeting the body element, so this
-         * must go here in the HTML.
-         */
-        body[dir=rtl] .hint {
-          right: 2px;
-          left: auto;
-        }
-      </style>
-    </div>
-
-  </form>
-</md-content>
-
-
-
 
 <!--
 <div>
@@ -316,174 +184,5 @@
   </div>
 </div>
 -->
-
-
-<!--
-    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true">
-      <md-tab>
-        <md-tab-label>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$invalid">
-            1
-          </span>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
-            <i class="material-icons md-12">done</i>
-          </span>
-          <span>Personal Information</span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep1">
-            <div layout-gt-sm="row">
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Phone Number</label>
-                <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-                <div class="hint" ng-show="showHints">(###) ###-####</div>
-                <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
-                  <div ng-message="required">Phone is required.</div>
-                  <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-                </div>
-              </md-input-container>
-            </div>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$invalid">2</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Address</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep2" novalidate>
-            <md-input-container class="md-block">
-              <label>Address</label>
-              <textarea ng-model="vm.formWizard.address" columns="1" md-maxlength="150" rows="5" required></textarea>
-              <div ng-messages="wizardStep2.address.$error" ng-show="wizardStep2.address.$touched" role="alert" multiple>
-                <div ng-message="required"><span>Address field is required.</span></div>
-                <div ng-message="md-maxlength">
-                  <span>Address can't be longer than 150 characters.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid || vm.formStep2.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$invalid">3</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Payment Method</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep3" novalidate>
-            <md-input-container class="md-block">
-              <input type="text" name="cardholder" ng-model="vm.formWizard.cardholder" placeholder="Card Holder" required>
-              <div ng-messages="wizardStep3.cardholder.$error" ng-show="wizardStep3.cardholder.$dirty" role="alert">
-                <div ng-message="required">
-                  <span>Card holder field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab>
-        <md-tab-label>
-          <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
-        </md-tab-label>
-      </md-tab>
-    </md-tabs>
-    -->
-
-<!--
-    <md-tabs md-selected="vm.selectedIndex" md-center-tabs="true">
-      <md-tab>
-        <md-tab-label>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$invalid">
-            1
-          </span>
-          <span class="md-accent-bg" ng-if="vm.formStep1.$valid">
-            <i class="material-icons md-12">done</i>
-          </span>
-          <span>Personal Information</span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep1">
-            <div layout-gt-sm="row">
-              <md-input-container class="md-block" flex-gt-sm>
-                <label>Phone Number</label>
-                <input name="phone" ng-model="vm.user.phone" required ng-pattern="/^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/" />
-                <div class="hint" ng-show="showHints">(###) ###-####</div>
-                <div ng-messages="vm.formStep1.phone.$error" ng-hide="showHints">
-                  <div ng-message="required">Phone is required.</div>
-                  <div ng-message="pattern">(###) ###-#### - Please enter a valid phone number.</div>
-                </div>
-              </md-input-container>
-            </div>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$invalid">2</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep2.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Address</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep2" novalidate>
-            <md-input-container class="md-block">
-              <label>Address</label>
-              <textarea ng-model="vm.formWizard.address" columns="1" md-maxlength="150" rows="5" required></textarea>
-              <div ng-messages="wizardStep2.address.$error" ng-show="wizardStep2.address.$touched" role="alert" multiple>
-                <div ng-message="required"><span>Address field is required.</span></div>
-                <div ng-message="md-maxlength">
-                  <span>Address can't be longer than 150 characters.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab ng-disabled="vm.formStep1.$invalid || vm.formStep2.$invalid">
-        <md-tab-label>
-            <span class="ms-form-wizard-step-label">
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$invalid">3</span>
-                <span class="ms-form-wizard-step-number md-accent-bg" ng-if="wizardStep3.$valid">
-                    <i class="icon-check s16"></i>
-                </span>
-                <span class="ms-form-wizard-step-text">Payment Method</span>
-            </span>
-        </md-tab-label>
-        <md-tab-body>
-          <form name="vm.formStep3" novalidate>
-            <md-input-container class="md-block">
-              <input type="text" name="cardholder" ng-model="vm.formWizard.cardholder" placeholder="Card Holder" required>
-              <div ng-messages="wizardStep3.cardholder.$error" ng-show="wizardStep3.cardholder.$dirty" role="alert">
-                <div ng-message="required">
-                  <span>Card holder field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </form>
-        </md-tab-body>
-      </md-tab>
-      <md-tab>
-        <md-tab-label>
-          <md-switch ng-model="showHints">Showing {{showHints ? "Hints" : "Errors"}}</md-switch>
-        </md-tab-label>
-      </md-tab>
-    </md-tabs>
-    -->
 
 

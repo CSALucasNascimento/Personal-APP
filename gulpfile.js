@@ -49,7 +49,6 @@ gulp.task('env:prod', function () {
 gulp.task('nodemon', function () {
   return plugins.nodemon({
     script: 'server.js',
-    nodeArgs: ['--debug'],
     ext: 'js,html',
     verbose: true,
     watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
@@ -60,6 +59,7 @@ gulp.task('nodemon', function () {
 gulp.task('nodemon-nodebug', function () {
   return plugins.nodemon({
     script: 'server.js',
+    nodeArgs: ['--debug'],
     ext: 'js,html',
     watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
   });

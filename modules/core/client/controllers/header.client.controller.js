@@ -5,9 +5,9 @@
     .module('core')
     .controller('HeaderController', HeaderController);
 
-  HeaderController.$inject = ['$scope', '$state', 'Authentication', 'menuService'];
+  HeaderController.$inject = ['$scope', '$state', 'Authentication', 'menuService', '$mdSidenav'];
 
-  function HeaderController($scope, $state, Authentication, menuService) {
+  function HeaderController($scope, $state, Authentication, menuService, $mdSidenav) {
     var vm = this;
 
     vm.accountMenu = menuService.getMenu('account').items[0];
@@ -21,5 +21,13 @@
       // Collapsing the menu after navigation
       vm.isCollapsed = false;
     }
+
+    vm.showSidebar = showSidebar('left');
+    function showSidebar(componentId) {
+      return function() {
+        $mdSidenav(componentId).toggle();
+      };
+    }
+
   }
 }());
