@@ -31,7 +31,8 @@ module.exports = {
         'public/lib/angular-ui-router/release/angular-ui-router.js',
         'public/lib/owasp-password-strength-test/owasp-password-strength-test.js',
         'public/lib/moment/moment.js',
-        'public/lib/mdPickers/dist/mdPickers.js'
+        'public/lib/mdPickers/dist/mdPickers.js',
+        '//maps.googleapis.com/maps/api/js?key=AIzaSyA3egQrxpITfJ27ZdOxxNvyZcMkGh9XjTQ'
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
