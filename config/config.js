@@ -126,11 +126,21 @@ var initGlobalConfigFolders = function (config, assets) {
   // Appending files
   config.folders = {
     server: {},
-    client: {}
+    client: {
+      app: {},
+      adminApp: {},
+      siteApp: {}
+    }
   };
 
-  // Setting globbed client paths
-  config.folders.client = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/'), process.cwd().replace(new RegExp(/\\/g), '/'));
+  // Setting admin client paths
+  config.folders.client.app = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/app/'), process.cwd().replace(new RegExp(/\\/g), '/'));
+
+  // Setting admin client paths
+  config.folders.client.adminApp = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/admin/'), process.cwd().replace(new RegExp(/\\/g), '/'));
+
+  // Setting site client paths
+  config.folders.client.siteApp = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/site/'), process.cwd().replace(new RegExp(/\\/g), '/'));
 };
 
 /**
@@ -140,7 +150,10 @@ var initGlobalConfigFiles = function (config, assets) {
   // Appending files
   config.files = {
     server: {},
-    client: {}
+    client: {
+      adminApp: {},
+      siteApp: {}
+    }
   };
 
   // Setting Globbed model files
@@ -161,8 +174,20 @@ var initGlobalConfigFiles = function (config, assets) {
   // Setting Globbed js files
   config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/').concat(getGlobbedPaths(assets.client.js, ['public/']));
 
+  // Setting AdminApp js files
+  config.files.client.adminApp.js = getGlobbedPaths(assets.client.jsAdmin, 'public/');
+
+  // Setting SiteApp js files
+  config.files.client.siteApp.js = getGlobbedPaths(assets.client.jsSite, 'public/');
+
   // Setting Globbed css files
-  config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'public/').concat(getGlobbedPaths(assets.client.css, ['public/']));
+  config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'public/');
+
+  // Setting AdminApp css files
+  config.files.client.adminApp.css = getGlobbedPaths(assets.client.cssAdmin, 'public/');
+
+  // Setting Globbed css files
+  config.files.client.siteApp.css = getGlobbedPaths(assets.client.cssSite, 'public/');
 
   // Setting Globbed test files
   config.files.client.tests = getGlobbedPaths(assets.client.tests);

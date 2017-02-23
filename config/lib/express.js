@@ -36,7 +36,11 @@ module.exports.initLocalVariables = function (app) {
   app.locals.facebookAppId = config.facebook.clientID;
   app.locals.twitterUsername = config.twitter.username;
   app.locals.jsFiles = config.files.client.js;
+  app.locals.jsAdminFiles = config.files.client.adminApp.js;
+  app.locals.jsSiteFiles = config.files.client.siteApp.js;
   app.locals.cssFiles = config.files.client.css;
+  app.locals.cssAdminFiles = config.files.client.adminApp.css;
+  app.locals.cssSiteFiles = config.files.client.siteApp.css;
   app.locals.livereload = config.livereload;
   app.locals.logo = config.logo;
   app.locals.favicon = config.favicon;
@@ -162,7 +166,11 @@ module.exports.initModulesClientRoutes = function (app) {
   app.use('/', express.static(path.resolve('./public'), { maxAge: 86400000 }));
 
   // Globbing static routing
-  config.folders.client.forEach(function (staticPath) {
+  config.folders.client.adminApp.forEach(function (staticPath) {
+    app.use(staticPath, express.static(path.resolve('./' + staticPath)));
+  });
+  // Globbing static routing
+  config.folders.client.siteApp.forEach(function (staticPath) {
     app.use(staticPath, express.static(path.resolve('./' + staticPath)));
   });
 };

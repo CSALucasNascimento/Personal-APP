@@ -37,28 +37,49 @@ module.exports = {
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
-    css: [
-      'modules/*/client/{css,less,scss}/*.css'
+    cssAdmin: [
+      'modules/*/client/admin/{css,less,scss}/*.css'
     ],
-    less: [
-      'modules/*/client/less/*.less'
+    cssSite: [
+      'modules/*/client/site/{css,less,scss}/*.css'
     ],
-    sass: [
-      'modules/*/client/scss/*.scss'
+    lessAdmin: [
+      'modules/*/client/admin/less/*.less'
+    ],
+    lessSite: [
+      'modules/*/client/site/less/*.less'
+    ],
+    sassAdmin: [
+      'modules/*/client/admin/scss/*.scss'
+    ],
+    sassSite: [
+      'modules/*/client/site/scss/*.scss'
     ],
     js: [
-      'modules/core/client/app/config.js',
-      'modules/core/client/app/init.js',
-      'modules/*/client/*.js',
-      'modules/*/client/**/*.js'
+      'modules/core/client/app/*.js',
     ],
-    img: [
-      'modules/**/*/img/**/*.jpg',
-      'modules/**/*/img/**/*.png',
-      'modules/**/*/img/**/*.gif',
-      'modules/**/*/img/**/*.svg'
+    jsAdmin: [
+      'modules/*/client/admin/*.js',
+      'modules/*/client/admin/**/*.js'
     ],
-    views: ['modules/*/client/views/**/*.html'],
+    jsSite: [
+      'modules/*/client/site/*.js',
+      'modules/*/client/site/**/*.js'
+    ],
+    imgAdmin: [
+      'modules/*/admin/img/**/*.jpg',
+      'modules/*/admin/img/**/*.png',
+      'modules/*/admin/img/**/*.gif',
+      'modules/*/admin/img/**/*.svg'
+    ],
+    imgSite: [
+      'modules/*/site/img/**/*.jpg',
+      'modules/*/site/img/**/*.png',
+      'modules/*/site/img/**/*.gif',
+      'modules/*/site/img/**/*.svg'
+    ],
+    viewsAdmin: ['modules/*/client/admin/views/**/*.html'],
+    viewsSite: ['modules/*/client/site/views/**/*.html'],
     templates: ['build/templates.js']
   },
   server: {

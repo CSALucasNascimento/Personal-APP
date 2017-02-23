@@ -14,7 +14,7 @@ module.exports = {
   host: process.env.HOST || '0.0.0.0',
   // DOMAIN config should be set to the fully qualified application accessible
   // URL. For example: https://www.myapp.com (including port if required).
-  domain: process.env.DOMAIN,
+  domain: process.env.DOMAIN || 'DEFAULT',
   // Session Cookie settings
   sessionCookie: {
     // session expiration is set by default to 24 hours
@@ -40,15 +40,15 @@ module.exports = {
     p3p: 'ABCDEF',
     xssProtection: true
   },
-  logo: 'modules/core/client/img/brand/logo.png',
-  favicon: 'modules/core/client/img/brand/favicon.ico',
+  logo: 'modules/core/client/site/img/brand/logo.png',
+  favicon: 'modules/core/client/site/img/brand/favicon.ico',
   illegalUsernames: ['meanjs', 'administrator', 'password', 'admin', 'user',
     'unknown', 'anonymous', 'null', 'undefined', 'api'
   ],
   uploads: {
     profile: {
       image: {
-        dest: './modules/users/client/img/profile/uploads/',
+        dest: './modules/users/client/site/img/profile/uploads/',
         limits: {
           fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }
