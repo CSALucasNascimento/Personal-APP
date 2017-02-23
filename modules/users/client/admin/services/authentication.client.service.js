@@ -4,7 +4,7 @@
   // Authentication service for user variables
 
   angular
-    .module('users.services')
+    .module('users.admin.services')
     .factory('Authentication', Authentication);
 
   Authentication.$inject = ['$window'];

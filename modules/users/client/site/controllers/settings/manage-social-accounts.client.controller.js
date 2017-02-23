@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('users')
+    .module('users.site.controllers.settings')
     .controller('SocialAccountsController', SocialAccountsController);
 
   SocialAccountsController.$inject = ['$state', '$window', 'UsersService', 'Authentication', 'Notification'];

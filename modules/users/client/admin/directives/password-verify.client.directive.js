@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('users')
+    .module('users.admin.directives')
     .directive('passwordVerify', passwordVerify);
 
   function passwordVerify() {

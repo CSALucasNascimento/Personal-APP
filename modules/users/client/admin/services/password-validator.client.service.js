@@ -3,7 +3,7 @@
 
   // PasswordValidator service used for testing the password strength
   angular
-    .module('users.services')
+    .module('users.admin.services')
     .factory('PasswordValidator', PasswordValidator);
 
   PasswordValidator.$inject = ['$window'];

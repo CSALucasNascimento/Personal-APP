@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('users')
+    .module('users.site.controllers.settings')
     .controller('ChangeProfilePictureController', ChangeProfilePictureController);
 
   ChangeProfilePictureController.$inject = ['$timeout', 'Authentication', 'Upload', 'Notification'];

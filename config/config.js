@@ -151,6 +151,7 @@ var initGlobalConfigFiles = function (config, assets) {
   config.files = {
     server: {},
     client: {
+      app: {},
       adminApp: {},
       siteApp: {}
     }
@@ -172,7 +173,10 @@ var initGlobalConfigFiles = function (config, assets) {
   config.files.server.policies = getGlobbedPaths(assets.server.policies);
 
   // Setting Globbed js files
-  config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/').concat(getGlobbedPaths(assets.client.js, ['public/']));
+  config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/');
+
+  // Setting Globbed js files
+  config.files.client.app.js = getGlobbedPaths(assets.client.js, 'public/');
 
   // Setting AdminApp js files
   config.files.client.adminApp.js = getGlobbedPaths(assets.client.jsAdmin, 'public/');
