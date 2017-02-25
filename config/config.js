@@ -128,6 +128,7 @@ var initGlobalConfigFolders = function (config, assets) {
     server: {},
     client: {
       app: {},
+      commonApp: {},
       adminApp: {},
       siteApp: {}
     }
@@ -135,6 +136,9 @@ var initGlobalConfigFolders = function (config, assets) {
 
   // Setting admin client paths
   config.folders.client.app = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/app/'), process.cwd().replace(new RegExp(/\\/g), '/'));
+
+  // Setting admin client paths
+  config.folders.client.commonApp = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/common/'), process.cwd().replace(new RegExp(/\\/g), '/'));
 
   // Setting admin client paths
   config.folders.client.adminApp = getGlobbedPaths(path.join(process.cwd(), 'modules/*/client/admin/'), process.cwd().replace(new RegExp(/\\/g), '/'));
@@ -152,6 +156,7 @@ var initGlobalConfigFiles = function (config, assets) {
     server: {},
     client: {
       app: {},
+      commonApp: {},
       adminApp: {},
       siteApp: {}
     }
@@ -176,22 +181,28 @@ var initGlobalConfigFiles = function (config, assets) {
   config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/');
 
   // Setting Globbed js files
-  config.files.client.app.js = getGlobbedPaths(assets.client.js, 'public/');
+  config.files.client.app.js = getGlobbedPaths(assets.client.js);
+
+  // Setting Common js files
+  config.files.client.commonApp.js = getGlobbedPaths(assets.client.jsCommon);
 
   // Setting AdminApp js files
-  config.files.client.adminApp.js = getGlobbedPaths(assets.client.jsAdmin, 'public/');
+  config.files.client.adminApp.js = getGlobbedPaths(assets.client.jsAdmin);
 
   // Setting SiteApp js files
-  config.files.client.siteApp.js = getGlobbedPaths(assets.client.jsSite, 'public/');
+  config.files.client.siteApp.js = getGlobbedPaths(assets.client.jsSite);
 
   // Setting Globbed css files
   config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'public/');
 
+  // Setting App css files
+  config.files.client.commonApp.css = getGlobbedPaths(assets.client.cssCommon);
+
   // Setting AdminApp css files
-  config.files.client.adminApp.css = getGlobbedPaths(assets.client.cssAdmin, 'public/');
+  config.files.client.adminApp.css = getGlobbedPaths(assets.client.cssAdmin);
 
   // Setting Globbed css files
-  config.files.client.siteApp.css = getGlobbedPaths(assets.client.cssSite, 'public/');
+  config.files.client.siteApp.css = getGlobbedPaths(assets.client.cssSite);
 
   // Setting Globbed test files
   config.files.client.tests = getGlobbedPaths(assets.client.tests);

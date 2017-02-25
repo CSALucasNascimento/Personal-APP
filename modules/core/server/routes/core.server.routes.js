@@ -11,7 +11,7 @@ module.exports = function (app) {
   app.route('/:url(api|modules|lib)/*').get(core.renderNotFound);
 
   // Define application route
-  // app.route('/admin*').get(core.renderAdminIndex);
+  app.route('/admin*').get(core.renderAdminIndex);
 
   // Define application route
   app.route('/*').get(core.renderSiteIndex);

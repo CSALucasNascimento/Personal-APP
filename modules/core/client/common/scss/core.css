@@ -1,0 +1,23 @@
+/* Rules for sizing the icon. */
+.material-icons.md-12 {
+  font-size: 12px; }
+
+.material-icons.md-18 {
+  font-size: 18px;
+  line-height: 56px;
+  width: 44px; }
+
+.material-icons.md-24 {
+  font-size: 24px;
+  line-height: 56px;
+  width: 44px; }
+
+.material-icons.md-36 {
+  font-size: 36px;
+  line-height: 56px;
+  width: 44px; }
+
+.material-icons.md-48 {
+  font-size: 48px;
+  line-height: 56px;
+  width: 44px; }

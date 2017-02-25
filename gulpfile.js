@@ -74,21 +74,27 @@ gulp.task('watch', function () {
   gulp.watch(defaultAssets.server.views).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.server.allJS, ['eslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.js, ['eslint']).on('change', plugins.refresh.changed);
+  gulp.watch(defaultAssets.client.jsCommon, ['eslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.jsAdmin, ['eslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.jsSite, ['eslint']).on('change', plugins.refresh.changed);
+  gulp.watch(defaultAssets.client.cssCommon, ['csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.cssAdmin, ['csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.cssSite, ['csslint']).on('change', plugins.refresh.changed);
+  gulp.watch(defaultAssets.client.sassCommon, ['sass', 'csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.sassAdmin, ['sass', 'csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.sassSite, ['sass', 'csslint']).on('change', plugins.refresh.changed);
+  gulp.watch(defaultAssets.client.lessCommon, ['less', 'csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.lessAdmin, ['less', 'csslint']).on('change', plugins.refresh.changed);
   gulp.watch(defaultAssets.client.lessSite, ['less', 'csslint']).on('change', plugins.refresh.changed);
 
   if (process.env.NODE_ENV === 'production') {
     gulp.watch(defaultAssets.server.gulpConfig, ['templatecache', 'eslint']);
+    gulp.watch(defaultAssets.client.viewsCommon, ['templatecache']).on('change', plugins.refresh.changed);
     gulp.watch(defaultAssets.client.viewsAdmin, ['templatecache']).on('change', plugins.refresh.changed);
     gulp.watch(defaultAssets.client.viewsSite, ['templatecache']).on('change', plugins.refresh.changed);
   } else {
     gulp.watch(defaultAssets.server.gulpConfig, ['eslint']);
+    gulp.watch(defaultAssets.client.viewsCommon, ['templatecache']).on('change', plugins.refresh.changed);
     gulp.watch(defaultAssets.client.viewsAdmin).on('change', plugins.refresh.changed);
     gulp.watch(defaultAssets.client.viewsSite).on('change', plugins.refresh.changed);
   }
@@ -122,6 +128,7 @@ gulp.task('watch:server:run-tests', function () {
 // CSS linting task
 gulp.task('csslint', function () {
   var assets = _.union(
+    defaultAssets.client.cssCommon,
     defaultAssets.client.cssAdmin,
     defaultAssets.client.cssSite
   );
@@ -139,6 +146,7 @@ gulp.task('eslint', function () {
     defaultAssets.server.gulpConfig,
     defaultAssets.server.allJS,
     defaultAssets.client.js,
+    defaultAssets.client.jsCommon,
     defaultAssets.client.jsAdmin,
     defaultAssets.client.jsSite,
     testAssets.tests.server,
@@ -155,6 +163,7 @@ gulp.task('eslint', function () {
 gulp.task('uglify', function () {
   var assets = _.union(
     defaultAssets.client.js,
+    defaultAssets.client.jsCommon,
     defaultAssets.client.jsAdmin,
     defaultAssets.client.jsSite,
     defaultAssets.client.templates
@@ -174,6 +183,7 @@ gulp.task('uglify', function () {
 // CSS minifying task
 gulp.task('cssmin', function () {
   var assets = _.union(
+    defaultAssets.client.cssCommon,
     defaultAssets.client.cssAdmin,
     defaultAssets.client.cssSite
   );
@@ -188,6 +198,7 @@ gulp.task('cssmin', function () {
 // Sass task
 gulp.task('sass', function () {
   var assets = _.union(
+    defaultAssets.client.sassCommon,
     defaultAssets.client.sassAdmin,
     defaultAssets.client.sassSite
   );
@@ -201,6 +212,7 @@ gulp.task('sass', function () {
 // Less task
 gulp.task('less', function () {
   var assets = _.union(
+    defaultAssets.client.lessCommon,
     defaultAssets.client.lessAdmin,
     defaultAssets.client.lessSite
   );
@@ -214,6 +226,7 @@ gulp.task('less', function () {
 // Imagemin task
 gulp.task('imagemin', function () {
   var assets = _.union(
+    defaultAssets.client.imgCommon,
     defaultAssets.client.imgAdmin,
     defaultAssets.client.imgSite
   );
@@ -372,19 +385,25 @@ gulp.task('karma:coverage', function(done) {
   new KarmaServer({
     configFile: __dirname + '/karma.conf.js',
     preprocessors: {
+      'modules/*/client/views/common/**/*.html': ['ng-html2js'],
       'modules/*/client/views/admin/**/*.html': ['ng-html2js'],
       'modules/*/client/views/site/**/*.html': ['ng-html2js'],
       'modules/core/client/app/config.js': ['coverage'],
       'modules/core/client/app/init.js': ['coverage'],
       'modules/*/client/*.js': ['coverage'],
+      'modules/*/client/common/*.js': ['coverage'],
       'modules/*/client/admin/*.js': ['coverage'],
       'modules/*/client/site/*.js': ['coverage'],
+      'modules/*/client/config/common/*.js': ['coverage'],
       'modules/*/client/config/admin/*.js': ['coverage'],
       'modules/*/client/config/site/*.js': ['coverage'],
+      'modules/*/client/controllers/common/*.js': ['coverage'],
       'modules/*/client/controllers/admin/*.js': ['coverage'],
       'modules/*/client/controllers/site/*.js': ['coverage'],
+      'modules/*/client/directives/common/*.js': ['coverage'],
       'modules/*/client/directives/admin/*.js': ['coverage'],
       'modules/*/client/directives/site/*.js': ['coverage'],
+      'modules/*/client/services/common/*.js': ['coverage'],
       'modules/*/client/services/admin/*.js': ['coverage'],
       'modules/*/client/services/site/*.js': ['coverage']
     },

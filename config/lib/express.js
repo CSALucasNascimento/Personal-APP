@@ -37,9 +37,11 @@ module.exports.initLocalVariables = function (app) {
   app.locals.twitterUsername = config.twitter.username;
   app.locals.jsFiles = config.files.client.js;
   app.locals.jsAppFiles = config.files.client.app.js;
+  app.locals.jsCommonFiles = config.files.client.commonApp.js;
   app.locals.jsAdminFiles = config.files.client.adminApp.js;
   app.locals.jsSiteFiles = config.files.client.siteApp.js;
   app.locals.cssFiles = config.files.client.css;
+  app.locals.cssCommonFiles = config.files.client.commonApp.css;
   app.locals.cssAdminFiles = config.files.client.adminApp.css;
   app.locals.cssSiteFiles = config.files.client.siteApp.css;
   app.locals.livereload = config.livereload;
@@ -168,6 +170,10 @@ module.exports.initModulesClientRoutes = function (app) {
 
   // Globbing static routing
   config.folders.client.app.forEach(function (staticPath) {
+    app.use(staticPath, express.static(path.resolve('./' + staticPath)));
+  });
+  // Globbing static routing
+  config.folders.client.commonApp.forEach(function (staticPath) {
     app.use(staticPath, express.static(path.resolve('./' + staticPath)));
   });
   // Globbing static routing
