@@ -29,24 +29,23 @@
     $stateProvider
       .state('admin', {
         url: '/admin',
-        abstract: true,
         views: {
-          'main': {
+          'main@': {
             templateUrl: 'modules/core/client/admin/views/vertical-navigation.html',
             controller: 'MainController',
             controllerAs: 'vm'
           },
-          'toolbar': {
+          'toolbar@admin': {
             templateUrl: 'modules/core/client/admin/views/toolbar/toolbar.html',
             controller: 'ToolbarController',
             controllerAs: 'vm'
           },
-          'navigation': {
+          'navigation@admin': {
             templateUrl: 'modules/core/client/admin/views/navigation/navigation.html',
             controller: 'NavigationController',
             controllerAs: 'vm'
           },
-          'quickPanel': {
+          'quickPanel@admin': {
             templateUrl: 'modules/core/client/admin/views/quick-panel/quick-panel.html',
             controller: 'QuickPanelController',
             controllerAs: 'vm'
