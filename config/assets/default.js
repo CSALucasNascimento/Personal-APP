@@ -35,7 +35,9 @@ module.exports = {
         'public/lib/mdPickers/dist/mdPickers.js',
         '//maps.googleapis.com/maps/api/js?key=AIzaSyA3egQrxpITfJ27ZdOxxNvyZcMkGh9XjTQ',
         'public/lib/perfect-scrollbar/js/perfect-scrollbar.js',
-        'public/lib/mobile-detect/mobile-detect.js'
+        'public/lib/mobile-detect/mobile-detect.js',
+        'public/lib/angular-cookies/angular-cookies.js',
+        'public/lib/d3/d3.js'
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
@@ -53,23 +55,28 @@ module.exports = {
       'modules/*/client/site/{css,less,scss}/**/*.css'
     ],
     lessCommon: [
-      'modules/*/client/common/less/*.less'
+      'modules/*/client/common/less/*.less',
+      'modules/*/client/common/less/**/*.less'
     ],
     lessAdmin: [
-      'modules/*/client/admin/less/*.less'
+      'modules/*/client/admin/less/*.less',
+      'modules/*/client/admin/less/**/*.less'
     ],
     lessSite: [
-      'modules/*/client/site/less/*.less'
+      'modules/*/client/site/less/*.less',
+      'modules/*/client/site/less/**/*.less'
     ],
     sassCommon: [
       'modules/*/client/common/scss/*.scss',
       'modules/*/client/common/scss/**/*.scss'
     ],
     sassAdmin: [
-      'modules/*/client/admin/scss/*.scss'
+      'modules/*/client/admin/scss/*.scss',
+      'modules/*/client/admin/scss/**/*.scss'
     ],
     sassSite: [
-      'modules/*/client/site/scss/*.scss'
+      'modules/*/client/site/scss/*.scss',
+      'modules/*/client/site/scss/**/*.scss'
     ],
     js: [
       'modules/core/client/app/*.js'

@@ -29,9 +29,29 @@
     $stateProvider
       .state('admin', {
         url: '/admin',
-        templateUrl: '/modules/core/client/admin/views/home.client.view.html',
-        controller: 'HomeController',
-        controllerAs: 'vm'
+        abstract: true,
+        views: {
+          'main': {
+            templateUrl: 'modules/core/client/admin/views/vertical-navigation.html',
+            controller: 'MainController',
+            controllerAs: 'vm'
+          },
+          'toolbar': {
+            templateUrl: 'modules/core/client/admin/views/toolbar/toolbar.html',
+            controller: 'ToolbarController',
+            controllerAs: 'vm'
+          },
+          'navigation': {
+            templateUrl: 'modules/core/client/admin/views/navigation/navigation.html',
+            controller: 'NavigationController',
+            controllerAs: 'vm'
+          },
+          'quickPanel': {
+            templateUrl: 'modules/core/client/admin/views/quick-panel/quick-panel.html',
+            controller: 'QuickPanelController',
+            controllerAs: 'vm'
+          }
+        }
       })
       .state('not-found', {
         url: '/not-found',
