@@ -9,12 +9,7 @@
     .directive('msNavigation', msNavigationDirective)
     .controller('MsNavigationNodeController', MsNavigationNodeController)
     .directive('msNavigationNode', msNavigationNodeDirective)
-    .directive('msNavigationItem', msNavigationItemDirective)
-    // Horizontal
-    .directive('msNavigationHorizontal', msNavigationHorizontalDirective)
-    .controller('MsNavigationHorizontalNodeController', MsNavigationHorizontalNodeController)
-    .directive('msNavigationHorizontalNode', msNavigationHorizontalNodeDirective)
-    .directive('msNavigationHorizontalItem', msNavigationHorizontalItemDirective);
+    .directive('msNavigationItem', msNavigationItemDirective);
 
   /** @ngInject */
   function msNavigationServiceProvider() {
@@ -30,8 +25,6 @@
     service.saveItem = saveItem;
     service.deleteItem = deleteItem;
     service.sortByWeight = sortByWeight;
-
-    // // // // //
 
     /**
      * Create or update the navigation item
@@ -70,7 +63,7 @@
 
         // Add proper ui-sref
         updateItem.uisref = _getUiSref(updateItem);
-      } else { // Create
+      } else {
         // Create an empty children array in the item
         item.children = [];
 
@@ -279,8 +272,6 @@
 
       return service;
 
-      // // // // //
-
       /**
        * Clear the entire navigation
        */
@@ -445,8 +436,6 @@
     // Methods
     vm.toggleHorizontalMobileMenu = toggleHorizontalMobileMenu;
 
-    // // // // //
-
     init();
 
     /**
@@ -461,7 +450,7 @@
      * Toggle horizontal mobile menu
      */
     function toggleHorizontalMobileMenu() {
-      angular.element('body').toggleClass('ms-navigation-horizontal-mobile-menu-active');
+      angular.element(document).find('body').toggleClass('ms-navigation-horizontal-mobile-menu-active');
     }
   }
 
@@ -480,9 +469,9 @@
         tElement.addClass('ms-navigation');
 
         return function postLink(scope, iElement) {
-          var bodyEl = angular.element('body'),
-            foldExpanderEl = angular.element('<div id="ms-navigation-fold-expander"></div>'),
-            foldCollapserEl = angular.element('<div id="ms-navigation-fold-collapser"></div>'),
+          var bodyEl = angular.element(document).find('body'),
+            foldExpanderEl = angular.element(document).find('<div id="ms-navigation-fold-expander"></div>'),
+            foldCollapserEl = angular.element(document).find('<div id="ms-navigation-fold-collapser"></div>'),
             sidenav = $mdSidenav('navigation');
 
           // Store the navigation in the service for public access
@@ -722,8 +711,6 @@
     vm.expand = expand;
     vm.getClass = getClass;
     vm.isHidden = isHidden;
-
-    // // // // //
 
     init();
 
@@ -1020,189 +1007,6 @@
           // If the item is collapsable...
           if (MsNavigationNodeCtrl.collapsable) {
             iElement.on('click', MsNavigationNodeCtrl.toggleCollapsed);
-          }
-
-          // Cleanup
-          scope.$on('$destroy', function () {
-            iElement.off('click');
-          });
-        };
-      }
-    };
-  }
-
-  /** @ngInject */
-  function msNavigationHorizontalDirective(msNavigationService) {
-    return {
-      restrict: 'E',
-      scope: {
-        root: '@'
-      },
-      controller: 'MsNavigationController as vm',
-      templateUrl: 'modules/core/client/common/directives/ms-navigation/templates/horizontal.html',
-      transclude: true,
-      compile: function (tElement) {
-        tElement.addClass('ms-navigation-horizontal');
-
-        return function postLink(scope) {
-          // Store the navigation in the service for public access
-          msNavigationService.setNavigationScope(scope);
-        };
-      }
-    };
-  }
-
-  /** @ngInject */
-  function MsNavigationHorizontalNodeController($scope, $element, $rootScope, $state, msNavigationService) {
-    var vm = this;
-
-    // Data
-    vm.element = $element;
-    vm.node = $scope.node;
-    vm.hasChildren = undefined;
-    vm.group = undefined;
-
-    // Methods
-    vm.getClass = getClass;
-
-    // // // // //
-
-    init();
-
-    /**
-     * Initialize
-     */
-    function init() {
-      // Setup the initial values
-
-      // Is active
-      vm.isActive = false;
-
-      // Has children?
-      vm.hasChildren = vm.node.children.length > 0;
-
-      // Is group?
-      vm.group = !!(angular.isDefined(vm.node.group) && vm.node.group === true);
-
-      // Mark all parents as active if we have a matching state
-      // or the current state is a child of the node's state
-      if (vm.node.state === $state.current.name || $state.includes(vm.node.state)) {
-        // If state params are defined, make sure they are
-        // equal, otherwise do not set the active item
-        if (angular.isDefined(vm.node.stateParams) && angular.isDefined($state.params) && !angular.equals(vm.node.stateParams, $state.params)) {
-          return;
-        }
-
-        $scope.$emit('msNavigation::stateMatched');
-
-        // Also store the current active menu item
-        msNavigationService.setActiveItem(vm.node, $scope);
-      }
-
-      $scope.$on('msNavigation::stateMatched', function () {
-        // Mark as active if has children
-        if (vm.hasChildren) {
-          $scope.$evalAsync(function () {
-            vm.isActive = true;
-          });
-        }
-      });
-
-      // Listen for clearActive event
-      $scope.$on('msNavigation::clearActive', function () {
-        if (!vm.hasChildren) {
-          return;
-        }
-
-        var activePathParts = [];
-
-        var activeItem = msNavigationService.getActiveItem();
-        if (activeItem) {
-          activePathParts = activeItem.node._path.split('.');
-        }
-
-        // Test for active path
-        if (activePathParts.indexOf(vm.node._id) > -1) {
-          $scope.$evalAsync(function () {
-            vm.isActive = true;
-          });
-        } else {
-          $scope.$evalAsync(function () {
-            vm.isActive = false;
-          });
-        }
-
-      });
-
-      // Listen for $stateChangeSuccess event
-      $scope.$on('$stateChangeSuccess', function () {
-        if (vm.node.state === $state.current.name || $state.includes(vm.node.state)) {
-          // If state params are defined, make sure they are
-          // equal, otherwise do not set the active item
-          if (angular.isDefined(vm.node.stateParams) && angular.isDefined($state.params) && !angular.equals(vm.node.stateParams, $state.params)) {
-            return;
-          }
-
-          // Update active item on state change
-          msNavigationService.setActiveItem(vm.node, $scope);
-
-          // Clear all active states except the one we're using
-          $rootScope.$broadcast('msNavigation::clearActive');
-        }
-      });
-    }
-
-    /**
-     * Return the class
-     *
-     * @returns {*}
-     */
-    function getClass() {
-      return vm.node.class;
-    }
-  }
-
-  /** @ngInject */
-  function msNavigationHorizontalNodeDirective() {
-    return {
-      restrict: 'A',
-      bindToController: {
-        node: '=msNavigationHorizontalNode'
-      },
-      controller: 'MsNavigationHorizontalNodeController as vm',
-      compile: function (tElement) {
-        tElement.addClass('ms-navigation-horizontal-node');
-
-        return function postLink(scope, iElement, iAttrs, MsNavigationHorizontalNodeCtrl) {
-          // Add custom classes
-          iElement.addClass(MsNavigationHorizontalNodeCtrl.getClass());
-
-          // Add group class if it's a group
-          if (MsNavigationHorizontalNodeCtrl.group) {
-            iElement.addClass('group');
-          }
-        };
-      }
-    };
-  }
-
-  /** @ngInject */
-  function msNavigationHorizontalItemDirective($mdMedia) {
-    return {
-      restrict: 'A',
-      require: '^msNavigationHorizontalNode',
-      compile: function (tElement) {
-        tElement.addClass('ms-navigation-horizontal-item');
-
-        return function postLink(scope, iElement, iAttrs, MsNavigationHorizontalNodeCtrl) {
-          iElement.on('click', onClick);
-
-          function onClick() {
-            if (!MsNavigationHorizontalNodeCtrl.hasChildren || $mdMedia('gt-md')) {
-              return;
-            }
-
-            iElement.toggleClass('expanded');
           }
 
           // Cleanup

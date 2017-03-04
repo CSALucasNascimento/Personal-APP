@@ -25,3 +25,34 @@
 
 @import 'partials/helpers';
 @import 'partials/print';
+
+/**
+* Admin
+*/
+@import 'modules/core/client/admin/scss/navigation/navigation';
+@import 'modules/core/client/admin/scss/toolbar/toolbar';
+@import 'modules/core/client/admin/scss/quick-panel/quick-panel';
+
+/**
+* Directives
+*/
+@import 'modules/core/client/common/directives/ms-card/ms-card';
+@import 'modules/core/client/common/directives/ms-form-wizard/ms-form-wizard';
+@import 'modules/core/client/common/directives/ms-info-bar/ms-info-bar';
+@import 'modules/core/client/common/directives/ms-masonry/ms-masonry';
+@import 'modules/core/client/common/directives/ms-material-color-picker/ms-material-color-picker';
+@import 'modules/core/client/common/directives/ms-nav/ms-nav';
+@import 'modules/core/client/common/directives/ms-navigation/ms-navigation';
+@import 'modules/core/client/common/directives/ms-responsive-table/ms-responsive-table';
+@import 'modules/core/client/common/directives/ms-scroll/ms-scroll';
+@import 'modules/core/client/common/directives/ms-search-bar/ms-search-bar';
+@import 'modules/core/client/common/directives/ms-shortcuts/ms-shortcuts';
+@import 'modules/core/client/common/directives/ms-splash-screen/ms-splash-screen';
+@import 'modules/core/client/common/directives/ms-stepper/ms-stepper';
+@import 'modules/core/client/common/directives/ms-timeline/ms-timeline';
+@import 'modules/core/client/common/directives/ms-widget/ms-widget';
+
+/**
+* Theme
+*/
+@import 'modules/core/client/admin/scss/theme-options';

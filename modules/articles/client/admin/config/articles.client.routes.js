@@ -10,17 +10,23 @@
   function routeConfig($stateProvider) {
     $stateProvider
       .state('admin.articles', {
-        abstract: true,
         url: '/articles',
-        template: '<ui-view/>'
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/articles/client/admin/views/list-articles.client.view.html'
+            // controller: 'ArticlesAdminListController',
+            // controllerAs: 'vm'
+          }
+        }
       })
       .state('admin.articles.list', {
-        url: '',
-        templateUrl: '/modules/articles/client/views/admin/list-articles.client.view.html',
-        controller: 'ArticlesAdminListController',
-        controllerAs: 'vm',
-        data: {
-          roles: ['admin']
+        url: 'articles/list',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/articles/client/views/admin/list-articles.client.view.html',
+            controller: 'ArticlesAdminListController',
+            controllerAs: 'vm'
+          }
         }
       })
       .state('admin.articles.create', {

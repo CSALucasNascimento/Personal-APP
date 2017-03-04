@@ -49,6 +49,19 @@
             templateUrl: 'modules/core/client/admin/views/quick-panel/quick-panel.html',
             controller: 'QuickPanelController',
             controllerAs: 'vm'
+          },
+          'content@admin': {
+            templateUrl: 'modules/core/client/admin/views/dashboard-analytics.html',
+            controller: 'QuickPanelController',
+            controllerAs: 'vm'
+          }
+        }
+      })
+      .state('admin.settings', {
+        url: '/settings',
+        views: {
+          'content@admin': {
+            template: '<div>Admin Settings Menu</div>'
           }
         }
       })

@@ -4,40 +4,28 @@
   // Configuring the Articles Admin module
   angular
     .module('articles.admin.config')
-    .run(menuConfig);
+    .config(menuConfig);
 
-  menuConfig.$inject = ['menuService'];
+  menuConfig.$inject = ['msNavigationServiceProvider'];
 
-  function menuConfig(menuService) {
-    menuService.addMenu('account', {
-      roles: ['user']
+  function menuConfig(msNavigationServiceProvider) {
+
+    msNavigationServiceProvider.saveItem('admin.articles', {
+      title: 'Articles',
+      icon: 'icon-tile-four',
+      weight: 1
     });
 
-    menuService.addMenuItem('account', {
-      title: '',
-      state: 'settings',
-      type: 'dropdown',
-      roles: ['user']
+    msNavigationServiceProvider.saveItem('admin.articles.list', {
+      title: 'Articles List',
+      state: 'admin.articles.list',
+      weight: 1
     });
 
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile',
-      state: 'settings.profile'
-    });
-
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile Picture',
-      state: 'settings.picture'
-    });
-
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Change Password',
-      state: 'settings.password'
-    });
-
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Manage Social Accounts',
-      state: 'settings.accounts'
+    msNavigationServiceProvider.saveItem('admin.articles.create', {
+      title: 'Create New Article',
+      state: 'admin.articles.create',
+      weight: 2
     });
   }
 }());

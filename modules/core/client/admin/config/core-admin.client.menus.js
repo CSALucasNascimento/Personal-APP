@@ -3,40 +3,56 @@
 
   angular
     .module('core.admin.config')
-    .run(menuConfig);
+    .config(menuConfig);
 
-  menuConfig.$inject = ['menuService'];
+  menuConfig.$inject = ['msNavigationServiceProvider'];
 
-  function menuConfig(menuService) {
-    menuService.addMenu('account', {
-      roles: ['admin']
+  function menuConfig(msNavigationServiceProvider) {
+
+    msNavigationServiceProvider.saveItem('admin', {
+      title: 'Settings',
+      group: true,
+      weight: 1
     });
 
-    menuService.addMenuItem('account', {
-      title: '',
-      state: 'settings',
-      type: 'dropdown',
-      roles: ['admin']
+    msNavigationServiceProvider.saveItem('admin.settings', {
+      title: 'Settings',
+      icon: 'icon-tile-four',
+      state: 'admin.settings',
+      weight: 1
     });
 
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile',
-      state: 'settings.profile'
-    });
+    /*
+     menuService.addMenu('account', {
+     roles: ['admin']
+     });
 
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile Picture',
-      state: 'settings.picture'
-    });
+     menuService.addMenuItem('account', {
+     title: '',
+     state: 'settings',
+     type: 'dropdown',
+     roles: ['admin']
+     });
 
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Change Password',
-      state: 'settings.password'
-    });
+     menuService.addSubMenuItem('account', 'settings', {
+     title: 'Edit Profile',
+     state: 'settings.profile'
+     });
 
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Manage Social Accounts',
-      state: 'settings.accounts'
-    });
+     menuService.addSubMenuItem('account', 'settings', {
+     title: 'Edit Profile Picture',
+     state: 'settings.picture'
+     });
+
+     menuService.addSubMenuItem('account', 'settings', {
+     title: 'Change Password',
+     state: 'settings.password'
+     });
+
+     menuService.addSubMenuItem('account', 'settings', {
+     title: 'Manage Social Accounts',
+     state: 'settings.accounts'
+     });
+     */
   }
 }());

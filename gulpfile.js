@@ -5,6 +5,7 @@
  */
 var _ = require('lodash'),
   fs = require('fs'),
+  conf = require('./config/errorHandler'),
   defaultAssets = require('./config/assets/default'),
   testAssets = require('./config/assets/test'),
   testConfig = require('./config/env/test'),
@@ -205,7 +206,7 @@ gulp.task('sass', function () {
 
   return gulp.src(assets)
     .pipe(plugins.sass())
-    .pipe(plugins.autoprefixer())
+    .pipe(plugins.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe(gulp.dest('./modules/'));
 });
 

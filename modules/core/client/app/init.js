@@ -8,8 +8,7 @@
   // Setting HTML5 Location Mode
   angular
     .module(app.applicationModuleName)
-    .config(bootstrapConfig)
-    .config(themMaterial);
+    .config(bootstrapConfig);
 
   bootstrapConfig.$inject = ['$compileProvider', '$locationProvider', '$httpProvider', '$logProvider'];
 
@@ -25,14 +24,6 @@
     // @link https://docs.angularjs.org/guide/production
     $compileProvider.debugInfoEnabled(app.applicationEnvironment !== 'production');
     $logProvider.debugEnabled(app.applicationEnvironment !== 'production');
-  }
-
-  themMaterial.$inject = ['$mdThemingProvider'];
-
-  function themMaterial($mdThemingProvider) {
-    $mdThemingProvider.theme('default')
-      .primaryPalette('deep-orange')
-      .accentPalette('grey');
   }
 
   // Then define the init function for starting up the application

@@ -37,7 +37,10 @@ module.exports = {
         'public/lib/perfect-scrollbar/js/perfect-scrollbar.js',
         'public/lib/mobile-detect/mobile-detect.js',
         'public/lib/angular-cookies/angular-cookies.js',
-        'public/lib/d3/d3.js'
+        'public/lib/d3/d3.js',
+        'public/lib/jquery/dist/jquery.js',
+        'public/lib/jquery-ui/jquery-ui.js',
+        'public/lib/jqueryui-touch-punch/jquery.ui.touch-punch.js'
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
@@ -71,8 +74,7 @@ module.exports = {
       'modules/*/client/common/scss/**/*.scss'
     ],
     sassAdmin: [
-      'modules/*/client/admin/scss/*.scss',
-      'modules/*/client/admin/scss/**/*.scss'
+      'modules/*/client/admin/scss/*.scss'
     ],
     sassSite: [
       'modules/*/client/site/scss/*.scss',

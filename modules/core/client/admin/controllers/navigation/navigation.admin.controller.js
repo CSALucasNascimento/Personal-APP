@@ -10,7 +10,7 @@
     var vm = this;
 
     // Data
-    vm.bodyEl = angular.element('body');
+    vm.bodyEl = angular.element(document).find('body');
     vm.folded = false;
     vm.msScrollOptions = {
       suppressScrollX: true
