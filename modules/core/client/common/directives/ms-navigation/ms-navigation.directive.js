@@ -450,7 +450,7 @@
      * Toggle horizontal mobile menu
      */
     function toggleHorizontalMobileMenu() {
-      angular.element(document).find('body').toggleClass('ms-navigation-horizontal-mobile-menu-active');
+      angular.element('body').toggleClass('ms-navigation-horizontal-mobile-menu-active');
     }
   }
 
@@ -469,9 +469,9 @@
         tElement.addClass('ms-navigation');
 
         return function postLink(scope, iElement) {
-          var bodyEl = angular.element(document).find('body'),
-            foldExpanderEl = angular.element(document).find('<div id="ms-navigation-fold-expander"></div>'),
-            foldCollapserEl = angular.element(document).find('<div id="ms-navigation-fold-collapser"></div>'),
+          var bodyEl = angular.element('body'),
+            foldExpanderEl = angular.element('<div id="ms-navigation-fold-expander"></div>'),
+            foldCollapserEl = angular.element('<div id="ms-navigation-fold-collapser"></div>'),
             sidenav = $mdSidenav('navigation');
 
           // Store the navigation in the service for public access

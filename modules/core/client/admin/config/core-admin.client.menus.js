@@ -10,13 +10,13 @@
   function menuConfig(msNavigationServiceProvider) {
 
     msNavigationServiceProvider.saveItem('admin', {
-      title: 'Settings',
+      title: 'Dashboard',
       group: true,
       weight: 1
     });
 
     msNavigationServiceProvider.saveItem('admin.settings', {
-      title: 'Settings',
+      title: 'Dashboard',
       icon: 'icon-tile-four',
       state: 'admin.settings',
       weight: 1

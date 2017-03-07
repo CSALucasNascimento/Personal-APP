@@ -19,6 +19,9 @@ module.exports = {
       ],
       js: [
         // bower:js
+        'public/lib/jquery/dist/jquery.js',
+        'public/lib/jquery-ui/jquery-ui.js',
+        'public/lib/jqueryui-touch-punch/jquery.ui.touch-punch.js',
         'public/lib/angular/angular.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-aria/angular-aria.js',
@@ -37,10 +40,7 @@ module.exports = {
         'public/lib/perfect-scrollbar/js/perfect-scrollbar.js',
         'public/lib/mobile-detect/mobile-detect.js',
         'public/lib/angular-cookies/angular-cookies.js',
-        'public/lib/d3/d3.js',
-        'public/lib/jquery/dist/jquery.js',
-        'public/lib/jquery-ui/jquery-ui.js',
-        'public/lib/jqueryui-touch-punch/jquery.ui.touch-punch.js'
+        'public/lib/d3/d3.js'
         // endbower
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']

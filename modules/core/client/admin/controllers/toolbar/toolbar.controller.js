@@ -14,7 +14,7 @@
       search: ''
     };
 
-    vm.bodyEl = angular.element(document).find('body');
+    vm.bodyEl = angular.element('body');
     vm.userStatusOptions = [
       {
         'title': 'Online',
@@ -83,6 +83,7 @@
       vm.userStatus = vm.userStatusOptions[0];
 
       // Get the selected language directly from angular-translate module setting
+      vm.selectedLanguage = vm.languages.en;
     }
 
 

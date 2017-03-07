@@ -3,6 +3,9 @@
 
   angular
     .module('articles.admin.controllers')
+    .config(['$mdIconProvider', function($mdIconProvider) {
+      $mdIconProvider.icon('md-close', 'modules/core/client/common/assets/angular-material-assets/img/icons/ic_close_24px.svg', 24);
+    }])
     .controller('ArticlesAdminController', ArticlesAdminController);
 
   ArticlesAdminController.$inject = ['$scope', '$state', '$window', 'articleResolve', 'Authentication', 'Notification'];
@@ -11,6 +14,7 @@
     var vm = this;
 
     vm.article = article;
+    vm.article.tags = [];
     vm.authentication = Authentication;
     vm.form = {};
     vm.remove = remove;

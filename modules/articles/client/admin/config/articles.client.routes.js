@@ -13,17 +13,17 @@
         url: '/articles',
         views: {
           'content@admin': {
-            templateUrl: '/modules/articles/client/admin/views/list-articles.client.view.html'
+            templateUrl: 'modules/articles/client/admin/views/list-articles.client.view.html'
             // controller: 'ArticlesAdminListController',
             // controllerAs: 'vm'
           }
         }
       })
       .state('admin.articles.list', {
-        url: 'articles/list',
+        url: '/list',
         views: {
           'content@admin': {
-            templateUrl: '/modules/articles/client/views/admin/list-articles.client.view.html',
+            templateUrl: 'modules/articles/client/admin/views/list-articles.client.view.html',
             controller: 'ArticlesAdminListController',
             controllerAs: 'vm'
           }
@@ -31,14 +31,18 @@
       })
       .state('admin.articles.create', {
         url: '/create',
-        templateUrl: '/modules/articles/client/views/admin/form-article.client.view.html',
-        controller: 'ArticlesAdminController',
-        controllerAs: 'vm',
-        data: {
-          roles: ['admin']
-        },
-        resolve: {
-          articleResolve: newArticle
+        views: {
+          'content@admin': {
+            templateUrl: 'modules/articles/client/admin/views/form-article.client.view.html',
+            controller: 'ArticlesAdminController',
+            controllerAs: 'vm',
+            data: {
+              roles: ['admin']
+            },
+            resolve: {
+              articleResolve: newArticle
+            }
+          }
         }
       })
       .state('admin.articles.edit', {

@@ -51,8 +51,8 @@
             controllerAs: 'vm'
           },
           'content@admin': {
-            templateUrl: 'modules/core/client/admin/views/dashboard-analytics.html',
-            controller: 'QuickPanelController',
+            templateUrl: 'modules/core/client/admin/views/dashboard-project.html',
+            controller: 'DashboardProjectController',
             controllerAs: 'vm'
           }
         }

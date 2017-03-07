@@ -20,10 +20,23 @@ var ArticleSchema = new Schema({
     trim: true,
     required: 'Title cannot be blank'
   },
+  tags: {
+    type: [{}],
+    trim: true
+  },
   content: {
     type: String,
     default: '',
     trim: true
+  },
+  featuredImage: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  publish: {
+    type: Boolean,
+    default: false
   },
   user: {
     type: Schema.ObjectId,

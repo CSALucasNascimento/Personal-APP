@@ -10,6 +10,14 @@
 
   function routeConfig($stateProvider) {
     $stateProvider
+      .state('admin.profile', {
+        url: '/profile',
+        views: {
+          'content@admin': {
+            templateUrl: '',
+          }
+        }
+      }) 
       .state('admin.users', {
         url: '/users',
         templateUrl: '/modules/users/client/views/admin/list-users.client.view.html',

@@ -12,7 +12,7 @@
 
     msNavigationServiceProvider.saveItem('admin.articles', {
       title: 'Articles',
-      icon: 'icon-tile-four',
+      icon: 'icon-file-document',
       weight: 1
     });
 

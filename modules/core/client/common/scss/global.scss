@@ -27,11 +27,18 @@
 @import 'partials/print';
 
 /**
-* Admin
+* Admin Core
 */
 @import 'modules/core/client/admin/scss/navigation/navigation';
 @import 'modules/core/client/admin/scss/toolbar/toolbar';
 @import 'modules/core/client/admin/scss/quick-panel/quick-panel';
+@import 'modules/core/client/admin/scss/dashboard-project';
+
+/**
+* Articles
+*/
+@import 'modules/articles/client/admin/scss/forms';
+@import 'modules/articles/client/admin/scss/style';
 
 /**
 * Directives
