@@ -1,0 +1,156 @@
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+
+  <!-- HEADER -->
+  <div class="header md-accent-bg" layout="row" layout-align="space-between">
+    <div layout="column" layout-align="space-between">
+      <div class="breadcrumb" layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Categories</span>
+      </div>
+
+      <div class="title">{{vm.category._id ? 'Edit Category' : 'New Category'}}</div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" layout="column">
+
+    <div class="md-title mt-32">Basic form with validation</div>
+    <div class="pb-16">With this form example, Submit button will only be activated if all the required fields are
+      filled and if there is no error on the form.
+    </div>
+    <div layout="row">
+
+      <!-- BASIC FORM -->
+      <div class="form-wrapper md-whiteframe-1dp" flex="60">
+
+        <form name="basicCategoryForm" class="md-inline-form" ng-submit="vm.save(basicCategoryForm.$valid)" novalidate>
+
+          <div class="form-title">Create new category</div>
+
+          <div layout="column" layout-gt-sm="row">
+            <md-input-container flex>
+              <input type="text" name="title" ng-model="vm.category.title"
+                     placeholder="Title"
+                     md-maxlength="50"
+                     required>
+              <div ng-messages="basicCategoryForm.title.$error"
+                   role="alert" multiple>
+                <div ng-message="required">
+                  <span>Title field is required.</span>
+                </div>
+                <div ng-message="md-maxlength">
+                  <span>Title can't be longer than 50 characters.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div layout="column" layout-gt-xs="row">
+            <md-input-container flex>
+              <md-chips
+                ng-model="vm.article.tags"
+                readonly="false"
+                md-removable="true"
+                placeholder="Enter a tag"
+                delete-button-label="Remove Tag"
+                delete-hint="Press delete to remove tag"
+                secondary-placeholder="+Tag"></md-chips>
+            </md-input-container>
+          </div>
+
+          <md-input-container class="md-block">
+            <label>Content</label>
+            <textarea name="content" ng-model="vm.article.content" md-maxlength="500" max-rows="5"
+                      md-maxlength="50"
+                      required></textarea>
+            <div ng-messages="basicCategoryForm.content.$error"
+                 role="alert" multiple>
+              <div ng-message="required">
+                <span>Content field is required.</span>
+              </div>
+              <div ng-message="md-maxlength">
+                <span>Content can't be longer than 500 characters.</span>
+              </div>
+            </div>
+          </md-input-container>
+
+          <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                     ng-disabled="basicCategoryForm.$invalid || basicCategoryForm.$pristine">
+            {{vm.category._id ? 'Update' : 'Create'}}
+          </md-button>
+        </form>
+
+      </div>
+      <!-- / BASIC FORM -->
+
+      <!-- BASIC FORM DATA -->
+      <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="40">
+        <div class="form-title">Form ng-model data</div>
+        <div class="json-data-wrapper">
+          <pre>{{vm.basicCategoryForm | json}}</pre>
+        </div>
+      </div>
+      <!-- / BASIC FORM DATA -->
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
+<!-- 
+<section>
+  <div class="page-header">
+    <h1>{{vm.category._id ? 'Edit Category' : 'New Category'}}</h1>
+  </div>
+  <form name="vm.form.categoryForm" class="form-horizontal" ng-submit="vm.save(vm.form.categoryForm.$valid)" novalidate>
+    <div class="col-md-8">
+      <div class="form-group" show-errors>
+        <label class="control-label" for="name">Name</label>
+        <input name="name" type="text" ng-model="vm.category.name" id="name" class="form-control" placeholder="Name" required>
+        <div ng-messages="vm.form.categoryForm.name.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Category name is required.</p>
+        </div>
+      </div>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="slug">Slug</label>
+        <input name="slug" type="text" ng-model="vm.category.slug" id="slug" class="form-control" placeholder="slug" required>
+        <div ng-messages="vm.form.categoryForm.slug.$error" role="alert">
+          <p class="help-block error-text" ng-message="required">Category slug is required.</p>
+        </div>
+      </div>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="parentCategory">Parent Category</label>
+        <select name="parentCategory" class="form-control selectpicker" id="parentCategory"
+          ng-model="vm.category.parentCategory"
+          ng-options="parentCategories.name for parentCategories in vm.categoriesList track by parentCategories._id ">
+          <option value="">--- Select an item ---</option>
+        </select>
+      </div>
+      <div class="form-group" show-errors>
+        <label class="control-label" for="description">Description</label>
+        <textarea name="description" ng-model="vm.category.description" id="description" class="form-control" placeholder="Description" ></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-default">{{vm.category._id ? 'Update' : 'Create'}}</button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <label class="control-label">Category Image</label>
+        <div class="form-group text-center">
+          <img ng-src="{{vm.category.image}}" alt="{{vm.category.name}}" class="" ngf-drop>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Icon Image</label>
+        <div class="form-group text-center">
+          <img ng-src="{{vm.category.icon}}" alt="{{vm.category.name}}" class="" ngf-drop>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+-->

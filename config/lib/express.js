@@ -54,6 +54,11 @@ module.exports.initLocalVariables = function (app) {
   app.use(function (req, res, next) {
     res.locals.host = req.protocol + '://' + req.hostname;
     res.locals.url = req.protocol + '://' + req.headers.host + req.originalUrl;
+    res.locals.title = config.app.title;
+    res.locals.description = config.app.description;
+    res.locals.keywords = config.app.keywords;
+    res.locals.twitterUsername = config.twitter.username;
+    res.locals.logo = config.logo;
     next();
   });
 };

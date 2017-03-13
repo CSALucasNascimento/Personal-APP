@@ -14,10 +14,10 @@
         url: '/profile',
         views: {
           'content@admin': {
-            templateUrl: '',
+            templateUrl: ''
           }
         }
-      }) 
+      })
       .state('admin.users', {
         url: '/users',
         templateUrl: '/modules/users/client/views/admin/list-users.client.view.html',
