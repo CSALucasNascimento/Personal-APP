@@ -10,6 +10,11 @@
     .module(app.applicationModuleName)
     .config(bootstrapConfig);
 
+  // Setting HTML5 Location Mode
+  angular
+    .module(app.applicationModuleName)
+    .run(runBlock);
+
   bootstrapConfig.$inject = ['$compileProvider', '$locationProvider', '$httpProvider', '$logProvider'];
 
   function bootstrapConfig($compileProvider, $locationProvider, $httpProvider, $logProvider) {
@@ -50,4 +55,27 @@
     // Then init the app
     angular.bootstrap(document, [app.applicationModuleName]);
   }
+
+  runBlock.$inject = ['$rootScope', '$timeout'];
+
+  function runBlock($rootScope, $timeout) {
+    // Activate loading indicator
+    var stateChangeStartEvent = $rootScope.$on('$stateChangeStart', function () {
+      $rootScope.loadingProgress = true;
+    });
+
+    // De-activate loading indicator
+    var stateChangeSuccessEvent = $rootScope.$on('$stateChangeSuccess', function () {
+      $timeout(function () {
+        $rootScope.loadingProgress = false;
+      });
+    });
+
+    // Cleanup
+    $rootScope.$on('$destroy', function () {
+      stateChangeStartEvent();
+      stateChangeSuccessEvent();
+    });
+  }
+
 }(ApplicationConfiguration));
