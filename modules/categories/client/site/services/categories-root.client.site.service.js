@@ -3,12 +3,12 @@
   'use strict';
 
   angular
-    .module('categories.site.services')
-    .factory('CategoriesRootService', CategoriesRootService);
+    .module('amenities.site.services')
+    .factory('AmenitiesRootService', AmenitiesRootService);
 
-  CategoriesRootService.$inject = ['$resource'];
+  AmenitiesRootService.$inject = ['$resource'];
 
-  function CategoriesRootService($resource) {
-    return $resource('api/categories/root');
+  function AmenitiesRootService($resource) {
+    return $resource('api/amenities/root');
   }
 }());

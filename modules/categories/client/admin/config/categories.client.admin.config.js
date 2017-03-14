@@ -13,7 +13,7 @@
     msNavigationServiceProvider.saveItem('admin.categories', {
       title: 'Categories',
       icon: 'icon-format-list-bulleted',
-      weight: 1
+      weight: 4
     });
 
     msNavigationServiceProvider.saveItem('admin.categories.list', {

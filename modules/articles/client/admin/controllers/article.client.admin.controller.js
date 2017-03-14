@@ -33,7 +33,7 @@
     // Save Article
     function save(isValid) {
       if (!isValid) {
-        $scope.$broadcast('show-errors-check-validity', 'vm.form.articleForm');
+        $scope.$broadcast('show-errors-check-validity', '$scope.basicArticleForm');
         return false;
       }
 

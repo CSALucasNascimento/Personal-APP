@@ -1,4 +1,4 @@
-<div id="basicArticleForm" class="page-layout simple fullwidth doc-page" layout="column">
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
 
   <!-- HEADER -->
   <div class="header md-accent-bg" layout="row" layout-align="space-between">
@@ -6,10 +6,10 @@
       <div class="breadcrumb" layout="row" layout-align="start center">
         <md-icon md-font-icon="icon-home" class="s16"></md-icon>
         <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
-        <span class="parent">Articles</span>
+        <span class="parent">Amenities</span>
       </div>
 
-      <div class="title">{{vm.article._id ? 'Edit Article' : 'New Article'}}</div>
+      <div class="title">{{vm.amenity._id ? 'Edit Amenity' : 'New Amenity'}}</div>
     </div>
   </div>
   <!-- / HEADER -->
@@ -26,17 +26,17 @@
       <!-- BASIC FORM -->
       <div class="form-wrapper md-whiteframe-1dp" flex="60">
 
-        <form name="basicArticleForm" class="md-inline-form" ng-submit="vm.save(basicArticleForm.$valid)" novalidate>
+        <form name="basicAmenityForm" class="md-inline-form" ng-submit="vm.save(basicAmenityForm.$valid)" novalidate>
 
-          <div class="form-title">Create new article</div>
+          <div class="form-title">Create new amenity</div>
 
           <div layout="column" layout-gt-sm="row">
             <md-input-container flex>
-              <input type="text" name="title" ng-model="vm.article.title"
+              <input type="text" name="title" ng-model="vm.amenity.title"
                      placeholder="Title"
                      md-maxlength="50"
                      required>
-              <div ng-messages="basicArticleForm.title.$error"
+              <div ng-messages="basicAmenityForm.title.$error"
                    role="alert" multiple>
                 <div ng-message="required">
                   <span>Title field is required.</span>
@@ -51,7 +51,7 @@
           <div layout="column" layout-gt-xs="row">
             <md-input-container flex>
               <md-chips
-                ng-model="vm.article.tags"
+                ng-model="vm.amenity.tags"
                 readonly="false"
                 md-removable="true"
                 placeholder="Enter a tag"
@@ -63,10 +63,10 @@
 
           <md-input-container class="md-block">
             <label>Content</label>
-            <textarea name="content" ng-model="vm.article.content" md-maxlength="500" max-rows="5"
+            <textarea name="content" ng-model="vm.amenity.content" md-maxlength="500" max-rows="5"
                       md-maxlength="50"
                       required></textarea>
-            <div ng-messages="basicArticleForm.content.$error"
+            <div ng-messages="basicAmenityForm.content.$error"
                  role="alert" multiple>
               <div ng-message="required">
                 <span>Content field is required.</span>
@@ -78,8 +78,8 @@
           </md-input-container>
 
           <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
-                     ng-disabled="basicArticleForm.$invalid || basicArticleForm.$pristine">
-            {{vm.article._id ? 'Update' : 'Create'}}
+                     ng-disabled="basicAmenityForm.$invalid || basicAmenityForm.$pristine">
+            {{vm.amenity._id ? 'Update' : 'Create'}}
           </md-button>
         </form>
 
@@ -90,7 +90,7 @@
       <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="40">
         <div class="form-title">Form ng-model data</div>
         <div class="json-data-wrapper">
-          <pre>{{basicArticleForm | json}}</pre>
+          <pre>{{vm.basicAmenityForm | json}}</pre>
         </div>
       </div>
       <!-- / BASIC FORM DATA -->

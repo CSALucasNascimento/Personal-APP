@@ -13,7 +13,7 @@
     msNavigationServiceProvider.saveItem('admin.articles', {
       title: 'Articles',
       icon: 'icon-file-document',
-      weight: 1
+      weight: 2
     });
 
     msNavigationServiceProvider.saveItem('admin.articles.list', {

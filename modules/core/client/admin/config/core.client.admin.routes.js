@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core.admin.config')
+    .module('core.admin.config.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -61,7 +61,7 @@
         url: '/settings',
         views: {
           'content@admin': {
-            template: '<div>Admin Settings Menu</div>'
+            templateUrl: 'modules/core/client/admin/views/dashboard-project.html'
           }
         }
       })
@@ -71,7 +71,7 @@
         controller: 'ErrorController',
         controllerAs: 'vm',
         params: {
-          message: function($stateParams) {
+          message: function ($stateParams) {
             return $stateParams.message;
           }
         },
@@ -86,7 +86,7 @@
         controller: 'ErrorController',
         controllerAs: 'vm',
         params: {
-          message: function($stateParams) {
+          message: function ($stateParams) {
             return $stateParams.message;
           }
         },

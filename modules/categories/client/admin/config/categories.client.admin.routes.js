@@ -10,18 +10,14 @@
   function routeConfig($stateProvider) {
     $stateProvider
       .state('admin.categories', {
-        url: '/categories',
-        views: {
-          'content@admin': {
-            templateUrl: 'modules/articles/client/admin/views/list-categories.client.admin.view.html'
-          }
-        }
+        abstract: true,
+        url: '/categories'
       })
       .state('admin.categories.list', {
         url: '/list',
         views: {
           'content@admin': {
-            templateUrl: 'modules/categories/client/admin/views/list-categories.client.admin.view.html',
+            templateUrl: '/modules/categories/client/admin/views/list-categories.client.admin.view.html',
             controller: 'CategoriesListController',
             controllerAs: 'vm'
           }
@@ -31,7 +27,7 @@
         url: '/create',
         views: {
           'content@admin': {
-            templateUrl: 'modules/categories/client/admin/views/form-category.client.admin.view.html',
+            templateUrl: '/modules/categories/client/admin/views/form-category.client.admin.view.html',
             controller: 'CategoriesController',
             controllerAs: 'vm',
             resolve: {

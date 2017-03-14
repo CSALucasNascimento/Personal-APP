@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core.admin.config')
+    .module('core.admin.config.menus')
     .config(menuConfig);
 
   menuConfig.$inject = ['msNavigationServiceProvider'];
