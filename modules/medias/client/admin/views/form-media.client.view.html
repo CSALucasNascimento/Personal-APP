@@ -1,0 +1,102 @@
+<div id="forms" class="page-layout simple fullwidth doc-page" layout="column">
+
+  <!-- HEADER -->
+  <div class="header md-accent-bg" layout="row" layout-align="space-between">
+    <div layout="column" layout-align="space-between">
+      <div class="breadcrumb" layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Articles</span>
+      </div>
+
+      <div class="title">{{vm.article._id ? 'Edit Article' : 'New Article'}}</div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" layout="column">
+
+    <div class="md-title mt-32">Basic form with validation</div>
+    <div class="pb-16">With this form example, Submit button will only be activated if all the required fields are
+      filled and if there is no error on the form.
+    </div>
+    <div layout="row">
+
+      <!-- BASIC FORM -->
+      <div class="form-wrapper md-whiteframe-1dp" flex="60">
+
+        <form name="basicArticleForm" class="md-inline-form" ng-submit="vm.save(basicArticleForm.$valid)" novalidate>
+
+          <div class="form-title">Create new article</div>
+
+          <div layout="column" layout-gt-sm="row">
+            <md-input-container flex>
+              <input type="text" name="title" ng-model="vm.article.title"
+                     placeholder="Title"
+                     md-maxlength="50"
+                     required>
+              <div ng-messages="basicArticleForm.title.$error"
+                   role="alert" multiple>
+                <div ng-message="required">
+                  <span>Title field is required.</span>
+                </div>
+                <div ng-message="md-maxlength">
+                  <span>Title can't be longer than 50 characters.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div layout="column" layout-gt-xs="row">
+            <md-input-container flex>
+              <md-chips
+                ng-model="vm.article.tags"
+                readonly="false"
+                md-removable="true"
+                placeholder="Enter a tag"
+                delete-button-label="Remove Tag"
+                delete-hint="Press delete to remove tag"
+                secondary-placeholder="+Tag"></md-chips>
+            </md-input-container>
+          </div>
+
+          <md-input-container class="md-block">
+            <label>Content</label>
+            <textarea name="content" ng-model="vm.article.content" md-maxlength="500" max-rows="5"
+                      md-maxlength="50"
+                      required></textarea>
+            <div ng-messages="basicArticleForm.content.$error"
+                 role="alert" multiple>
+              <div ng-message="required">
+                <span>Content field is required.</span>
+              </div>
+              <div ng-message="md-maxlength">
+                <span>Content can't be longer than 500 characters.</span>
+              </div>
+            </div>
+          </md-input-container>
+
+          <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                     ng-disabled="basicArticleForm.$invalid || basicArticleForm.$pristine">
+            {{vm.article._id ? 'Update' : 'Create'}}
+          </md-button>
+        </form>
+
+      </div>
+      <!-- / BASIC FORM -->
+
+      <!-- BASIC FORM DATA -->
+      <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="40">
+        <div class="form-title">Form ng-model data</div>
+        <div class="json-data-wrapper">
+          <pre>{{vm.basicArticleForm | json}}</pre>
+        </div>
+      </div>
+      <!-- / BASIC FORM DATA -->
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
