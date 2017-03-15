@@ -7,8 +7,6 @@ module.exports = {
     lib: {
       css: [
         // bower:css
-        '//fonts.googleapis.com/icon?family=Material+Icons',
-        '//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic',
         'public/lib/chartist/dist/chartist.min.css',
         'public/lib/angular-datatables/dist/css/angular-datatables.css',
         'public/lib/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
@@ -24,7 +22,8 @@ module.exports = {
         'public/lib/moment-picker/dist/angular-moment-picker.min.css',
         'public/lib/perfect-scrollbar/css/perfect-scrollbar.css',
         'public/lib/textAngular/dist/textAngular.css',
-        'public/lib/wip-image-zoom/dist/wip-image-zoom.css'
+        'public/lib/wip-image-zoom/dist/wip-image-zoom.css',
+        '//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
       ],
       js: [
 

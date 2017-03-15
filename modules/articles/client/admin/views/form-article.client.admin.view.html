@@ -50,14 +50,30 @@
 
           <div layout="column" layout-gt-xs="row">
             <md-input-container flex>
-              <md-chips
-                ng-model="vm.article.tags"
-                readonly="false"
-                md-removable="true"
-                placeholder="Enter a tag"
-                delete-button-label="Remove Tag"
-                delete-hint="Press delete to remove tag"
-                secondary-placeholder="+Tag"></md-chips>
+              <md-chips ng-model="vm.article.tags"
+                        readonly="false"
+                        md-removable="true"
+                        placeholder="Enter a tag"
+                        delete-button-label="Remove Tag"
+                        delete-hint="Press delete to remove tag"
+                        secondary-placeholder="+Tag"
+                        md-autocomplete-snap
+                        md-transform-chip="vm.transformChip($chip)"
+                        md-require-match="vm.autocompleteDemoRequireMatch">
+                <md-autocomplete
+                  md-selected-item="vm.selectedItem"
+                  md-search-text="vm.searchText"
+                  md-items="tag in vm.querySearch(vm.searchText)"
+                  md-item-text="tag.name"
+                  placeholder="Search for a tag">
+                  <span md-highlight-text="vm.searchText">{{tag.name}}</span>
+                </md-autocomplete>
+                <md-chip-template>
+                  <span>
+                    <strong>{{$chip.name}}</strong>
+                  </span>
+                </md-chip-template>
+              </md-chips>
             </md-input-container>
           </div>
 

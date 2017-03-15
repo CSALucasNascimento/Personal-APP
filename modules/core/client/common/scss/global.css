@@ -43419,6 +43419,63 @@ img {
 .custom-chips md-chips-wrap.md-removable md-chip md-chip-template {
   padding-right: 5px; }
 
+#articles_list .center .header {
+  height: 136px !important;
+  min-height: 136px !important;
+  max-height: 136px !important;
+  padding: 24px 0; }
+  #articles_list .center .header .h1 md-icon {
+    margin-right: 12px; }
+  #articles_list .center .header .product-count {
+    margin: 6px 0 0 36px; }
+  #articles_list .center .header .search {
+    position: relative;
+    padding-left: 24px;
+    max-width: 480px; }
+    #articles_list .center .header .search .search-icon {
+      margin: 0 -24px 0 0; }
+    #articles_list .center .header .search .search-input {
+      margin: 0 0 0 32px;
+      background: none;
+      font-size: 16px;
+      line-height: 40px;
+      height: 40px;
+      color: #FFFFFF;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      -webkit-transition: border-color 300ms ease;
+      transition: border-color 300ms ease; }
+      #articles_list .center .header .search .search-input:focus {
+        border-color: white; }
+      #articles_list .center .header .search .search-input::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.5); }
+
+#articles_list .center .content-card .toolbar {
+  padding: 8px; }
+
+#articles_list .center .content-card .content {
+  padding: 0; }
+  #articles_list .center .content-card .content .dataTables_wrapper .dataTables_scrollHead {
+    min-height: 64px; }
+    #articles_list .center .content-card .content .dataTables_wrapper .dataTables_scrollHead table th {
+      padding-top: 20px;
+      padding-bottom: 20px; }
+  #articles_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .product-image {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(0, 0, 0, 0.12); }
+  #articles_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .quantity-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 8px; }
+    #articles_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .quantity-indicator + div {
+      display: inline-block;
+      vertical-align: middle; }
+  #articles_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .edit-button {
+    margin: 0; }
+
 /**
 * Directives
 */

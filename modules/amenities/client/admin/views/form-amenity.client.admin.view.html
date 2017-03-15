@@ -32,17 +32,17 @@
 
           <div layout="column" layout-gt-sm="row">
             <md-input-container flex>
-              <input type="text" name="title" ng-model="vm.amenity.title"
-                     placeholder="Title"
+              <input type="text" name="name" ng-model="vm.amenity.name"
+                     placeholder="Name"
                      md-maxlength="50"
                      required>
-              <div ng-messages="basicAmenityForm.title.$error"
+              <div ng-messages="basicAmenityForm.name.$error"
                    role="alert" multiple>
                 <div ng-message="required">
-                  <span>Title field is required.</span>
+                  <span>Name field is required.</span>
                 </div>
                 <div ng-message="md-maxlength">
-                  <span>Title can't be longer than 50 characters.</span>
+                  <span>Name can't be longer than 50 characters.</span>
                 </div>
               </div>
             </md-input-container>
@@ -50,32 +50,21 @@
 
           <div layout="column" layout-gt-xs="row">
             <md-input-container flex>
-              <md-chips
-                ng-model="vm.amenity.tags"
-                readonly="false"
-                md-removable="true"
-                placeholder="Enter a tag"
-                delete-button-label="Remove Tag"
-                delete-hint="Press delete to remove tag"
-                secondary-placeholder="+Tag"></md-chips>
+              <input type="text" name="slug" ng-model="vm.amenity.slug"
+                     placeholder="Slug"
+                     md-maxlength="50"
+                     required>
+              <div ng-messages="basicAmenityForm.slug.$error"
+                   role="alert" multiple>
+                <div ng-message="required">
+                  <span>Slug field is required.</span>
+                </div>
+                <div ng-message="md-maxlength">
+                  <span>Slug can't be longer than 50 characters.</span>
+                </div>
+              </div>
             </md-input-container>
           </div>
-
-          <md-input-container class="md-block">
-            <label>Content</label>
-            <textarea name="content" ng-model="vm.amenity.content" md-maxlength="500" max-rows="5"
-                      md-maxlength="50"
-                      required></textarea>
-            <div ng-messages="basicAmenityForm.content.$error"
-                 role="alert" multiple>
-              <div ng-message="required">
-                <span>Content field is required.</span>
-              </div>
-              <div ng-message="md-maxlength">
-                <span>Content can't be longer than 500 characters.</span>
-              </div>
-            </div>
-          </md-input-container>
 
           <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
                      ng-disabled="basicAmenityForm.$invalid || basicAmenityForm.$pristine">

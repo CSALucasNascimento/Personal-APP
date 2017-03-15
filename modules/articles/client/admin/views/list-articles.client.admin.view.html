@@ -1,26 +1,102 @@
-﻿<section>
-  <div class="page-header">
-    <h1>
-      Articles
-      <a class="btn btn-primary pull-right" data-ui-sref="admin.articles.create">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </h1>
+﻿<div id="articles_list" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-cube-outline"></md-icon>
+          <span>Articles</span>
+        </div>
+        <div class="product-count secondary-text">
+          <span>Total articles:</span>
+          <span>{{vm.articles.length}}</span>
+        </div>
+      </div>
+
+      <div class="search" layout="row" layout-align="start center" flex>
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input id="articles-search" class="search-input" type="text" placeholder="Search"
+               translate flex>
+      </div>
+
+      <div>
+        <md-button class="md-raised md-background" ng-click="vm.gotoAddArticle()">
+          <span>Add New Article</span>
+        </md-button>
+      </div>
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- CONTENT TOOLBAR -->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content fullpage-datatable" layout="column" flex>
+
+        <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
+          <thead>
+          <tr>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">ID</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Image</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Title</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Active</span>
+              </div>
+            </th>
+            <th class="secondary-text">
+              <div class="table-header">
+                <span class="column-title">Actions</span>
+              </div>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="article in ::vm.articles">
+            <td>{{ article._id }}</td>
+            <td><img class="product-image" ng-src="{{ article.featuredImage.url }}"></td>
+            <td>{{ article.title }}</td>
+            <td>{{ article.publish }}</td>
+            <td>
+              <md-button class="edit-button md-icon-button" ng-click="vm.gotoArticleDetail(article._id)" aria-label="Article details"
+                         translate>
+                <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+              </md-button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
   </div>
-  <div class="list-group">
-    <a data-ng-repeat="article in vm.articles" data-ui-sref="admin.articles.edit({articleId: article._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="article.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="article.user" ng-bind="article.user.displayName"></span>
-        <span ng-if="!article.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" data-ng-bind="article.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="article.content"></p>
-    </a>
-  </div>
-  <div class="alert alert-warning text-center" data-ng-if="articles.$resolved && !articles.length">
-    No articles yet, why don't you <a data-ui-sref="admin.articles.create">create one</a>?
-  </div>
-</section>
+  <!-- / CENTER -->
+
+</div>

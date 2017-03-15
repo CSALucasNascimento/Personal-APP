@@ -75,7 +75,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="amenity in vm.amenities">
+            <tr ng-repeat="amenity in ::vm.amenities">
               <td>{{ amenity._id }}</td>
               <td><img class="product-image" ng-src="{{ amenity.icon.url }}"></td>
               <td>{{ amenity.name }}</td>

@@ -21,6 +21,9 @@
             controller: 'AmenitiesAdminListController',
             controllerAs: 'vm'
           }
+        },
+        resolve: {
+          amenityListResolve: getAmenityList
         }
       })
       .state('admin.amenities.create', {
@@ -29,18 +32,22 @@
           'content@admin': {
             templateUrl: '/modules/amenities/client/admin/views/form-amenity.client.admin.view.html',
             controller: 'AmenitiesAdminController',
-            controllerAs: 'vm',
-            resolve: {
-              amenityResolve: newAmenity
-            }
+            controllerAs: 'vm'
           }
+        },
+        resolve: {
+          amenityResolve: newAmenity
         }
       })
       .state('admin.amenities.edit', {
         url: '/:amenityId/edit',
-        templateUrl: '/modules/amenities/client/views/admin/form-amenity.client.admin.view.html',
-        controller: 'AmenitiesAdminController',
-        controllerAs: 'vm',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/amenities/client/admin/views/form-amenity.client.admin.view.html',
+            controller: 'AmenitiesAdminController',
+            controllerAs: 'vm'
+          }
+        },
         resolve: {
           amenityResolve: getAmenity
         }
@@ -59,5 +66,11 @@
 
   function newAmenity(AmenitiesService) {
     return new AmenitiesService();
+  }
+
+  getAmenityList.$inject = ['AmenitiesService'];
+
+  function getAmenityList(AmenitiesService) {
+    return AmenitiesService.query().$promise;
   }
 }());

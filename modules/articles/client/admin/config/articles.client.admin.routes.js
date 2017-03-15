@@ -20,6 +20,9 @@
             controller: 'ArticlesAdminListController',
             controllerAs: 'vm'
           }
+        },
+        resolve: {
+          articleListResolve: getArticleList
         }
       })
       .state('admin.articles.create', {
@@ -66,10 +69,16 @@
     return new ArticlesService();
   }
 
-  getTagList.$inject = ['$stateParams', 'TagsService'];
+  getTagList.$inject = ['TagsService'];
 
   function getTagList(TagsService) {
-    return TagsService.query();
+    return TagsService.query().$promise;
+  }
+
+  getArticleList.$inject = ['ArticlesService'];
+
+  function getArticleList(ArticlesService) {
+    return ArticlesService.query().$promise;
   }
 
 }());
