@@ -62,10 +62,8 @@
           </div>
 
           <md-input-container class="md-block">
-            <label>Content</label>
-            <textarea name="content" ng-model="vm.article.content" md-maxlength="500" max-rows="5"
-                      md-maxlength="50"
-                      required></textarea>
+            <text-angular name="content" ta-toolbar="vm.taToolbar" ng-model="vm.article.content" md-maxlength="2000"
+                          class="pb-32"></text-angular>
             <div ng-messages="basicArticleForm.content.$error"
                  role="alert" multiple>
               <div ng-message="required">

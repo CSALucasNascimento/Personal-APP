@@ -12,7 +12,7 @@
 
     msNavigationServiceProvider.saveItem('admin.medias', {
       title: 'Medias',
-      icon: 'icon-file-document',
+      icon: 'icon-file-image-box',
       weight: 5
     });
 

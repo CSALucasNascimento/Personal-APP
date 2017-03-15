@@ -32,16 +32,22 @@
           }
         },
         resolve: {
-          articleResolve: newArticle
+          articleResolve: newArticle,
+          tagResolve: getTagList
         }
       })
       .state('admin.articles.edit', {
         url: '/:articleId/edit',
-        templateUrl: '/modules/articles/client/views/admin/form-article.client.admin.view.html',
-        controller: 'ArticlesAdminController',
-        controllerAs: 'vm',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/articles/client/admin/views/form-article.client.admin.view.html',
+            controller: 'ArticlesAdminController',
+            controllerAs: 'vm'
+          }
+        },
         resolve: {
-          articleResolve: getArticle
+          articleResolve: getArticle,
+          tagResolve: getTagList
         }
       });
   }
@@ -59,4 +65,11 @@
   function newArticle(ArticlesService) {
     return new ArticlesService();
   }
+
+  getTagList.$inject = ['$stateParams', 'TagsService'];
+
+  function getTagList(TagsService) {
+    return TagsService.query();
+  }
+
 }());

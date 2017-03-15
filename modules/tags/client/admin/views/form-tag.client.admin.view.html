@@ -1,0 +1,73 @@
+<div id="basicTagForm" class="page-layout simple fullwidth doc-page" layout="column">
+
+  <!-- HEADER -->
+  <div class="header md-accent-bg" layout="row" layout-align="space-between">
+    <div layout="column" layout-align="space-between">
+      <div class="breadcrumb" layout="row" layout-align="start center">
+        <md-icon md-font-icon="icon-home" class="s16"></md-icon>
+        <md-icon md-font-icon="icon-chevron-right" class="s16 separator"></md-icon>
+        <span class="parent">Tags</span>
+      </div>
+
+      <div class="title">{{vm.tag._id ? 'Edit Tag' : 'New Tag'}}</div>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" layout="column">
+
+    <div class="md-title mt-32">Basic form with validation</div>
+    <div class="pb-16">With this form example, Submit button will only be activated if all the required fields are
+      filled and if there is no error on the form.
+    </div>
+    <div layout="row">
+
+      <!-- BASIC FORM -->
+      <div class="form-wrapper md-whiteframe-1dp" flex="60">
+
+        <form name="basicTagForm" class="md-inline-form" ng-submit="vm.save(basicTagForm.$valid)" novalidate>
+
+          <div class="form-title">Create new tag</div>
+
+          <div layout="column" layout-gt-sm="row">
+            <md-input-container flex>
+              <input type="text" name="name" ng-model="vm.tag.name"
+                     placeholder="Name"
+                     md-maxlength="50"
+                     required>
+              <div ng-messages="basicTagForm.title.$error"
+                   role="alert" multiple>
+                <div ng-message="required">
+                  <span>Name field is required.</span>
+                </div>
+                <div ng-message="md-maxlength">
+                  <span>Name can't be longer than 50 characters.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <md-button type="submit" class="md-raised md-accent" aria-label="Submit"
+                     ng-disabled="basicTagForm.$invalid || basicTagForm.$pristine">
+            {{vm.tag._id ? 'Update' : 'Create'}}
+          </md-button>
+        </form>
+
+      </div>
+      <!-- / BASIC FORM -->
+
+      <!-- BASIC FORM DATA -->
+      <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="40">
+        <div class="form-title">Form ng-model data</div>
+        <div class="json-data-wrapper">
+          <pre>{{basicTagForm | json}}</pre>
+        </div>
+      </div>
+      <!-- / BASIC FORM DATA -->
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>

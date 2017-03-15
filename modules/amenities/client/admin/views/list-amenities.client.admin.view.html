@@ -44,50 +44,49 @@
       <!-- CONTENT -->
       <div class="content fullpage-datatable" layout="column" flex>
 
-        <table class="dataTable row-border hover" datatable="ng" dt-instance="vm.dtInstance"
-               dt-options="vm.dtOptions">
+        <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
           <thead>
-          <tr>
-            <th class="secondary-text">
-              <div class="table-header">
-                <span class="column-title">ID</span>
-              </div>
-            </th>
-            <th class="secondary-text">
-              <div class="table-header">
-                <span class="column-title">Image</span>
-              </div>
-            </th>
-            <th class="secondary-text">
-              <div class="table-header">
-                <span class="column-title">Name</span>
-              </div>
-            </th>
-            <th class="secondary-text">
-              <div class="table-header">
-                <span class="column-title">Active</span>
-              </div>
-            </th>
-            <th class="secondary-text">
-              <div class="table-header">
-                <span class="column-title">Actions</span>
-              </div>
-            </th>
-          </tr>
+            <tr>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">ID</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Image</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Name</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Active</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Actions</span>
+                </div>
+              </th>
+            </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="amenity in vm.amenities">
-            <td>{{amenity._id}}</td>
-            <td><img class="product-image" ng-src="{{amenity.icon.url}}"></td>
-            <td>{{amenity.name}}</td>
-            <td></td>
-            <td>
-              <md-button class="edit-button md-icon-button" ng-click="vm.gotoAmenityDetail(amenity._id)" aria-label="Amenity details"
-                         translate>
-                <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
-              </md-button>
-            </td>
-          </tr>
+            <tr ng-repeat="amenity in vm.amenities">
+              <td>{{ amenity._id }}</td>
+              <td><img class="product-image" ng-src="{{ amenity.icon.url }}"></td>
+              <td>{{ amenity.name }}</td>
+              <td>{{ amenity._id.length > 0 }}</td>
+              <td>
+                <md-button class="edit-button md-icon-button" ng-click="vm.gotoAmenityDetail(amenity._id)" aria-label="Amenity details"
+                           translate>
+                  <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+                </md-button>
+              </td>
+            </tr>
           </tbody>
         </table>
 
@@ -101,32 +100,3 @@
   <!-- / CENTER -->
 
 </div>
-
-<!-- 
-<section>
-  <div class="page-header">
-    <h1>
-      Amenities
-      <a class="btn btn-primary pull-right" data-ui-sref="admin.amenities.create">
-        <i class="glyphicon glyphicon-plus"></i>
-      </a>
-    </h1>
-  </div>
-  <div class="list-group">
-    <a data-ng-repeat="amenity in vm.amenities" data-ui-sref="admin.amenities.edit({amenityId: amenity._id})" class="list-group-item">
-      <small class="list-group-item-text">
-        Posted on
-        <span data-ng-bind="amenity.created | date:'mediumDate'"></span>
-        by
-        <span ng-if="amenity.user" ng-bind="amenity.user.displayName"></span>
-        <span ng-if="!amenity.user">Deleted User</span>
-      </small>
-      <h4 class="list-group-item-heading" data-ng-bind="amenity.title"></h4>
-      <p class="list-group-item-text" data-ng-bind="amenity.content"></p>
-    </a>
-  </div>
-  <div class="alert alert-warning text-center" data-ng-if="amenities.$resolved && !amenities.length">
-    No amenities yet, why don't you <a data-ui-sref="admin.amenities.create">create one</a>?
-  </div>
-</section>
--->

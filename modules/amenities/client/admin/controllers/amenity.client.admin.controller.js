@@ -8,9 +8,9 @@
     }])
     .controller('AmenitiesAdminController', AmenitiesAdminController);
 
-  AmenitiesAdminController.$inject = ['$scope', '$state', '$window', 'amenityResolve', 'Authentication', 'Notification'];
+  AmenitiesAdminController.$inject = ['$scope', '$state', '$window', 'amenityResolve', 'Authentication'];
 
-  function AmenitiesAdminController($scope, $state, $window, amenity, Authentication, Notification) {
+  function AmenitiesAdminController($scope, $state, $window, amenity, Authentication) {
     var vm = this;
 
     vm.amenity = amenity;
@@ -25,7 +25,6 @@
       if ($window.confirm('Are you sure you want to delete?')) {
         vm.amenity.$remove(function() {
           $state.go('admin.amenities.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Amenity deleted successfully!' });
         });
       }
     }
@@ -44,11 +43,10 @@
 
       function successCallback(res) {
         $state.go('admin.amenities.list'); // should we send the User to the list or the updated Article's view?
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Amenity saved successfully!' });
       }
 
       function errorCallback(res) {
-        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Amenity save error!' });
+        res.data.message;
       }
     }
   }

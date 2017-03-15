@@ -8,9 +8,9 @@
     }])
     .controller('CategoriesController', CategoriesController);
 
-  CategoriesController.$inject = ['$scope', '$state', '$window', 'Authentication', '$filter', 'categoryResolve', 'categoryListResolve', 'Notification'];
+  CategoriesController.$inject = ['$scope', '$state', '$window', 'Authentication', '$filter', 'categoryResolve', 'categoryListResolve'];
 
-  function CategoriesController ($scope, $state, $window, Authentication, $filter, category, categoryListResolve, Notification) {
+  function CategoriesController ($scope, $state, $window, Authentication, $filter, category, categoryListResolve) {
     var vm = this;
 
     vm.category = category;
@@ -25,7 +25,6 @@
       if ($window.confirm('Are you sure you want to delete?')) {
         vm.category.$remove(function() {
           $state.go('admin.categories.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Category deleted successfully!' });
         });
       }
     }
@@ -44,11 +43,10 @@
 
       function successCallback(res) {
         $state.go('admin.categories.list'); // should we send the User to the list or the updated Article's view?
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Category saved successfully!' });
       }
 
       function errorCallback(res) {
-        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Category save error!' });
+        res.data.message;
       }
     }
 
