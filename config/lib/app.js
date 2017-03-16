@@ -25,7 +25,7 @@ module.exports.init = function init(callback) {
     var app = express.init(db);
     if (callback) callback(app, db, config);
 
-  });
+  }, { config: { autoIndex: false } });
 };
 
 module.exports.start = function start(callback) {

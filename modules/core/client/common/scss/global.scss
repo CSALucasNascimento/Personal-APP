@@ -47,6 +47,12 @@
 @import 'modules/articles/client/admin/scss/articles_list';
 
 /**
+* Listings
+*/
+@import 'modules/listings/client/admin/scss/listings_list';
+@import 'modules/listings/client/admin/scss/listing';
+
+/**
 * Directives
 */
 @import 'modules/core/client/common/directives/ms-card/ms-card';

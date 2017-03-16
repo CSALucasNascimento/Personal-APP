@@ -43477,6 +43477,130 @@ img {
     margin: 0; }
 
 /**
+* Listings
+*/
+#listings_list .center .header {
+  height: 136px !important;
+  min-height: 136px !important;
+  max-height: 136px !important;
+  padding: 24px 0; }
+  #listings_list .center .header .h1 md-icon {
+    margin-right: 12px; }
+  #listings_list .center .header .product-count {
+    margin: 6px 0 0 36px; }
+  #listings_list .center .header .search {
+    position: relative;
+    padding-left: 24px;
+    max-width: 480px; }
+    #listings_list .center .header .search .search-icon {
+      margin: 0 -24px 0 0; }
+    #listings_list .center .header .search .search-input {
+      margin: 0 0 0 32px;
+      background: none;
+      font-size: 16px;
+      line-height: 40px;
+      height: 40px;
+      color: #FFFFFF;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      -webkit-transition: border-color 300ms ease;
+      transition: border-color 300ms ease; }
+      #listings_list .center .header .search .search-input:focus {
+        border-color: white; }
+      #listings_list .center .header .search .search-input::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.5); }
+
+#listings_list .center .content-card .toolbar {
+  padding: 8px; }
+
+#listings_list .center .content-card .content {
+  padding: 0; }
+  #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollHead {
+    min-height: 64px; }
+    #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollHead table th {
+      padding-top: 20px;
+      padding-bottom: 20px; }
+  #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .product-image {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(0, 0, 0, 0.12); }
+  #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .quantity-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 8px; }
+    #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .quantity-indicator + div {
+      display: inline-block;
+      vertical-align: middle; }
+  #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .edit-button {
+    margin: 0; }
+
+#listing .header {
+  height: 120px;
+  min-height: 120px;
+  max-height: 120px; }
+  #listing .header .goto-products-button {
+    margin-right: 16px; }
+  #listing .header .product-image {
+    overflow: hidden;
+    width: 56px;
+    height: 56px;
+    margin-right: 16px;
+    border: 3px solid rgba(0, 0, 0, 0.12); }
+    #listing .header .product-image img {
+      height: 100%;
+      width: auto;
+      max-width: none; }
+  #listing .header .subtitle {
+    margin: 6px 0 0 0; }
+  #listing .header span.status {
+    margin: 0 12px 0 8px; }
+
+#listing .product-detail-form-container {
+  padding: 24px; }
+  #listing .product-detail-form-container #product-image-uploader {
+    position: relative; }
+    #listing .product-detail-form-container #product-image-uploader.dropping .drop-text {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+    #listing .product-detail-form-container #product-image-uploader .drop-text {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 16px;
+      text-align: center;
+      border: 2px dashed rgba(0, 0, 0, 0.12);
+      background: #FFFFFF;
+      font-size: 20px;
+      z-index: 100; }
+    #listing .product-detail-form-container #product-image-uploader .upload-button {
+      margin-bottom: 16px; }
+    #listing .product-detail-form-container #product-image-uploader .image-zoom-area {
+      border: 2px solid rgba(0, 0, 0, 0.12);
+      width: 500px; }
+    #listing .product-detail-form-container #product-image-uploader .product-image {
+      position: relative;
+      width: 100px;
+      min-height: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      margin: 8px; }
+      #listing .product-detail-form-container #product-image-uploader .product-image.uploading .overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.87); }
+      #listing .product-detail-form-container #product-image-uploader .product-image .media {
+        cursor: pointer;
+        max-height: 100%; }
+
+/**
 * Directives
 */
 /*----------------------------------------------------------------*/

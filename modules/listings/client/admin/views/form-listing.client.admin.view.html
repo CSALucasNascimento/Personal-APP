@@ -1,0 +1,315 @@
+<div id="listing" class="page-layout simple tabbed" layout="column">
+
+  <!-- HEADER -->
+  <div class="header md-accent-bg" layout="row" layout-align="start center">
+    <div class="white-fg" layout="row" layout-align="start center" flex>
+      <md-button class="goto-products-button md-icon-button" aria-label="Go to listings"
+                 ng-click="vm.gotoListings()">
+        <md-icon md-font-icon="icon-arrow-left"></md-icon>
+      </md-button>
+
+      <div layout="row" layout-align="start center">
+        <div class="product-image" hide-xs>
+          <img ng-src="{{vm.listing.featuredImage.url}}">
+        </div>
+
+        <div layout="column" layout-align="start start">
+          <div class="h2">
+            {{vm.listing.title}}
+          </div>
+          <div class="subtitle secondary-text">
+            <span>Listing Detail</span>
+          </div>
+        </div>
+
+        <div>
+          <md-button class="md-icon-button" aria-label="Add Featured"
+                     ng-click="vm.setListingFeatured()">
+            <md-icon md-font-icon="icon-star" class="amber-600-fg s24"
+                     ng-hide="!vm.listing.featured"></md-icon>
+            <md-icon md-font-icon="icon-star-outline" class="s24"
+                     ng-hide="vm.listing.featured"></md-icon>
+            <md-tooltip md-direction="bottom">Click to {{vm.listing.featured ? 'remove' : 'add'}} featured</md-tooltip>
+          </md-button>
+        </div>
+        
+      </div>
+    </div>
+
+    <md-menu-bar id="status-menu">
+      <md-menu md-position-mode="left bottom">
+        <md-button class="status-button" ng-click="$mdOpenMenu()"
+                   aria-label="Status settings">
+          <div layout="row" layout-align="space-between center">
+            <div class="avatar-wrapper">
+              <md-icon md-font-icon ng-class="vm.listing.status.icon"
+                       ng-style="{'color': vm.listing.status.color }"
+                       class="icon status">
+              </md-icon>
+            </div>
+            <span class="status" hide show-gt-sm>{{vm.listing.status.title}}</span>
+            <md-icon md-font-icon="icon-chevron-down"
+                     class="icon s16" hide-xs></md-icon>
+          </div>
+        </md-button>
+        <md-menu-content width="1">
+          <md-menu-item class="status md-indent"
+                        ng-class="{'selected': status === vm.listing.status}"
+                        ng-repeat="status in vm.listingStatusOptions">
+            <md-icon md-font-icon="{{status.icon}}" ng-style="{'color': status.color }"
+                     class="icon"></md-icon>
+            <md-button ng-click="vm.setListingStatus(status)">
+              {{status.title}}
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </md-menu-bar>
+    
+    <div>
+      <md-button class="md-raised md-background" ng-click="vm.saveProduct()"
+                 ng-disabled="!vm.isFormValid('listingForm')">
+        <span>SAVE</span>
+      </md-button>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <md-tabs md-dynamic-height>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Basic Info</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form id="listingForm" name="listingForm">
+              <md-input-container class="md-block">
+                <label>Listing Title</label>
+                <input type="text" ng-model="vm.listing.title" required>
+              </md-input-container>
+
+              <h3 class="secondary-text">Listing Description</h3>
+              <text-angular ta-toolbar="vm.taToolbar" ng-model="vm.listing.description"
+                            class="pb-32"></text-angular>
+
+              <md-input-container class="md-block">
+                <label>Categories</label>
+                <md-select ng-model="vm.categoriesSelected"
+                           md-on-open="vm.onCategoriesSelectorOpen()"
+                           md-on-close="vm.onCategoriesSelectorClose()">
+                  <md-select-header>
+                    <input type="search" class="md-text"
+                           ng-model="vm.categoriesSelectFilter" placeholder="Search for a category">
+                  </md-select-header>
+                  <md-optgroup>
+                    <md-option ng-value="category._id"
+                               ng-repeat="category in vm.categories | filter:vm.categoriesSelectFilter">
+                      {{category.name}}
+                    </md-option>
+                  </md-optgroup>
+                </md-select>
+              </md-input-container>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Amenities</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout="row" flex="100" layout-wrap>
+                <md-input-container layout="column" flex="100" flex-gt-xs="50" flex-gt-md="25" ng-repeat="amenity in vm.amenities">
+                  <md-checkbox ng-checked="vm.exists(amenity, vm.amenitiesSelected)" ng-click="vm.toggle(amenity, vm.amenitiesSelected)">
+                    {{ amenity.name }}
+                  </md-checkbox>
+                </md-input-container>
+              </div>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Product Images</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+
+            <div id="product-image-uploader"
+                 flow-init="vm.ngFlowOptions"
+                 flow-name="vm.ngFlow.flow"
+                 flow-files-submitted="vm.upload()"
+                 flow-file-added="vm.fileAdded($file)"
+                 flow-file-success="vm.fileSuccess($file, $message)"
+                 flow-complete="vm.uploadComplete()"
+                 flow-drop
+                 flow-drag-enter="vm.dropping=true"
+                 flow-drag-leave="vm.dropping=false"
+                 ng-class="{'dropping':vm.dropping}">
+
+              <div class="drop-text hint-text" layout="row" layout-align="center center">
+                <span>Drop to upload</span>
+              </div>
+
+              <div class="upload-button" layout="column" layout-align="center center">
+                <md-button class="md-accent md-raised" flow-btn>
+                  Upload
+                </md-button>
+                <span class="secondary-text mt-8">You can also drop images here to upload. Only PNG, JPG - Max. 8MB</span>
+              </div>
+
+              <div class="mv-32" layout="row" layout-align="center center">
+                <div class="image-zoom-area">
+                  <img wip-image-zoom="vm.imageZoomOptions">
+                </div>
+              </div>
+
+              <div layout="row" layout-align="start start" layout-wrap>
+                <div ng-repeat="image in vm.listing.images" ng-switch="image.type">
+                  <div class="product-image uploading" ng-switch-when="uploading" layout="row"
+                       layout-align="center center">
+                    <div class="overlay" layout="column" layout-align="center center">
+                      <md-progress-linear md-mode="determinate"
+                                          value="{{image.file.progress() * 100}}">
+                      </md-progress-linear>
+                    </div>
+                    <img class="media" flow-img="image.file">
+                  </div>
+
+                  <div class="product-image" ng-switch-when="image" layout="row"
+                       layout-align="center center">
+                    <img class="media" ng-src="{{image.url}}"
+                         ng-click="vm.updateImageZoomOptions(image.url)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-8 font-size-12" layout="row" layout-align="center center">
+                Click on images to activate the zoom!
+              </div>
+            </div>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Pricing</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <md-input-container class="md-block md-icon-float">
+                <label>Tax Excluded Price</label>
+                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                <input type="number" step="0.01" ng-model="vm.product.priceTaxExcl">
+              </md-input-container>
+
+              <md-input-container class="md-block md-icon-float">
+                <label>Tax Included Price</label>
+                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                <input type="number" step="0.01" ng-model="vm.product.priceTaxIncl">
+              </md-input-container>
+
+              <md-input-container class="md-block md-icon-float">
+                <label>Tax Rate</label>
+                <md-icon md-font-icon="icon icon-percent"></md-icon>
+                <input type="number" step="0.01" ng-model="vm.product.taxRate">
+              </md-input-container>
+
+              <md-input-container class="md-block md-icon-float">
+                <label>Compared Price</label>
+                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                <input type="number" step="0.01" ng-model="vm.product.comparedPrice">
+                <div class="input-hint">Add a compare price to show next to the real price</div>
+              </md-input-container>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Inventory</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <md-input-container class="md-block">
+                <label>SKU</label>
+                <input type="text" ng-model="vm.product.sku">
+              </md-input-container>
+
+              <md-input-container class="md-block">
+                <label>Barcode</label>
+                <input type="text" ng-model="vm.product.barcode">
+              </md-input-container>
+
+              <md-input-container class="md-block">
+                <label>Quantity</label>
+                <input type="number" step="1" ng-model="vm.product.quantity">
+              </md-input-container>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Shipping</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout-gt-sm="row" layout-align="start center">
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Width</label>
+                  <input type="text" ng-model="vm.product.width">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Height</label>
+                  <input type="text" ng-model="vm.product.height">
+                </md-input-container>
+
+                <md-input-container class="md-block" flex-gt-sm>
+                  <label>Depth</label>
+                  <input type="text" ng-model="vm.product.depth">
+                </md-input-container>
+              </div>
+
+              <md-input-container class="md-block">
+                <label>Weight</label>
+                <input type="text" ng-model="vm.product.weight">
+              </md-input-container>
+
+              <md-input-container class="md-block md-icon-float">
+                <label>Extra Shipping Fee</label>
+                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                <input type="text" ng-model="vm.product.extraShippingFee">
+              </md-input-container>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+    </md-tabs>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
