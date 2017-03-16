@@ -32,7 +32,7 @@
             <md-tooltip md-direction="bottom">Click to {{vm.listing.featured ? 'remove' : 'add'}} featured</md-tooltip>
           </md-button>
         </div>
-        
+
       </div>
     </div>
 
@@ -65,7 +65,7 @@
         </md-menu-content>
       </md-menu>
     </md-menu-bar>
-    
+
     <div>
       <md-button class="md-raised md-background" ng-click="vm.saveProduct()"
                  ng-disabled="!vm.isFormValid('listingForm')">
@@ -101,7 +101,7 @@
                 <label>Categories</label>
                 <md-select ng-model="vm.categoriesSelected"
                            md-on-open="vm.onCategoriesSelectorOpen()"
-                           md-on-close="vm.onCategoriesSelectorClose()">
+                           md-on-close="vm.onCategoriesSelectorClose()" multiple>
                   <md-select-header>
                     <input type="search" class="md-text"
                            ng-model="vm.categoriesSelectFilter" placeholder="Search for a category">
@@ -132,6 +132,87 @@
                   <md-checkbox ng-checked="vm.exists(amenity, vm.amenitiesSelected)" ng-click="vm.toggle(amenity, vm.amenitiesSelected)">
                     {{ amenity.name }}
                   </md-checkbox>
+                </md-input-container>
+              </div>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
+          <span>Address</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout="column" layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>Unit Number</label>
+                  <input name="unitNumber" ng-model="vm.listing.address.unit" placeholder="1234"
+                         required ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                  <div ng-messages="basicForm.unitNumber.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a unit number.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid unit number.</span></div>
+                    <div ng-message="md-maxlength">
+                      <span>Unit number can't be longer than 4 characters.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+
+                <md-input-container flex>
+                  <label>Street Number</label>
+                  <input name="streetNumber" ng-model="vm.listing.address.streetNumber" placeholder="1234"
+                         required ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                  <div ng-messages="basicForm.streetNumber.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a street number.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid street number.</span></div>
+                    <div ng-message="md-maxlength">
+                      <span>Street number code can't be longer than 4 characters.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+
+                <md-input-container flex>
+                  <input type="text" name="streetName" ng-model="vm.listing.address.streetName"
+                         placeholder="Street Name"
+                         required>
+                  <div ng-messages="basicForm.streetName.$error"
+                       role="alert">
+                    <div ng-message="required">
+                      <span>Street Name field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+              </div>
+
+              <div layout="column" layout-gt-xs="row">
+                <md-input-container flex>
+                  <label>City</label>
+                  <input type="text" name="city" ng-model="vm.basicForm.city">
+                </md-input-container>
+
+                <md-input-container flex>
+                  <label>State</label>
+                  <md-select ng-model="vm.basicForm.state">
+                    <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
+                      {{state.abbrev}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+
+                <md-input-container flex>
+                  <label>Postal Code</label>
+                  <input name="postalcode" ng-model="vm.basicForm.postalCode" placeholder="12345"
+                         required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+                  <div ng-messages="basicForm.postalcode.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a postal code.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid postal code.</span></div>
+                    <div ng-message="md-maxlength">
+                      <span>Postal code can't be longer than 5 characters.</span>
+                    </div>
+                  </div>
                 </md-input-container>
               </div>
             </form>
