@@ -8,9 +8,9 @@
     }])
     .controller('MediasAdminController', MediasAdminController);
 
-  MediasAdminController.$inject = ['$scope', '$state', '$window', 'mediaResolve', 'Authentication', 'Notification'];
+  MediasAdminController.$inject = ['$scope', '$state', '$window', 'mediaResolve', 'Authentication'];
 
-  function MediasAdminController($scope, $state, $window, media, Authentication, Notification) {
+  function MediasAdminController($scope, $state, $window, media, Authentication) {
     var vm = this;
 
     vm.media = media;
@@ -25,7 +25,6 @@
       if ($window.confirm('Are you sure you want to delete?')) {
         vm.media.$remove(function() {
           $state.go('admin.medias.list');
-          Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Media deleted successfully!' });
         });
       }
     }
@@ -44,11 +43,10 @@
 
       function successCallback(res) {
         $state.go('admin.medias.list'); // should we send the User to the list or the updated Media's view?
-        Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Media saved successfully!' });
       }
 
       function errorCallback(res) {
-        Notification.error({ message: res.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Media save error!' });
+        console.log(res.data.message);
       }
     }
   }

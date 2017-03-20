@@ -9,6 +9,32 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 /**
+ * AvailabilitySchema Schema
+ * Storing hours in minutes
+ **/
+var AvailabilitySchema = new Schema({
+  mon: { open: { type: Number, default: 540 }, close: { type: Number, default: 1020 }, description: { type: String, default: 'Open' } },
+  tue: { open: { type: Number, default: 540 }, close: { type: Number, default: 1020 }, description: { type: String, default: 'Open' } },
+  wed: { open: { type: Number, default: 540 }, close: { type: Number, default: 1020 }, description: { type: String, default: 'Open' } },
+  thu: { open: { type: Number, default: 540 }, close: { type: Number, default: 1020 }, description: { type: String, default: 'Open' } },
+  fri: { open: { type: Number, default: 540 }, close: { type: Number, default: 1020 }, description: { type: String, default: 'Open' } },
+  sat: { open: { type: Number, default: 0 }, close: { type: Number, default: 0 }, description: { type: String, default: 'Close' } },
+  sun: { open: { type: Number, default: 0 }, close: { type: Number, default: 0 }, description: { type: String, default: 'Close' } }
+});
+
+/**
+ * ExceptionSchema Schema
+ * Storing hours in minutes
+ **/
+var ExceptionSchema = new Schema({
+  to: { type: Date },
+  from: { type: Date },
+  open: { type: Number, default: 0 },
+  close: { type: Number, default: 0 },
+  description: { type: String, default: 'Close' }
+});
+
+/**
  * Listing Schema
  */
 var ListingSchema = new Schema({
@@ -20,11 +46,6 @@ var ListingSchema = new Schema({
     type: String,
     default: '',
     required: 'Please fill Listing title',
-    trim: true
-  },
-  subtitle: {
-    type: String,
-    default: '',
     trim: true
   },
   fulladdress: {
@@ -71,29 +92,25 @@ var ListingSchema = new Schema({
     }
   },
   price: {
-    type: Number,
-    required: 'Please fill Listing price'
-  },
-  leasePeriodMin: {
-    type: String,
-    default: '1 Hour'
-  },
-  leasePeriodMax: {
-    type: String,
-    default: '12 Months'
-  },
-  period: {
-    type: String,
-    enum: {
-      values: 'hour day week fortnight month'.split(' '),
-      message: 'Choose how frequently the payment will be. It will be per: hour, day, week, fortnight or month?'
+    method: {
+      type: String,
+      enum: ['hourly', 'daily', 'monthly']
     },
-    default: 'week'
-    // required: 'Please fill Listing period'
+    details: {}
   },
-  space: {
-    type: Number // ,
-    // required: 'Please fill Listing space'
+  poa: {
+    type: Boolean,
+    default: false
+  },
+  bookingSystem: {
+    type: Boolean,
+    default: false
+  },
+  availability: {
+    type: AvailabilitySchema
+  },
+  exception: {
+    type: [ExceptionSchema]
   },
   description: {
     type: String,
@@ -110,36 +127,24 @@ var ListingSchema = new Schema({
     default: 0,
     required: 'Please fill the number of Parking Spaces'
   },
-  desks: {
+  capacity: {
     type: Number,
-    default: 0,
+    default: 1,
     required: 'Please fill the number of Desks'
   },
-  boardrooms: {
+  boardroom: {
     type: Number,
     default: 0,
     required: 'Please fill the number of Board Rooms'
-  },
-  availability: {
-    type: Date,
-    default: Date.now
   },
   featured: {
     type: Boolean,
     default: false
   },
-  featuredImage: {
-    type: Schema.ObjectId,
-    ref: 'Media'
-  },
   images: [{
     type: String,
     default: '',
     trim: true
-  }],
-  galleryImage: [{
-    type: Schema.ObjectId,
-    ref: 'Media'
   }],
   stats: {
     clicks: {
@@ -172,10 +177,6 @@ var ListingSchema = new Schema({
     }]
   },
   reports: {
-    shouldntBe: {
-      type: Number,
-      default: 0
-    },
     notCM: {
       type: Number,
       default: 0
@@ -187,28 +188,6 @@ var ListingSchema = new Schema({
     photo: {
       type: Number,
       default: 0
-    }
-  },
-  nearbyRecommendations: {
-    busStop: {
-      type: String,
-      trim: true
-    },
-    trainStation: {
-      type: String,
-      trim: true
-    },
-    coffee: {
-      type: String,
-      trim: true
-    },
-    lunchSpot: {
-      type: String,
-      trim: true
-    },
-    meetClients: {
-      type: String,
-      trim: true
     }
   },
   status: {

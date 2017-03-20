@@ -74,6 +74,11 @@
               </th>
               <th class="secondary-text">
                 <div class="table-header">
+                  <span class="column-title">Featured</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
                   <span class="column-title">Actions</span>
                 </div>
               </th>
@@ -86,6 +91,7 @@
               <td>{{listing.category[0]}}</td>
               <td>{{listing.price}}</td>
               <td>{{listing.status}}</td>
+              <td>{{listing.featured}}</td>
               <td>
                 <md-button class="edit-button md-icon-button" ng-click="vm.gotoListingDetail(listing._id)" aria-label="Listing details"
                            aria-label="Listing Detail">

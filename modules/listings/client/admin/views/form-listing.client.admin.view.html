@@ -3,13 +3,13 @@
   <!-- HEADER -->
   <div class="header md-accent-bg" layout="row" layout-align="start center">
     <div class="white-fg" layout="row" layout-align="start center" flex>
-      <md-button class="goto-products-button md-icon-button" aria-label="Go to listings"
+      <md-button class="goto-listings-button md-icon-button" aria-label="Go to listings"
                  ng-click="vm.gotoListings()">
         <md-icon md-font-icon="icon-arrow-left"></md-icon>
       </md-button>
 
       <div layout="row" layout-align="start center">
-        <div class="product-image" hide-xs>
+        <div class="listing-image" hide-xs>
           <img ng-src="{{vm.listing.featuredImage.url}}">
         </div>
 
@@ -38,23 +38,23 @@
 
     <md-menu-bar id="status-menu">
       <md-menu md-position-mode="left bottom">
-        <md-button class="status-button" ng-click="$mdOpenMenu()"
+        <md-button class="status-button" ng-click="$mdMenu.open()"
                    aria-label="Status settings">
           <div layout="row" layout-align="space-between center">
             <div class="avatar-wrapper">
-              <md-icon md-font-icon ng-class="vm.listing.status.icon"
-                       ng-style="{'color': vm.listing.status.color }"
+              <md-icon md-font-icon ng-class="vm.listingStatus.icon"
+                       ng-style="{'color': vm.listingStatus.color }"
                        class="icon status">
               </md-icon>
             </div>
-            <span class="status" hide show-gt-sm>{{vm.listing.status.title}}</span>
+            <span class="status" hide show-gt-sm>{{vm.listing.status}}</span>
             <md-icon md-font-icon="icon-chevron-down"
                      class="icon s16" hide-xs></md-icon>
           </div>
         </md-button>
         <md-menu-content width="1">
           <md-menu-item class="status md-indent"
-                        ng-class="{'selected': status === vm.listing.status}"
+                        ng-class="{'selected': status === vm.listingStatus}"
                         ng-repeat="status in vm.listingStatusOptions">
             <md-icon md-font-icon="{{status.icon}}" ng-style="{'color': status.color }"
                      class="icon"></md-icon>
@@ -86,16 +86,12 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form id="listingForm" name="listingForm">
               <md-input-container class="md-block">
                 <label>Listing Title</label>
                 <input type="text" ng-model="vm.listing.title" required>
               </md-input-container>
-
-              <h3 class="secondary-text">Listing Description</h3>
-              <text-angular ta-toolbar="vm.taToolbar" ng-model="vm.listing.description"
-                            class="pb-32"></text-angular>
 
               <md-input-container class="md-block">
                 <label>Categories</label>
@@ -114,6 +110,10 @@
                   </md-optgroup>
                 </md-select>
               </md-input-container>
+
+              <h3 class="secondary-text">Listing Description</h3>
+              <text-angular ta-toolbar="vm.taToolbar" ng-model="vm.listing.description"
+                            class="pb-32"></text-angular>
             </form>
           </div>
         </md-tab-body>
@@ -125,7 +125,7 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form>
               <div layout="row" flex="100" layout-wrap>
                 <md-input-container layout="column" flex="100" flex-gt-xs="50" flex-gt-md="25" ng-repeat="amenity in vm.amenities">
@@ -145,8 +145,32 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form>
+
+              <div layout="column" layout-gt-sm="row">
+                <md-input-container flex>
+                  <input vs-google-autocomplete="options"
+                         ng-model="vm.listing.fulladdress"
+                         vs-place="address.place"
+                         vs-place-id="address.components.placeId"
+                         vs-home-number="vm.listing.address.unit"
+                         vs-street-number="vm.listing.address.streetNumber"
+                         vs-street="vm.listing.address.streetName"
+                         vs-city="vm.listing.address.suburb"
+                         vs-state="vm.listing.address.state"
+                         vs-post-code="vm.listing.address.postCode"
+                         vs-latitude="vm.listing.address.geo[0]"
+                         vs-longitude="vm.listing.address.geo[1]"
+                         name="fulladdress"
+                         type="text"
+                         id="fulladdress"
+                         required
+                         aria-label="Full Address"
+                  >
+                </md-input-container>
+              </div>
+              
               <div layout="column" layout-gt-sm="row">
                 <md-input-container flex>
                   <label>Unit Number</label>
@@ -163,13 +187,13 @@
 
                 <md-input-container flex>
                   <label>Street Number</label>
-                  <input name="streetNumber" ng-model="vm.listing.address.streetNumber" placeholder="1234"
-                         required ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                  <input name="streetNumber" ng-model="vm.listing.address.streetNumber" placeholder="1234567"
+                         required ng-pattern="/^[0-9]{7}$/" md-maxlength="7">
                   <div ng-messages="basicForm.streetNumber.$error" role="alert" multiple>
                     <div ng-message="required"><span>You must supply a street number.</span></div>
                     <div ng-message="pattern"><span>That doesn't look like a valid street number.</span></div>
                     <div ng-message="md-maxlength">
-                      <span>Street number code can't be longer than 4 characters.</span>
+                      <span>Street number code can't be longer than 7 characters.</span>
                     </div>
                   </div>
                 </md-input-container>
@@ -189,28 +213,24 @@
 
               <div layout="column" layout-gt-xs="row">
                 <md-input-container flex>
-                  <label>City</label>
-                  <input type="text" name="city" ng-model="vm.basicForm.city">
+                  <label>Suburb</label>
+                  <input type="text" name="suburb" ng-model="vm.listing.address.suburb">
                 </md-input-container>
 
                 <md-input-container flex>
                   <label>State</label>
-                  <md-select ng-model="vm.basicForm.state">
-                    <md-option ng-repeat="state in vm.states" value="{{state.abbrev}}">
-                      {{state.abbrev}}
-                    </md-option>
-                  </md-select>
+                  <input type="text" name="state" ng-model="vm.listing.address.state">
                 </md-input-container>
 
                 <md-input-container flex>
                   <label>Postal Code</label>
-                  <input name="postalcode" ng-model="vm.basicForm.postalCode" placeholder="12345"
-                         required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
-                  <div ng-messages="basicForm.postalcode.$error" role="alert" multiple>
-                    <div ng-message="required"><span>You must supply a postal code.</span></div>
-                    <div ng-message="pattern"><span>That doesn't look like a valid postal code.</span></div>
+                  <input name="postcode" ng-model="vm.listing.address.postCode" placeholder="1234"
+                         required ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                  <div ng-messages="basicForm.postcode.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a post code.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid post code.</span></div>
                     <div ng-message="md-maxlength">
-                      <span>Postal code can't be longer than 5 characters.</span>
+                      <span>Post code can't be longer than 4 characters.</span>
                     </div>
                   </div>
                 </md-input-container>
@@ -226,9 +246,9 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
 
-            <div id="product-image-uploader"
+            <div id="listing-image-uploader"
                  flow-init="vm.ngFlowOptions"
                  flow-name="vm.ngFlow.flow"
                  flow-files-submitted="vm.upload()"
@@ -259,7 +279,7 @@
 
               <div layout="row" layout-align="start start" layout-wrap>
                 <div ng-repeat="image in vm.listing.images" ng-switch="image.type">
-                  <div class="product-image uploading" ng-switch-when="uploading" layout="row"
+                  <div class="listing-image uploading" ng-switch-when="uploading" layout="row"
                        layout-align="center center">
                     <div class="overlay" layout="column" layout-align="center center">
                       <md-progress-linear md-mode="determinate"
@@ -269,7 +289,7 @@
                     <img class="media" flow-img="image.file">
                   </div>
 
-                  <div class="product-image" ng-switch-when="image" layout="row"
+                  <div class="listing-image" ng-switch-when="image" layout="row"
                        layout-align="center center">
                     <img class="media" ng-src="{{image.url}}"
                          ng-click="vm.updateImageZoomOptions(image.url)">
@@ -287,37 +307,325 @@
 
       <md-tab>
         <md-tab-label>
+          <span>About the Space</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout="column" layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>Parking(s)</label>
+                  <md-icon md-font-icon="icon icon-car"></md-icon>
+                  <input type="number" ng-model="vm.listing.parking" ng-pattern="/^[0-9]{3}$/" md-maxlength="3">
+                </md-input-container>
+                <md-input-container flex>
+                  <label>Capacity</label>
+                  <md-icon md-font-icon="icon icon-chair-school"></md-icon>
+                  <input type="number" ng-model="vm.listing.capacity" ng-pattern="/^[0-9]{3}$/" md-maxlength="3">
+                </md-input-container>
+                <md-input-container flex>
+                  <label>Board Room(s)</label>
+                  <md-icon md-font-icon="icon icon-account-multiple"></md-icon>
+                  <input type="number" ng-model="vm.listing.boardroom" ng-pattern="/^[0-9]{3}$/" md-maxlength="3">
+                </md-input-container>
+              </div>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab>
+        <md-tab-label>
           <span>Pricing</span>
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+
+          <div md-background-bg layout="row" layout-align="start start">
+            
+            <!-- SIDENAV -->
+            <md-sidenav class="sidenav main-sidenav md-background-bg md-whiteframe-1dp" ms-scroll md-is-locked-open="$mdMedia('gt-md')"
+                        layout="column" flex="100" md-component-id="pricing-method-sidenav"
+                        ms-sidenav-helper>
+              <!-- SIDENAV CONTENT -->
+              <div ms-scroll class="content scrollable">
+  
+                <md-list>
+                  <md-subheader class="md-no-sticky">Method</md-subheader>
+  
+                  <md-list class="offline-switch">
+                    <md-list-item ng-click="vm.listing.price.method = 'hourly'">
+  
+                      <p>Hourly</p>
+                      <md-switch class="md-primary" ng-model="vm.listing.price.method" aria-label="Toggle offline" translate
+                                 ng-true-value="'hourly'"></md-switch>
+  
+                    </md-list-item>
+                  </md-list>
+  
+                  <md-list class="offline-switch">
+                    <md-list-item ng-click="vm.listing.price.method = 'daily'">
+  
+                      <p>Daily</p>
+                      <md-switch class="md-primary" ng-model="vm.listing.price.method" aria-label="Toggle offline" translate
+                                 ng-true-value="'daily'"></md-switch>
+  
+                    </md-list-item>
+                  </md-list>
+  
+                  <md-list class="offline-switch">
+                    <md-list-item ng-click="vm.listing.price.method = 'monthly'">
+  
+                      <p>Monthly</p>
+                      <md-switch class="md-primary" ng-model="vm.listing.price.method" aria-label="Toggle offline" translate
+                                 ng-true-value="'monthly'"></md-switch>
+  
+                    </md-list-item>
+                  </md-list>
+  
+                  <md-divider></md-divider>
+                  
+                  <md-list class="offline-switch">
+                    <md-list-item ng-click="vm.listing.poa = !vm.listing.poa">
+                      
+                      <p>Show POA as a price</p>
+                      <md-checkbox class="md-primary" ng-checked="vm.listing.poa" ng-click="vm.listing.poa = !vm.listing.poa"></md-checkbox>
+                    
+                    </md-list-item>
+                  </md-list>
+  
+                  <md-divider></md-divider>
+  
+                  <md-list class="offline-switch">
+                    <md-list-item ng-click="vm.listing.bookingSystem = !vm.listing.bookingSystem">
+  
+                      <p>Use Space Now booking System</p>
+                      <md-checkbox class="md-primary" ng-checked="vm.listing.bookingSystem" ng-click="vm.listing.bookingSystem = !vm.listing.bookingSystem"></md-checkbox>
+  
+                    </md-list-item>
+                  </md-list>
+  
+  
+                </md-list>
+  
+              </div>
+              <!-- / SIDENAV CONTENT -->
+            </md-sidenav>
+            <!-- / SIDENAV -->
+
+            <div layout="column" flex>
+
+              <div md-background-bg layout="row" layout-align="start start">
+                
+                <!-- MAIN -->
+                <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp" layout="column" flex>
+
+                  <!-- HEADER -->
+                  <md-subheader class="md-no-sticky md-white-bg">
+
+                    <div layout="row" layout-align="space-between center">
+
+                      <div class="list-title" layout="row" layout-align="start center">
+                        <span ng-if="vm.listing.price.method === 'hourly'">Hourly</span>
+                        <span ng-if="vm.listing.price.method === 'daily'">Daily</span>
+                        <span ng-if="vm.listing.price.method === 'monthly'">Monthly</span>
+                      </div>
+
+                    </div>
+
+                  </md-subheader>
+                  <!-- / HEADER -->
+
+                  <!-- CONTENT -->
+
+                  <form ng-if="vm.listing.price.method === 'hourly'">
+                    <div layout="column" layout-gt-sm="row">
+                      <md-input-container flex>
+                        <label>Per Hour</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.listing.price.details.hourly.perhour">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Half Day</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.listing.price.details.hourly.perhalfday">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Day Pass</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.listing.price.details.hourly.perday">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Minimum Term</label>
+                        <md-icon md-font-icon="icon icon-timetable"></md-icon>
+                        <input type="number" ng-model="vm.listing.price.details.hourly.minimumTerm">
+                      </md-input-container>
+                    </div>
+                  </form>
+
+                  <form ng-if="vm.listing.price.method === 'daily'">
+                    <div layout="column" layout-gt-sm="row">
+                      <md-input-container flex>
+                        <label>Per Day</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="text" ng-model="vm.listing.price.details.daily.perday" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Minimum Term</label>
+                        <input type="text" ng-model="vm.listing.price.details.daily.minimumTerm" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                      </md-input-container>
+                    </div>
+                  </form>
+
+                  <form ng-if="vm.listing.price.method === 'monthly'">
+                    <div layout="column" layout-gt-sm="row">
+                      <md-input-container flex>
+                        <label>Per Month</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="text" ng-model="vm.listing.parking" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>Minimum Term</label>
+                        <input type="text" ng-model="vm.listing.boardroom" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                      </md-input-container>
+                    </div>
+                  </form>
+                </div>
+                
+              </div>
+
+              <div ng-if="vm.listing.bookingSystem" md-background-bg layout="row" layout-align="start start">
+
+                <!-- MAIN -->
+                <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp" layout="column" flex>
+
+                  <!-- AGENDA LIST -->
+                  <md-list class="agenda-list" flex>
+                  
+                    <!-- HEADER -->
+                    <md-subheader class="md-no-sticky md-white-bg">
+  
+                      <div layout="row" layout-align="space-between center">
+  
+                        <div class="list-title" layout="row" layout-align="start center">
+                          <span>Space Now Booking System</span>
+                        </div>
+  
+                      </div>
+  
+                    </md-subheader>
+                    <!-- / HEADER -->
+  
+                    <!-- CONTENT -->
+                    
+                    <md-list-item class="md-4-line" ng-repeat="days in vm.weekDays">
+  
+                      <md-input-container flex>
+                        <md-switch class="md-primary" ng-model="vm.statusDay[days]" ng-true-value="'Open'" ng-false-value="'Closed'" aria-label="Open">
+                          {{ vm.statusDay[days] }}
+                        </md-switch>
+                      </md-input-container>
+                      <p class="text-truncate font-weight-600">
+                        {{days}}
+                      </p>
+                      <md-input-container flex>
+                        <md-icon md-font-icon="icon icon-clock"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <md-icon md-font-icon="icon icon-clock"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
+                      </md-input-container>
+  
+                    </md-list-item>
+  
+                    <!-- /CONTENT -->
+                    
+                    </md-list>
+                    <!-- /AGENDA LIST -->
+  
+                </div>
+                <!-- / MAIN -->
+                
+              </div>
+              
+            </div>
+            
+          <!-- <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form>
               <md-input-container class="md-block md-icon-float">
                 <label>Tax Excluded Price</label>
                 <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.product.priceTaxExcl">
+                <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
               </md-input-container>
 
               <md-input-container class="md-block md-icon-float">
                 <label>Tax Included Price</label>
                 <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.product.priceTaxIncl">
+                <input type="number" step="0.01" ng-model="vm.listing.priceTaxIncl">
               </md-input-container>
 
               <md-input-container class="md-block md-icon-float">
                 <label>Tax Rate</label>
                 <md-icon md-font-icon="icon icon-percent"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.product.taxRate">
+                <input type="number" step="0.01" ng-model="vm.listing.taxRate">
               </md-input-container>
 
               <md-input-container class="md-block md-icon-float">
                 <label>Compared Price</label>
                 <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.product.comparedPrice">
+                <input type="number" step="0.01" ng-model="vm.listing.comparedPrice">
                 <div class="input-hint">Add a compare price to show next to the real price</div>
               </md-input-container>
             </form>
+          </div> -->
+        </md-tab-body>
+      </md-tab>
+
+      <md-tab ng-if="vm.listing.bookingSystem">
+        <md-tab-label>
+          <span>Exceptions</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout-xs="column" layout="row">
+                <div flex="20">
+                  <label>Date</label>
+                  <md-datepicker flex ng-model="vm.dateException" md-placeholder="Enter date"  md-date-filter="blockExceptionDates"></md-datepicker>
+                </div>
+                <div flex="15">
+                  <label>Status Day</label>
+                  <md-switch class="md-primary" ng-model="vm.statusDay.exception" ng-true-value="'Open'" ng-false-value="'Closed'" aria-label="'Closed'">
+                    {{ vm.statusDay.exception }}
+                  </md-switch>
+                </div>
+                <md-input-container flex="50" class="md-block md-icon-float">
+                  <label>Description</label>
+                  <textarea ng-model="vm.statusDay.description">
+                  </textarea>
+                </md-input-container>
+                <div flex>
+                  <md-button class="md-raised md-background" ng-click="vm.addException()">
+                    <span>ADD</span>
+                  </md-button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
+            <md-list>
+              <md-subheader class="md-no-sticky">Exception days</md-subheader>
+              <md-list-item ng-repeat="exception in vm.listing.exception">
+                <p flex> {{exception.from | date : 'M/d/yyyy'}}</p>
+                <p flex>{{ exception.status }}</p>
+                <p flex>{{ exception.description }}</p>
+                <p flex><md-icon md-font-icon="icon icon-trash"></md-icon></p>
+              </md-list-item>
+            </md-list>
           </div>
         </md-tab-body>
       </md-tab>
@@ -328,21 +636,21 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form>
               <md-input-container class="md-block">
                 <label>SKU</label>
-                <input type="text" ng-model="vm.product.sku">
+                <input type="text" ng-model="vm.listing.sku">
               </md-input-container>
 
               <md-input-container class="md-block">
                 <label>Barcode</label>
-                <input type="text" ng-model="vm.product.barcode">
+                <input type="text" ng-model="vm.listing.barcode">
               </md-input-container>
 
               <md-input-container class="md-block">
                 <label>Quantity</label>
-                <input type="number" step="1" ng-model="vm.product.quantity">
+                <input type="number" step="1" ng-model="vm.listing.quantity">
               </md-input-container>
             </form>
           </div>
@@ -355,34 +663,34 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="product-detail-form-container md-background-bg md-whiteframe-1dp">
+          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form>
               <div layout-gt-sm="row" layout-align="start center">
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Width</label>
-                  <input type="text" ng-model="vm.product.width">
+                  <input type="text" ng-model="vm.listing.width">
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Height</label>
-                  <input type="text" ng-model="vm.product.height">
+                  <input type="text" ng-model="vm.listing.height">
                 </md-input-container>
 
                 <md-input-container class="md-block" flex-gt-sm>
                   <label>Depth</label>
-                  <input type="text" ng-model="vm.product.depth">
+                  <input type="text" ng-model="vm.listing.depth">
                 </md-input-container>
               </div>
 
               <md-input-container class="md-block">
                 <label>Weight</label>
-                <input type="text" ng-model="vm.product.weight">
+                <input type="text" ng-model="vm.listing.weight">
               </md-input-container>
 
               <md-input-container class="md-block md-icon-float">
                 <label>Extra Shipping Fee</label>
                 <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="text" ng-model="vm.product.extraShippingFee">
+                <input type="text" ng-model="vm.listing.extraShippingFee">
               </md-input-container>
             </form>
           </div>

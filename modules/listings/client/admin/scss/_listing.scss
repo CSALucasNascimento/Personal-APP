@@ -1,15 +1,17 @@
 #listing {
 
+    position: relative;
+    
     .header {
         height: 120px;
         min-height: 120px;
         max-height: 120px;
 
-        .goto-products-button {
+        .goto-listings-button {
             margin-right: 16px;
         }
 
-        .product-image {
+        .listing-image {
             overflow: hidden;
             width: 56px;
             height: 56px;
@@ -33,10 +35,17 @@
         
     }
 
-    .product-detail-form-container {
+    .sidenav {
+        margin-right: 24px;
+        width: 300px;
+        min-width: 300px;
+        max-width: 300px;
+    }
+
+    .listing-detail-form-container {
         padding: 24px;
 
-        #product-image-uploader {
+        #listing-image-uploader {
             position: relative;
 
             &.dropping {
@@ -70,7 +79,7 @@
                 width: 500px;
             }
 
-            .product-image {
+            .listing-image {
                 position: relative;
                 width: 100px;
                 min-height: 100px;
@@ -95,6 +104,20 @@
                 }
             }
         }
+        
+        .agenda-list > md-list-item > .md-list-item-inner {
+                
+            height: 60px;
+            
+        }
+
+        md-datepicker {
+            
+            display: flex;
+            margin: 16px 0;
+            
+        }
+        
     }
 
 }

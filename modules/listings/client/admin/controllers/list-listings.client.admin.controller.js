@@ -53,8 +53,32 @@
           }
         },
         {
-          // Target the actions column
+          // Target the status column
           targets: 5,
+          filterable: false,
+          render: function (data, type) {
+            if (type === 'display') {
+              if (data === 'true') {
+                return '<i class="icon-star amber-600-fg s24"></i>';
+              }
+
+              return '<i class="icon-star-outline s24"></i>';
+            }
+
+            if (type === 'filter') {
+              if (data) {
+                return '1';
+              }
+
+              return '0';
+            }
+
+            return data;
+          }
+        },
+        {
+          // Target the actions column
+          targets: 6,
           responsivePriority: 1,
           filterable: false,
           sortable: false

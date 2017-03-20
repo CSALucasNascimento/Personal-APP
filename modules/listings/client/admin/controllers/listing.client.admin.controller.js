@@ -31,17 +31,25 @@
     vm.toggle = toggle;
     vm.exists = exists;
     vm.setListingStatus = setListingStatus;
-    vm.setListingFeatured = setListingFeatured
+    vm.setListingFeatured = setListingFeatured;
+    vm.setOpeningHours = setOpeningHours;
     vm.categoriesSelected = vm.listing.category || [];
     vm.amenitiesSelected = vm.listing.amenity || [];
     vm.listing.images = vm.listing.images || [];
+    vm.listing.status = vm.listing.status || 'draft';
+    vm.listing.price = {};
+    vm.listing.price.details = {};
+    vm.listing.price.method = vm.listing.price.method || 'hourly';
+    vm.listing.exception = [];
+    vm.dateException = new Date();
+    var exceptionDates = [new Date(2017, 0, 25).toLocaleDateString(), new Date(2017, 1, 9).toLocaleDateString()];
+    vm.addException = addException;
 
     // Data
     vm.taToolbar = [
       ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote', 'bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
       ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent', 'html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
     ];
-
     vm.categoriesSelectFilter = '';
     vm.ngFlowOptions = {
       // You can configure the ngFlow from here
@@ -58,8 +66,7 @@
     };
     vm.dropping = false;
     vm.imageZoomOptions = {};
-
-
+    vm.listingStatus = {};
     vm.listingStatusOptions = [
       {
         'title': 'Draft',
@@ -76,14 +83,26 @@
         'icon': 'icon-checkbox-marked-circle',
         'color': '#4CAF50'
       },
-      
       {
         'title': 'Expired',
         'icon': 'icon-minus-circle',
         'color': '#F44336'
       }
     ];
-    
+
+    /**
+     *
+     * HOURS SET
+     *
+     */
+
+    /**
+     *
+     * AVAILABILITY
+     *
+     */
+    vm.weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
     init();
 
     /**
@@ -96,8 +115,8 @@
         }
       }
 
-      vm.listing.status = vm.listing.status || vm.listingStatusOptions[0];
-      
+      setListingStatus(vm.listing.status);
+
     }
 
     /**
@@ -121,7 +140,12 @@
      * @param status
      */
     function setListingStatus(status) {
-      vm.listing.status = status;
+      vm.listingStatusOptions.forEach(function(statusOpt) {
+        if (statusOpt.title.toLowerCase() === status || statusOpt.title === status.title) {
+          vm.listing.status = statusOpt.title.toLowerCase();
+          vm.listingStatus = statusOpt;
+        }
+      });
     }
 
     /**
@@ -131,7 +155,78 @@
     function setListingFeatured() {
       vm.listing.featured = !vm.listing.featured;
     }
-    
+
+    /**
+     *
+     * Specifications - Set Up Opening Hours
+     *
+     */
+    function setOpeningHours() {
+      resetOpeningHours();
+      /*
+      if (vm.listing.price.method === 'hourly') {
+        vm.listing.price.details.hourly.perhour = vm.hourlyPrice;
+        vm.listing.price.details.hourly.perhalfday = vm.hourlyPriceHalfDay;
+        vm.listing.price.details.hourly.perday = vm.hourlyPriceDay;
+        vm.listing.price.details.hourly.minimumTerm = vm.minimumTermHours;
+      }
+
+      if (vm.listing.price.method === 'daily') {
+        vm.listing.price.details.daily.perday = vm.dailyPrice;
+        vm.listing.price.details.daily.minimumTerm = vm.minimumTermDays;
+      }
+
+      if (vm.listing.price.method === 'monthly') {
+        vm.listing.price.details.monthly = {};
+        vm.listing.price.details.monthly.permonth = parseInt(vm.monthlyPrice);
+        vm.listing.price.details.monthly.minimumTerm = vm.minimumTermMonths;
+        if (vm.monthlyPriceTrimester !== 0 )
+          vm.listing.price.details.monthly.trimester = vm.monthlyPriceTrimester;
+        if (vm.monthlyPriceSemester !== 0)
+          vm.listing.price.details.monthly.semester = vm.monthlyPriceSemester;
+        if (vm.monthlyPriceYear !==0)
+          vm.listing.price.details.monthly.year = vm.monthlyPriceYear;
+
+      }
+      */
+
+    }
+
+    /**
+     *
+     * Exception for Days, Weeks and Months
+     *
+     */
+    function addException() {
+      vm.exception = {};
+      vm.exception.from = vm.dateException;
+      vm.exception.to = vm.dateException;
+      vm.exception.status = vm.statusDay.exception;
+      vm.exception.description = vm.statusDay.description;
+      if (vm.statusDay.exception === "Open") {
+        vm.exception.open = 0;
+        vm.exception.close = 1440;
+        vm.exception.description = vm.exception.description || "Open";
+      } else {
+        vm.exception.open = 0;
+        vm.exception.close = 0;
+        vm.exception.description = vm.exception.description || "Closed";
+      }
+      exceptionDates.push(vm.dateException.toLocaleDateString());
+      vm.listing.exception.push(vm.exception);
+    }
+
+    /**
+     *
+     * Specifications - Reset Opening Hours
+     *
+     */
+    function resetOpeningHours() {
+      vm.listing.price.details.hourly = {};
+      vm.listing.price.details.daily = {};
+      vm.listing.price.details.monthly = {};
+    }
+
     /**
      * Save product
      */

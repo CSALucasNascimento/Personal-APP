@@ -43536,69 +43536,118 @@ img {
   #listings_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .edit-button {
     margin: 0; }
 
-#listing .header {
-  height: 120px;
-  min-height: 120px;
-  max-height: 120px; }
-  #listing .header .goto-products-button {
-    margin-right: 16px; }
-  #listing .header .product-image {
-    overflow: hidden;
-    width: 56px;
-    height: 56px;
-    margin-right: 16px;
-    border: 3px solid rgba(0, 0, 0, 0.12); }
-    #listing .header .product-image img {
-      height: 100%;
-      width: auto;
-      max-width: none; }
-  #listing .header .subtitle {
-    margin: 6px 0 0 0; }
-  #listing .header span.status {
-    margin: 0 12px 0 8px; }
-
-#listing .product-detail-form-container {
-  padding: 24px; }
-  #listing .product-detail-form-container #product-image-uploader {
-    position: relative; }
-    #listing .product-detail-form-container #product-image-uploader.dropping .drop-text {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex; }
-    #listing .product-detail-form-container #product-image-uploader .drop-text {
-      display: none;
-      position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      padding: 16px;
-      text-align: center;
-      border: 2px dashed rgba(0, 0, 0, 0.12);
-      background: #FFFFFF;
-      font-size: 20px;
-      z-index: 100; }
-    #listing .product-detail-form-container #product-image-uploader .upload-button {
-      margin-bottom: 16px; }
-    #listing .product-detail-form-container #product-image-uploader .image-zoom-area {
-      border: 2px solid rgba(0, 0, 0, 0.12);
-      width: 500px; }
-    #listing .product-detail-form-container #product-image-uploader .product-image {
-      position: relative;
-      width: 100px;
-      min-height: 100px;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      margin: 8px; }
-      #listing .product-detail-form-container #product-image-uploader .product-image.uploading .overlay {
+#listing {
+  position: relative; }
+  #listing .header {
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px; }
+    #listing .header .goto-listings-button {
+      margin-right: 16px; }
+    #listing .header .listing-image {
+      overflow: hidden;
+      width: 56px;
+      height: 56px;
+      margin-right: 16px;
+      border: 3px solid rgba(0, 0, 0, 0.12); }
+      #listing .header .listing-image img {
+        height: 100%;
+        width: auto;
+        max-width: none; }
+    #listing .header .subtitle {
+      margin: 6px 0 0 0; }
+    #listing .header span.status {
+      margin: 0 12px 0 8px; }
+  #listing .sidenav {
+    margin-right: 24px;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px; }
+  #listing .listing-detail-form-container {
+    padding: 24px; }
+    #listing .listing-detail-form-container #listing-image-uploader {
+      position: relative; }
+      #listing .listing-detail-form-container #listing-image-uploader.dropping .drop-text {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex; }
+      #listing .listing-detail-form-container #listing-image-uploader .drop-text {
+        display: none;
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-        background: rgba(0, 0, 0, 0.87); }
-      #listing .product-detail-form-container #product-image-uploader .product-image .media {
-        cursor: pointer;
-        max-height: 100%; }
+        padding: 16px;
+        text-align: center;
+        border: 2px dashed rgba(0, 0, 0, 0.12);
+        background: #FFFFFF;
+        font-size: 20px;
+        z-index: 100; }
+      #listing .listing-detail-form-container #listing-image-uploader .upload-button {
+        margin-bottom: 16px; }
+      #listing .listing-detail-form-container #listing-image-uploader .image-zoom-area {
+        border: 2px solid rgba(0, 0, 0, 0.12);
+        width: 500px; }
+      #listing .listing-detail-form-container #listing-image-uploader .listing-image {
+        position: relative;
+        width: 100px;
+        min-height: 100px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        margin: 8px; }
+        #listing .listing-detail-form-container #listing-image-uploader .listing-image.uploading .overlay {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background: rgba(0, 0, 0, 0.87); }
+        #listing .listing-detail-form-container #listing-image-uploader .listing-image .media {
+          cursor: pointer;
+          max-height: 100%; }
+    #listing .listing-detail-form-container .agenda-list > md-list-item > .md-list-item-inner {
+      height: 60px; }
+    #listing .listing-detail-form-container md-datepicker {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin: 16px 0; }
+
+#listing .main-sidenav md-list md-list-item .md-list-item-inner > md-checkbox {
+  margin-right: 0; }
+
+#listing .main-sidenav md-list md-list-item.selected .md-button {
+  font-weight: 500;
+  color: #000000; }
+
+#listing .main-sidenav md-list md-list-item.new-group-form .editable-text {
+  width: 100%; }
+  #listing .main-sidenav md-list md-list-item.new-group-form .editable-text .editable-controls {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+    padding-left: 8px; }
+    #listing .main-sidenav md-list md-list-item.new-group-form .editable-text .editable-controls .editable-input {
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      padding: 4px 2px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      width: 100%; }
+    #listing .main-sidenav md-list md-list-item.new-group-form .editable-text .editable-controls .editable-buttons .md-button {
+      margin: 0;
+      margin: 0;
+      padding: 0;
+      height: 32px;
+      min-height: 32px;
+      line-height: 32px;
+      width: 32px; }
 
 /**
 * Directives

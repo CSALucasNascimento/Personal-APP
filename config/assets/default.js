@@ -29,6 +29,7 @@ module.exports = {
 
         'public/lib/jquery/dist/jquery.js',
         'public/lib/angular/angular.js',
+        'public/lib/angular-bootstrap/ui-bootstrap.js',
         'public/lib/angular-animate/angular-animate.js',
         'public/lib/angular-aria/angular-aria.js',
         'public/lib/chart.js/dist/Chart.js',
@@ -104,7 +105,9 @@ module.exports = {
         'public/lib/textAngular/dist/textAngular-sanitize.js',
         'public/lib/textAngular/dist/textAngularSetup.js',
         'public/lib/angular-touch/angular-touch.js',
-        'public/lib/wip-image-zoom/dist/wip-image-zoom.js'
+        'public/lib/wip-image-zoom/dist/wip-image-zoom.js',
+        '//maps.googleapis.com/maps/api/js?key=AIzaSyDgxlpA4sdSzSFFC1iitqzJ_wRe0hdsdDg&libraries=places',
+        'public/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
