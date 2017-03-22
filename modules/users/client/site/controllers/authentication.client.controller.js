@@ -5,9 +5,9 @@
     .module('users.site.controllers')
     .controller('AuthenticationController', AuthenticationController);
 
-  AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$location', '$window', 'Authentication', 'PasswordValidator', 'Notification'];
+  AuthenticationController.$inject = ['$scope', '$state', 'UsersService', '$location', '$window', 'Authentication', 'PasswordValidator'];
 
-  function AuthenticationController($scope, $state, UsersService, $location, $window, Authentication, PasswordValidator, Notification) {
+  function AuthenticationController($scope, $state, UsersService, $location, $window, Authentication, PasswordValidator) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -113,25 +113,21 @@
     function onUserSignupSuccess(response) {
       // If successful we assign the response to the global user model
       vm.authentication.user = response;
-      Notification.success({ message: '<i class="glyphicon glyphicon-ok"></i> Signup successful!' });
       // And redirect to the previous or home page
       $state.go($state.previous.state.name || 'home', $state.previous.params);
     }
 
     function onUserSignupError(response) {
-      Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Signup Error!', delay: 6000 });
     }
 
     function onUserSigninSuccess(response) {
       // If successful we assign the response to the global user model
       vm.authentication.user = response;
-      Notification.info({ message: 'Welcome ' + response.firstName });
       // And redirect to the previous or home page
       $state.go($state.previous.state.name || 'home', $state.previous.params);
     }
 
     function onUserSigninError(response) {
-      Notification.error({ message: response.data.message, title: '<i class="glyphicon glyphicon-remove"></i> Signin Error!', delay: 6000 });
     }
   }
 }());

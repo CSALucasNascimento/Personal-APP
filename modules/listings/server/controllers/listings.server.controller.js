@@ -5,8 +5,12 @@
  */
 var path = require('path'),
   mongoose = require('mongoose'),
+  util = require('util'),
   Listing = mongoose.model('Listing'),
-  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
+  util = require('util'),
+  util = require('util'),
+  errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  _ = require('lodash');;
 
 /**
  * Create an listing
@@ -27,35 +31,49 @@ exports.create = function (req, res) {
 };
 
 /**
- * Show the current listing
+ * Show the current Listing
  */
-exports.read = function (req, res) {
+exports.read = function(req, res) {
+  // stats increase VIEWs per day
+  req.listing.save();
+
   // convert mongoose document to JSON
   var listing = req.listing ? req.listing.toJSON() : {};
 
-  // Add a custom field to the Listing, for determining if the current User is the "owner".
-  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Listing model.
-  listing.isCurrentUserOwner = !!(req.user && listing.user && listing.user._id.toString() === req.user._id.toString());
+  // Add a custom field to the Article, for determining if the current User is the "owner".
+  // NOTE: This field is NOT persisted to the database, since it doesn't exist in the Article model.
+  listing.isCurrentUserOwner = req.user && listing.user && listing.user._id.toString() === req.user._id.toString();
 
-  res.json(listing);
+  res.jsonp(listing);
 };
 
 /**
- * Update an listing
+ * Update a Listing
  */
-exports.update = function (req, res) {
+exports.update = function(req, res) {
   var listing = req.listing;
+  var files = req.files;
 
-  listing.title = req.body.title;
-  listing.content = req.body.content;
+  listing = _.extend(listing, req.body);
+  
+  var chunkNumber = listing['flowChunkNumber'];
+  var chunkSize = listing['flowChunkSize'];
+  var totalSize = listing['flowTotalSize'];
+  var identifier = cleanIdentifier(listing['flowIdentifier']);
+  var filename = listing['flowFilename'];
 
-  listing.save(function (err) {
+  if (!files[$.fileParameterName] || !files[$.fileParameterName].size) {
+    callback('invalid_flow_request', null, null, null);
+    return;
+  }
+
+  listing.save(req, function(err) {
     if (err) {
-      return res.status(422).send({
+      return res.status(400).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
-      res.json(listing);
+      res.jsonp(listing);
     }
   });
 };
@@ -97,7 +115,8 @@ exports.list = function (req, res) {
 /**
  * Listing middleware
  */
-exports.listingByID = function (req, res, next, id) {
+
+exports.listingByID = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(400).send({
@@ -106,16 +125,28 @@ exports.listingByID = function (req, res, next, id) {
   }
 
   Listing.findById(id)
-    .populate('user', 'displayName')
+    .populate({
+      path: 'user',
+      populate: { path: 'profileImage', select: 'url' },
+      select: 'displayName email profileImageURL profileImage'
+    })
     .exec(function (err, listing) {
       if (err) {
         return next(err);
       } else if (!listing) {
         return res.status(404).send({
-          message: 'No listing with that identifier has been found'
+          message: 'No Listing with that identifier has been found'
         });
       }
+
+      listing.address.geo.lat = listing.address.geo[0];
+      listing.address.geo.lng = listing.address.geo[1];
       req.listing = listing;
+      req.oldListing = JSON.parse(JSON.stringify(listing));
       next();
     });
 };
+
+function cleanIdentifier(identifier) {
+  return identifier.replace(/[^0-9A-Za-z_-]/g, '');
+}

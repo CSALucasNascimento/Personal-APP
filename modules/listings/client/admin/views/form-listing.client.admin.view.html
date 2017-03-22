@@ -67,7 +67,7 @@
     </md-menu-bar>
 
     <div>
-      <md-button class="md-raised md-background" ng-click="vm.saveProduct()"
+      <md-button class="md-raised md-background" ng-click="vm.saveListing()"
                  ng-disabled="!vm.isFormValid('listingForm')">
         <span>SAVE</span>
       </md-button>
@@ -242,7 +242,7 @@
 
       <md-tab>
         <md-tab-label>
-          <span>Product Images</span>
+          <span>Images</span>
         </md-tab-label>
 
         <md-tab-body>
@@ -317,17 +317,17 @@
                 <md-input-container flex>
                   <label>Parking(s)</label>
                   <md-icon md-font-icon="icon icon-car"></md-icon>
-                  <input type="number" ng-model="vm.listing.parking" ng-pattern="/^[0-9]{3}$/" md-maxlength="3">
+                  <input type="number" step="1" ng-model="vm.listing.parking">
                 </md-input-container>
                 <md-input-container flex>
                   <label>Capacity</label>
                   <md-icon md-font-icon="icon icon-chair-school"></md-icon>
-                  <input type="number" ng-model="vm.listing.capacity" ng-pattern="/^[0-9]{3}$/" md-maxlength="3">
+                  <input type="number" step="1"  ng-model="vm.listing.capacity">
                 </md-input-container>
                 <md-input-container flex>
                   <label>Board Room(s)</label>
                   <md-icon md-font-icon="icon icon-account-multiple"></md-icon>
-                  <input type="number" ng-model="vm.listing.boardroom" ng-pattern="/^[0-9]{3}$/" md-maxlength="3">
+                  <input type="number" step="1"  ng-model="vm.listing.boardroom">
                 </md-input-container>
               </div>
             </form>
@@ -345,6 +345,7 @@
           <div md-background-bg layout="row" layout-align="start start">
             
             <!-- SIDENAV -->
+            
             <md-sidenav class="sidenav main-sidenav md-background-bg md-whiteframe-1dp" ms-scroll md-is-locked-open="$mdMedia('gt-md')"
                         layout="column" flex="100" md-component-id="pricing-method-sidenav"
                         ms-sidenav-helper>
@@ -387,10 +388,12 @@
                   <md-divider></md-divider>
                   
                   <md-list class="offline-switch">
-                    <md-list-item ng-click="vm.listing.poa = !vm.listing.poa">
+                    <md-list-item>
                       
                       <p>Show POA as a price</p>
-                      <md-checkbox class="md-primary" ng-checked="vm.listing.poa" ng-click="vm.listing.poa = !vm.listing.poa"></md-checkbox>
+                      <md-checkbox class="md-primary" ng-model="vm.listing.poa" aria-label="POA">
+                        {{vm.listing.poa}}
+                      </md-checkbox>
                     
                     </md-list-item>
                   </md-list>
@@ -400,7 +403,7 @@
                   <md-list class="offline-switch">
                     <md-list-item ng-click="vm.listing.bookingSystem = !vm.listing.bookingSystem">
   
-                      <p>Use Space Now booking System</p>
+                      <p>Use Space Now Booking System</p>
                       <md-checkbox class="md-primary" ng-checked="vm.listing.bookingSystem" ng-click="vm.listing.bookingSystem = !vm.listing.bookingSystem"></md-checkbox>
   
                     </md-list-item>
@@ -412,7 +415,9 @@
               </div>
               <!-- / SIDENAV CONTENT -->
             </md-sidenav>
+            
             <!-- / SIDENAV -->
+            <!-- CONTENT -->
 
             <div layout="column" flex>
 
@@ -459,7 +464,12 @@
                       <md-input-container flex>
                         <label>Minimum Term</label>
                         <md-icon md-font-icon="icon icon-timetable"></md-icon>
-                        <input type="number" ng-model="vm.listing.price.details.hourly.minimumTerm">
+                        <md-select ng-model="vm.minimumTermHours">
+                          <md-option ng-value="option.value"
+                                     ng-repeat="option in vm.minimumTermPerHour">
+                            {{option.display}}
+                          </md-option>
+                        </md-select>
                       </md-input-container>
                     </div>
                   </form>
@@ -469,11 +479,17 @@
                       <md-input-container flex>
                         <label>Per Day</label>
                         <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                        <input type="text" ng-model="vm.listing.price.details.daily.perday" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                        <input type="number" step="0.01" ng-model="vm.listing.price.details.daily.perday">
                       </md-input-container>
                       <md-input-container flex>
                         <label>Minimum Term</label>
-                        <input type="text" ng-model="vm.listing.price.details.daily.minimumTerm" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                        <md-icon md-font-icon="icon icon-timetable"></md-icon>
+                        <md-select ng-model="vm.minimumTermDays">
+                          <md-option ng-value="option.value"
+                                     ng-repeat="option in vm.minimumTermPerDay">
+                            {{option.display}}
+                          </md-option>
+                        </md-select>
                       </md-input-container>
                     </div>
                   </form>
@@ -483,11 +499,43 @@
                       <md-input-container flex>
                         <label>Per Month</label>
                         <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                        <input type="text" ng-model="vm.listing.parking" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                        <input type="number" step="0.01" ng-model="vm.listing.price.details.daily.permonth">
                       </md-input-container>
                       <md-input-container flex>
                         <label>Minimum Term</label>
-                        <input type="text" ng-model="vm.listing.boardroom" ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                        <md-icon md-font-icon="icon icon-timetable"></md-icon>
+                        <md-select ng-model="vm.minimumTermMonths">
+                          <md-option ng-value="option.value"
+                                     ng-repeat="option in vm.minimumTermPerMonth">
+                            {{option.display}}
+                          </md-option>
+                        </md-select>
+                      </md-input-container>
+                    </div>
+                    <div layout="column" layout-gt-sm="row" data-ng-if="vm.minimumTermMonths < 12">
+                      <md-subheader class="md-no-sticky md-white-bg">
+                        <div layout="row" layout-align="space-between center">
+                          <div class="list-title" layout="row" layout-align="start center">
+                            <span>Long Term Incentives</span>
+                          </div>
+                        </div>
+                      </md-subheader>
+                    </div>
+                    <div layout="column" layout-gt-sm="row" data-ng-if="vm.minimumTermMonths < 12">
+                      <md-input-container flex data-ng-if="vm.minimumTermMonths < 3">
+                        <label>3 Months</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.monthlyPriceTrimester">
+                      </md-input-container>
+                      <md-input-container flex data-ng-if="vm.minimumTermMonths < 6">
+                        <label>6 Months</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.monthlyPriceSemester">
+                      </md-input-container>
+                      <md-input-container flex>
+                        <label>12 Months</label>
+                        <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
+                        <input type="number" step="0.01" ng-model="vm.monthlyPriceYear">
                       </md-input-container>
                     </div>
                   </form>
@@ -520,15 +568,15 @@
                     <!-- CONTENT -->
                     
                     <md-list-item class="md-4-line" ng-repeat="days in vm.weekDays">
-  
+                      
+                      <p flex="10" class="text-truncate font-weight-600">
+                        {{days}}
+                      </p>
                       <md-input-container flex>
                         <md-switch class="md-primary" ng-model="vm.statusDay[days]" ng-true-value="'Open'" ng-false-value="'Closed'" aria-label="Open">
                           {{ vm.statusDay[days] }}
                         </md-switch>
                       </md-input-container>
-                      <p class="text-truncate font-weight-600">
-                        {{days}}
-                      </p>
                       <md-input-container flex>
                         <md-icon md-font-icon="icon icon-clock"></md-icon>
                         <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
@@ -551,35 +599,10 @@
               </div>
               
             </div>
+
+            <!-- / CONTENT -->
             
-          <!-- <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
-              <md-input-container class="md-block md-icon-float">
-                <label>Tax Excluded Price</label>
-                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
-              </md-input-container>
-
-              <md-input-container class="md-block md-icon-float">
-                <label>Tax Included Price</label>
-                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.listing.priceTaxIncl">
-              </md-input-container>
-
-              <md-input-container class="md-block md-icon-float">
-                <label>Tax Rate</label>
-                <md-icon md-font-icon="icon icon-percent"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.listing.taxRate">
-              </md-input-container>
-
-              <md-input-container class="md-block md-icon-float">
-                <label>Compared Price</label>
-                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="number" step="0.01" ng-model="vm.listing.comparedPrice">
-                <div class="input-hint">Add a compare price to show next to the real price</div>
-              </md-input-container>
-            </form>
-          </div> -->
+          </div>
         </md-tab-body>
       </md-tab>
 
@@ -589,113 +612,99 @@
         </md-tab-label>
 
         <md-tab-body>
-          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
-              <div layout-xs="column" layout="row">
-                <div flex="20">
-                  <label>Date</label>
-                  <md-datepicker flex ng-model="vm.dateException" md-placeholder="Enter date"  md-date-filter="blockExceptionDates"></md-datepicker>
-                </div>
-                <div flex="15">
-                  <label>Status Day</label>
-                  <md-switch class="md-primary" ng-model="vm.statusDay.exception" ng-true-value="'Open'" ng-false-value="'Closed'" aria-label="'Closed'">
-                    {{ vm.statusDay.exception }}
-                  </md-switch>
-                </div>
-                <md-input-container flex="50" class="md-block md-icon-float">
-                  <label>Description</label>
-                  <textarea ng-model="vm.statusDay.description">
-                  </textarea>
-                </md-input-container>
-                <div flex>
+
+          <div md-background-bg layout="row" layout-align="start start">
+
+            <!-- SIDENAV -->
+            
+            <md-sidenav class="sidenav main-sidenav md-background-bg md-whiteframe-1dp" ms-scroll md-is-locked-open="$mdMedia('gt-md')"
+                        layout="column" flex="100" md-component-id="pricing-method-sidenav"
+                        ms-sidenav-helper>
+              <!-- SIDENAV CONTENT -->
+              <div ms-scroll class="content scrollable">
+                
+                <md-subheader class="md-no-sticky">Exceptions Date</md-subheader>
+
+                <md-list>
+                  <md-list-item>
+                    <md-datepicker ng-model="vm.dateException" md-placeholder="Enter date"  md-date-filter="vm.blockExceptionDates"></md-datepicker>
+                  </md-list-item>
+                </md-list>
+
+                <md-list>
+                  <md-list-item>
+                    <p>Status</p>
+                    <md-switch class="md-primary" ng-model="vm.statusDay.exception" ng-true-value="'Open'" ng-false-value="'Closed'" aria-label="'Closed'">
+                      {{ vm.statusDay.exception }}
+                    </md-switch>
+                  </md-list-item>
+                </md-list>
+
+                <md-list>
+                  <textarea class="ph-16 pv-16" flex="100" ng-model="vm.statusDay.description" placeholder="Description" style="width: 100%"></textarea>
+                </md-list>
+                  
+                <md-divider></md-divider>
+
+                <md-list>
                   <md-button class="md-raised md-background" ng-click="vm.addException()">
                     <span>ADD</span>
                   </md-button>
+                </md-list>
+                
+              </div>
+              <!-- / SIDENAV CONTENT -->
+              
+            </md-sidenav>
+            
+            <!-- / SIDENAV -->
+            <!-- CONTENT -->
+
+            <div layout="column" flex>
+
+              <div md-background-bg layout="row" layout-align="start start">
+
+                <!-- MAIN -->
+                <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp" layout="column" flex>
+
+                  <!-- HEADER -->
+                  <md-subheader class="md-no-sticky md-white-bg">
+
+                    <div layout="row" layout-align="space-between center">
+
+                      <div class="list-title" layout="row" layout-align="start center">
+                        <span>List of exceptions</span>
+                      </div>
+
+                    </div>
+
+                  </md-subheader>
+                  <!-- / HEADER -->
+
+                  <!-- CONTENT -->
+
+                  <md-list>
+                    <md-list-item ng-repeat="exception in vm.listing.exception">
+                      <p flex> {{exception.from | date : 'M/d/yyyy'}}</p>
+                      <p flex>{{ exception.status }}</p>
+                      <p flex>{{ exception.description }}</p>
+                      <p flex><md-icon md-font-icon="icon icon-trash"></md-icon></p>
+                    </md-list-item>
+                  </md-list>
+                  
                 </div>
-              </div>
-            </form>
-          </div>
 
-          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
-            <md-list>
-              <md-subheader class="md-no-sticky">Exception days</md-subheader>
-              <md-list-item ng-repeat="exception in vm.listing.exception">
-                <p flex> {{exception.from | date : 'M/d/yyyy'}}</p>
-                <p flex>{{ exception.status }}</p>
-                <p flex>{{ exception.description }}</p>
-                <p flex><md-icon md-font-icon="icon icon-trash"></md-icon></p>
-              </md-list-item>
-            </md-list>
-          </div>
-        </md-tab-body>
-      </md-tab>
-
-      <md-tab>
-        <md-tab-label>
-          <span>Inventory</span>
-        </md-tab-label>
-
-        <md-tab-body>
-          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
-              <md-input-container class="md-block">
-                <label>SKU</label>
-                <input type="text" ng-model="vm.listing.sku">
-              </md-input-container>
-
-              <md-input-container class="md-block">
-                <label>Barcode</label>
-                <input type="text" ng-model="vm.listing.barcode">
-              </md-input-container>
-
-              <md-input-container class="md-block">
-                <label>Quantity</label>
-                <input type="number" step="1" ng-model="vm.listing.quantity">
-              </md-input-container>
-            </form>
-          </div>
-        </md-tab-body>
-      </md-tab>
-
-      <md-tab>
-        <md-tab-label>
-          <span>Shipping</span>
-        </md-tab-label>
-
-        <md-tab-body>
-          <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
-              <div layout-gt-sm="row" layout-align="start center">
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Width</label>
-                  <input type="text" ng-model="vm.listing.width">
-                </md-input-container>
-
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Height</label>
-                  <input type="text" ng-model="vm.listing.height">
-                </md-input-container>
-
-                <md-input-container class="md-block" flex-gt-sm>
-                  <label>Depth</label>
-                  <input type="text" ng-model="vm.listing.depth">
-                </md-input-container>
               </div>
 
-              <md-input-container class="md-block">
-                <label>Weight</label>
-                <input type="text" ng-model="vm.listing.weight">
-              </md-input-container>
+            </div>
 
-              <md-input-container class="md-block md-icon-float">
-                <label>Extra Shipping Fee</label>
-                <md-icon md-font-icon="icon icon-currency-usd"></md-icon>
-                <input type="text" ng-model="vm.listing.extraShippingFee">
-              </md-input-container>
-            </form>
+            <!-- / CONTENT -->
+            
           </div>
+          
         </md-tab-body>
       </md-tab>
+
     </md-tabs>
 
   </div>

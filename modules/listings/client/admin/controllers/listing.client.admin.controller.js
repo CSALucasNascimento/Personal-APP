@@ -37,13 +37,6 @@
     vm.amenitiesSelected = vm.listing.amenity || [];
     vm.listing.images = vm.listing.images || [];
     vm.listing.status = vm.listing.status || 'draft';
-    vm.listing.price = {};
-    vm.listing.price.details = {};
-    vm.listing.price.method = vm.listing.price.method || 'hourly';
-    vm.listing.exception = [];
-    vm.dateException = new Date();
-    var exceptionDates = [new Date(2017, 0, 25).toLocaleDateString(), new Date(2017, 1, 9).toLocaleDateString()];
-    vm.addException = addException;
 
     // Data
     vm.taToolbar = [
@@ -90,11 +83,109 @@
       }
     ];
 
+
+    /**
+     *
+     * PRICE
+     *
+     */
+    vm.setOpeningHours = setOpeningHours;
+    vm.listing.price =vm.listing.price || {};
+    vm.listing.price.details = vm.listing.price.details || {};
+    vm.listing.price.method = vm.listing.price.method || 'hourly';
+    vm.hourlyPrice = '';
+    vm.hourlyPriceHalfDay = '';
+    vm.hourlyPriceDay = '';
+    vm.dailyPrice = '';
+    vm.monthlyPrice = '';
+    vm.monthlyPriceTrimester = '';
+    vm.monthlyPriceSemester = '';
+    vm.monthlyPriceYear = '';
+    vm.minimumTermHours = 1;
+    vm.minimumTermDays = 1;
+    vm.minimumTermMonths = 1;
+    vm.minimumTermPerHour = [
+      {
+        value: 1,
+        display: '1 Hour'
+      },
+      {
+        value: 2,
+        display: '2 Hours'
+      },
+      {
+        value: 3,
+        display: '3 Hours'
+      },
+      {
+        value: 4,
+        display: '4 Hours'
+      }];
+    vm.minimumTermPerDay = [
+      {
+        value: 1,
+        display: '1 Day'
+      },
+      {
+        value: 2,
+        display: '2 Days'
+      },
+      {
+        value: 3,
+        display: '3 Days'
+      },
+      {
+        value: 4,
+        display: '4 Days'
+      },
+      {
+        value: 5,
+        display: '5 Days'
+      },
+      {
+        value: 10,
+        display: '10 Days'
+      },
+      {
+        value: 15,
+        display: '15 Days'
+      },
+      {
+        value: 20,
+        display: '20 Days'
+      }
+    ];
+    vm.minimumTermPerMonth = [
+      {
+        value: 1,
+        display: '1 Month'
+      },
+      {
+        value: 3,
+        display: '3 Months'
+      },
+      {
+        value: 6,
+        display: '6 Months'
+      },
+      {
+        value: 12,
+        display: '12 Months'
+      }
+    ];
     /**
      *
      * HOURS SET
      *
      */
+    vm.startTime = new Date();
+    vm.startTime.setHours(9, 0, 0, 0);
+    vm.endTime = new Date();
+    vm.endTime.setHours(17, 0, 0, 0);
+    vm.minStartTime = moment({ hour: 0, minute: 0 }).format('H:mm');
+    vm.minEndTime = moment({ hour: 1, minute: 0 }).format('H:mm');
+    vm.maxStartTime = moment({ hour: 23, minute: 0 }).format('H:mm');
+    vm.maxEndTime = moment({ hour: 23, minute: 59 }).format('H:mm');
 
     /**
      *
@@ -102,6 +193,35 @@
      *
      */
     vm.weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    vm.statusDay = {};
+    vm.statusDay.exception = vm.statusDay.exception === 'Closed' ? 'Open' : 'Closed';
+    vm.weekDays.forEach(function(wd) {
+      if (wd === 'Sun') {
+        eval('vm.startTime.' + wd + ' = new Date();');
+        eval('vm.startTime.' + wd + '.setHours(0, 0, 0, 0);');
+        eval('vm.endTime.' + wd + ' = new Date();');
+        eval('vm.endTime.' + wd + '.setHours(0, 0, 0, 0);');
+        eval('vm.statusDay.' + wd + '= "Closed" ;');
+      } else {
+        eval('vm.startTime.' + wd + ' = new Date();');
+        eval('vm.startTime.' + wd + '.setHours(9, 0, 0, 0);');
+        eval('vm.endTime.' + wd + ' = new Date();');
+        eval('vm.endTime.' + wd + '.setHours(17, 0, 0, 0);');
+        eval('vm.statusDay.' + wd + '= "Open" ;');
+      }
+    });
+    vm.setAvailability = setAvailability;
+    vm.blockExceptionDates = blockExceptionDates;
+
+    /**
+     *
+     * EXCEPTIONS
+     *
+     */
+    vm.listing.exception = vm.listing.exception || [];
+    vm.dateException = new Date();
+    var exceptionDates = [new Date(2017, 0, 25).toLocaleDateString(), new Date(2017, 1, 9).toLocaleDateString()];
+    vm.addException = addException;
 
     init();
 
@@ -110,8 +230,8 @@
      */
     function init() {
       if (vm.listing._id) {
-        if (vm.listing.galleryImage.length > 0) {
-          vm.updateImageZoomOptions(vm.listing.galleryImage[0].url);
+        if (vm.listing.images.length > 0) {
+          vm.updateImageZoomOptions(vm.listing.images[0].url);
         }
       }
 
@@ -163,33 +283,6 @@
      */
     function setOpeningHours() {
       resetOpeningHours();
-      /*
-      if (vm.listing.price.method === 'hourly') {
-        vm.listing.price.details.hourly.perhour = vm.hourlyPrice;
-        vm.listing.price.details.hourly.perhalfday = vm.hourlyPriceHalfDay;
-        vm.listing.price.details.hourly.perday = vm.hourlyPriceDay;
-        vm.listing.price.details.hourly.minimumTerm = vm.minimumTermHours;
-      }
-
-      if (vm.listing.price.method === 'daily') {
-        vm.listing.price.details.daily.perday = vm.dailyPrice;
-        vm.listing.price.details.daily.minimumTerm = vm.minimumTermDays;
-      }
-
-      if (vm.listing.price.method === 'monthly') {
-        vm.listing.price.details.monthly = {};
-        vm.listing.price.details.monthly.permonth = parseInt(vm.monthlyPrice);
-        vm.listing.price.details.monthly.minimumTerm = vm.minimumTermMonths;
-        if (vm.monthlyPriceTrimester !== 0 )
-          vm.listing.price.details.monthly.trimester = vm.monthlyPriceTrimester;
-        if (vm.monthlyPriceSemester !== 0)
-          vm.listing.price.details.monthly.semester = vm.monthlyPriceSemester;
-        if (vm.monthlyPriceYear !==0)
-          vm.listing.price.details.monthly.year = vm.monthlyPriceYear;
-
-      }
-      */
-
     }
 
     /**
@@ -216,6 +309,35 @@
       vm.listing.exception.push(vm.exception);
     }
 
+    /**
+     *
+     * Block Days defined by exception
+     *
+     */
+    function blockExceptionDates(date) {
+      return exceptionDates.indexOf(date.toLocaleDateString()) === -1;
+    }
+    
+    /**
+     *
+     * Specifications - Set Up Availability
+     *
+     */
+    function setAvailability() {
+      vm.listing.availability = vm.listing.availability || {};
+      $scope.weekDays.forEach(function(wd) {
+        eval('vm.listing.availability.' + wd.toLowerCase() + ' = {}');
+        if (eval('vm.statusDay.' + wd + ' === "Closed"')) {
+          eval('vm.listing.availability.' + wd.toLowerCase() + '.open = 0');
+          eval('vm.listing.availability.' + wd.toLowerCase() + '.close = 0');
+        } else {
+          eval('vm.listing.availability.' + wd.toLowerCase() + '.open = calcTimeMinutes(vm.startTime.' + wd + '.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}))');
+          eval('vm.listing.availability.' + wd.toLowerCase() + '.close = calcTimeMinutes(vm.endTime.' + wd + '.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}))');
+        }
+        eval('vm.listing.availability.' + wd.toLowerCase() + '.description = vm.statusDay.' + wd);
+      });
+    }
+    
     /**
      *
      * Specifications - Reset Opening Hours

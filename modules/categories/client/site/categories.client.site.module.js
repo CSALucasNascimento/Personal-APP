@@ -1,6 +1,6 @@
 (function (app) {
   'use strict';
 
-  app.registerModule('categories.services');
+  app.registerModule('categories.site.services');
 
 }(ApplicationConfiguration));
