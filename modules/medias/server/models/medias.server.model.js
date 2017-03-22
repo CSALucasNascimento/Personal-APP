@@ -14,25 +14,12 @@ var MediaSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  title: {
-    type: String,
-    default: '',
-    trim: true,
-    required: 'Title cannot be blank'
-  },
-  tags: {
-    type: [{}],
-    trim: true
-  },
-  content: {
-    type: String,
-    default: '',
-    trim: true
+  url: {
+    type: String
   },
   featuredImage: {
-    type: String,
-    default: '',
-    trim: true
+    type: Boolean,
+    default: false
   },
   publish: {
     type: Boolean,

@@ -3,14 +3,14 @@
 /**
  * Module dependencies
  */
-var path = require('path'),
+var _ = require('lodash'),
+  path = require('path'),
   mongoose = require('mongoose'),
   util = require('util'),
   Listing = mongoose.model('Listing'),
-  util = require('util'),
-  util = require('util'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-  _ = require('lodash');;
+  multer = require('multer'),
+  config = require(path.resolve('./config/config'));
 
 /**
  * Create an listing
@@ -52,20 +52,8 @@ exports.read = function(req, res) {
  */
 exports.update = function(req, res) {
   var listing = req.listing;
-  var files = req.files;
 
   listing = _.extend(listing, req.body);
-  
-  var chunkNumber = listing['flowChunkNumber'];
-  var chunkSize = listing['flowChunkSize'];
-  var totalSize = listing['flowTotalSize'];
-  var identifier = cleanIdentifier(listing['flowIdentifier']);
-  var filename = listing['flowFilename'];
-
-  if (!files[$.fileParameterName] || !files[$.fileParameterName].size) {
-    callback('invalid_flow_request', null, null, null);
-    return;
-  }
 
   listing.save(req, function(err) {
     if (err) {
@@ -147,6 +135,76 @@ exports.listingByID = function(req, res, next, id) {
     });
 };
 
-function cleanIdentifier(identifier) {
-  return identifier.replace(/[^0-9A-Za-z_-]/g, '');
-}
+/**
+ * Update listing picture
+ */
+exports.uploadImage = function (listing) {
+  var existingImageUrl;
+
+  // Filtering to upload only images
+  var multerConfig = config.uploads.listing.image;
+  multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
+  var upload = multer(multerConfig).single('newProfilePicture');
+
+  if (user) {
+    existingImageUrl = user.profileImageURL;
+    uploadImage()
+      .then(updateUser)
+      .then(deleteOldImage)
+      .then(function () {
+        res.json(user);
+      })
+      .catch(function (err) {
+        res.status(422).send(err);
+      });
+  } else {
+    res.status(401).send({
+      message: 'User is not signed in'
+    });
+  }
+
+  function uploadImage () {
+    return new Promise(function (resolve, reject) {
+      upload(req, res, function (uploadError) {
+        if (uploadError) {
+          reject(errorHandler.getErrorMessage(uploadError));
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  function updateUser () {
+    return new Promise(function (resolve, reject) {
+      user.profileImageURL = config.uploads.profile.image.dest + req.file.filename;
+      user.save(function (err, theuser) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+  function deleteOldImage () {
+    return new Promise(function (resolve, reject) {
+      if (existingImageUrl !== User.schema.path('profileImageURL').defaultValue) {
+        fs.unlink(existingImageUrl, function (unlinkError) {
+          if (unlinkError) {
+            console.log(unlinkError);
+            reject({
+              message: 'Error occurred while deleting old profile picture'
+            });
+          } else {
+            resolve();
+          }
+        });
+      } else {
+        resolve();
+      }
+    });
+  }
+
+};

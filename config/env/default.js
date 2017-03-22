@@ -53,6 +53,14 @@ module.exports = {
           fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }
       }
+    },
+    listing: {
+      image: {
+        dest: './modules/listings/client/admin/assets/images/',
+        limits: {
+          fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
+        }
+      }
     }
   },
   shared: {

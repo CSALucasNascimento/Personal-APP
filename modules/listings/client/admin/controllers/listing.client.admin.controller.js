@@ -46,12 +46,12 @@
     vm.categoriesSelectFilter = '';
     vm.ngFlowOptions = {
       // You can configure the ngFlow from here
-      /* target                   : 'api/media/image',
+       target                   : '/api/medias',
        chunkSize                : 15 * 1024 * 1024,
        maxChunkRetries          : 1,
        simultaneousUploads      : 1,
        testChunks               : false,
-       progressCallbacksInterval: 1000*/
+       progressCallbacksInterval: 100
     };
     vm.ngFlow = {
       // ng-flow will be injected into here through its directive
@@ -317,7 +317,7 @@
     function blockExceptionDates(date) {
       return exceptionDates.indexOf(date.toLocaleDateString()) === -1;
     }
-    
+
     /**
      *
      * Specifications - Set Up Availability
@@ -337,7 +337,7 @@
         eval('vm.listing.availability.' + wd.toLowerCase() + '.description = vm.statusDay.' + wd);
       });
     }
-    
+
     /**
      *
      * Specifications - Reset Opening Hours
