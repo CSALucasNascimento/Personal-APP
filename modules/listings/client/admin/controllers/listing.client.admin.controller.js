@@ -21,19 +21,13 @@
 
     vm.saveListing = saveListing;
     vm.gotoListings = gotoListings;
-    vm.onCategoriesSelectorOpen = onCategoriesSelectorOpen;
-    vm.onCategoriesSelectorClose = onCategoriesSelectorClose;
-    vm.fileAdded = fileAdded;
-    vm.upload = upload;
-    vm.fileSuccess = fileSuccess;
     vm.isFormValid = isFormValid;
-    vm.updateImageZoomOptions = updateImageZoomOptions;
     vm.toggle = toggle;
     vm.exists = exists;
     vm.setListingStatus = setListingStatus;
     vm.setListingFeatured = setListingFeatured;
+    vm.setListingFeaturedImage = setListingFeaturedImage;
     vm.setOpeningHours = setOpeningHours;
-    vm.categoriesSelected = vm.listing.category || [];
     vm.amenitiesSelected = vm.listing.amenity || [];
     vm.listing.images = vm.listing.images || [];
     vm.listing.status = vm.listing.status || 'draft';
@@ -173,6 +167,7 @@
         display: '12 Months'
       }
     ];
+
     /**
      *
      * HOURS SET
@@ -229,12 +224,7 @@
      * Initialize
      */
     function init() {
-      if (vm.listing._id) {
-        if (vm.listing.images.length > 0) {
-          vm.updateImageZoomOptions(vm.listing.images[0].url);
-        }
-      }
-
+      
       setListingStatus(vm.listing.status);
 
     }
@@ -269,11 +259,18 @@
     }
 
     /**
-     * Sets Listing Status
-     * @param status
+     * Sets Listing Featured
      */
     function setListingFeatured() {
       vm.listing.featured = !vm.listing.featured;
+    }
+
+    /**
+     * Sets Listing Featured Image
+     * @param file
+     */
+    function setListingFeaturedImage(file) {
+      vm.featuredImage = file;
     }
 
     /**
@@ -370,88 +367,6 @@
     }
 
     /**
-     * On categories selector open
-     */
-    function onCategoriesSelectorOpen() {
-      // The md-select directive eats keydown events for some quick select
-      // logic. Since we have a search input here, we don't need that logic.
-      $document.find('md-select-header input[type="search"]').on('keydown', function (e) {
-        e.stopPropagation();
-      });
-    }
-
-    /**
-     * On categories selector close
-     */
-    function onCategoriesSelectorClose() {
-      // Clear the filter
-      vm.categoriesSelectFilter = '';
-
-      // Unbind the input event
-      $document.find('md-select-header input[type="search"]').unbind('keydown');
-    }
-
-    /**
-     * File added callback
-     * Triggers when files added to the uploader
-     *
-     * @param file
-     */
-    function fileAdded(file) {
-      // Prepare the temp file data for media list
-      var uploadingFile = {
-        id: file.uniqueIdentifier,
-        file: file,
-        type: 'uploading'
-      };
-
-      // Append it to the media list
-      vm.listing.images.unshift(uploadingFile);
-    }
-
-    /**
-     * Upload
-     * Automatically triggers when files added to the uploader
-     */
-    function upload() {
-      // Set headers
-      vm.ngFlow.flow.opts.headers = {
-        'X-Requested-With': 'XMLHttpRequest'
-        // 'X-XSRF-TOKEN'    : $cookies.get('XSRF-TOKEN')
-      };
-
-      vm.ngFlow.flow.upload();
-    }
-
-    /**
-     * File upload success callback
-     * Triggers when single upload completed
-     *
-     * @param file
-     * @param message
-     */
-    function fileSuccess(file, message) {
-      // Iterate through the media list, find the one we
-      // are added as a temp and replace its data
-      // Normally you would parse the message and extract
-      // the uploaded file data from it
-      angular.forEach(vm.listing.images, function (media, index) {
-        if (media.id === file.uniqueIdentifier) {
-          // Normally you would update the media item
-          // from database but we are cheating here!
-          var fileReader = new FileReader();
-          fileReader.readAsDataURL(media.file.file);
-          fileReader.onload = function (event) {
-            media.url = event.target.result;
-          };
-
-          // Update the image type so the overlay can go away
-          media.type = 'image';
-        }
-      });
-    }
-
-    /**
      * Checks if the given form valid
      *
      * @param formName
@@ -460,23 +375,6 @@
       if ($scope[formName] && $scope[formName].$valid) {
         return $scope[formName].$valid;
       }
-    }
-
-    /**
-     * Update image zoom options
-     *
-     * @param url
-     */
-    function updateImageZoomOptions(url) {
-      vm.imageZoomOptions = {
-        images: [
-          {
-            thumb: url,
-            medium: url,
-            large: url
-          }
-        ]
-      };
     }
 
   }

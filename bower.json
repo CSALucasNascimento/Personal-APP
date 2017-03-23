@@ -41,7 +41,7 @@
     "moment-picker": "0.9.4",
     "moment-range": "2.2.0",
     "nvd3": "1.8.5",
-    "ng-flow": "2.7.4",
+    "ng-file-upload": "^12.1.0",
     "perfect-scrollbar": "0.6.14",
     "Sortable": "1.4.2",
     "textAngular": "1.5.16",

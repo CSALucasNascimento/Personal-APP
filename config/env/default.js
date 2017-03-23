@@ -56,7 +56,10 @@ module.exports = {
     },
     listing: {
       image: {
-        dest: './modules/listings/client/admin/assets/images/',
+        original: './modules/listings/client/admin/assets/images/',
+        thumb: './modules/listings/client/admin/assets/images/thumb',
+        medium: './modules/listings/client/admin/assets/images/medium',
+        large: './modules/listings/client/admin/assets/images/large',
         limits: {
           fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }

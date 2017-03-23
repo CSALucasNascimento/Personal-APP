@@ -43547,7 +43547,9 @@ img {
     #listing .header .listing-image {
       overflow: hidden;
       width: 56px;
+      max-width: 56px;
       height: 56px;
+      max-height: 56px;
       margin-right: 16px;
       border: 3px solid rgba(0, 0, 0, 0.12); }
       #listing .header .listing-image img {
@@ -43565,46 +43567,37 @@ img {
     max-width: 300px; }
   #listing .listing-detail-form-container {
     padding: 24px; }
-    #listing .listing-detail-form-container #listing-image-uploader {
-      position: relative; }
-      #listing .listing-detail-form-container #listing-image-uploader.dropping .drop-text {
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex; }
-      #listing .listing-detail-form-container #listing-image-uploader .drop-text {
-        display: none;
+    #listing .listing-detail-form-container .drop-text {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 16px;
+      text-align: center;
+      border: 2px dashed rgba(0, 0, 0, 0.12);
+      background: #FFFFFF;
+      font-size: 20px;
+      z-index: 100; }
+    #listing .listing-detail-form-container .upload-button {
+      margin-bottom: 16px; }
+    #listing .listing-detail-form-container .listing-image {
+      position: relative;
+      width: 100px;
+      min-height: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      margin: 8px; }
+      #listing .listing-detail-form-container .listing-image.uploading .overlay {
         position: absolute;
         top: 0;
         right: 0;
         bottom: 0;
         left: 0;
-        padding: 16px;
-        text-align: center;
-        border: 2px dashed rgba(0, 0, 0, 0.12);
-        background: #FFFFFF;
-        font-size: 20px;
-        z-index: 100; }
-      #listing .listing-detail-form-container #listing-image-uploader .upload-button {
-        margin-bottom: 16px; }
-      #listing .listing-detail-form-container #listing-image-uploader .image-zoom-area {
-        border: 2px solid rgba(0, 0, 0, 0.12);
-        width: 500px; }
-      #listing .listing-detail-form-container #listing-image-uploader .listing-image {
-        position: relative;
-        width: 100px;
-        min-height: 100px;
-        border: 1px solid rgba(0, 0, 0, 0.12);
-        margin: 8px; }
-        #listing .listing-detail-form-container #listing-image-uploader .listing-image.uploading .overlay {
-          position: absolute;
-          top: 0;
-          right: 0;
-          bottom: 0;
-          left: 0;
-          background: rgba(0, 0, 0, 0.87); }
-        #listing .listing-detail-form-container #listing-image-uploader .listing-image .media {
-          cursor: pointer;
-          max-height: 100%; }
+        background: rgba(0, 0, 0, 0.87); }
+      #listing .listing-detail-form-container .listing-image .media {
+        cursor: pointer;
+        max-height: 100%; }
     #listing .listing-detail-form-container .agenda-list > md-list-item > .md-list-item-inner {
       height: 60px; }
     #listing .listing-detail-form-container md-datepicker {

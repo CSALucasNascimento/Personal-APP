@@ -10,7 +10,7 @@
 
       <div layout="row" layout-align="start center">
         <div class="listing-image" hide-xs>
-          <img ng-src="{{vm.listing.featuredImage.url}}">
+          <img ng-src="{{vm.listing.images[0].thumb.url}}">
         </div>
 
         <div layout="column" layout-align="start start">
@@ -95,19 +95,11 @@
 
               <md-input-container class="md-block">
                 <label>Categories</label>
-                <md-select ng-model="vm.categoriesSelected"
-                           md-on-open="vm.onCategoriesSelectorOpen()"
-                           md-on-close="vm.onCategoriesSelectorClose()" multiple>
-                  <md-select-header>
-                    <input type="search" class="md-text"
-                           ng-model="vm.categoriesSelectFilter" placeholder="Search for a category">
-                  </md-select-header>
-                  <md-optgroup>
+                <md-select ng-model="vm.listing.category" >
                     <md-option ng-value="category._id"
-                               ng-repeat="category in vm.categories | filter:vm.categoriesSelectFilter">
+                               ng-repeat="category in vm.categories">
                       {{category.name}}
                     </md-option>
-                  </md-optgroup>
                 </md-select>
               </md-input-container>
 
@@ -164,7 +156,7 @@
                          vs-longitude="vm.listing.address.geo[1]"
                          name="fulladdress"
                          type="text"
-                         id="fulladdress"
+                         id="street"
                          required
                          aria-label="Full Address"
                   >
@@ -234,6 +226,8 @@
                     </div>
                   </div>
                 </md-input-container>
+                <input name="lat" type="hidden" ng-model="vm.listing.address.geo[0]" id="lat" class="form-control" placeholder="Latitude" required>
+                <input name="lon" type="hidden" ng-model="vm.listing.address.geo[1]" id="lng" class="form-control" placeholder="Longitude" required>
               </div>
             </form>
           </div>
@@ -247,60 +241,51 @@
 
         <md-tab-body>
           <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
+            
+            <div class="drop-text hint-text" layout="row" layout-align="center center">
+              <span>Drop to upload</span>
+            </div>
 
-            <div id="listing-image-uploader"
-                 flow-init="vm.ngFlowOptions"
-                 flow-name="vm.ngFlow.flow"
-                 flow-files-submitted="vm.upload()"
-                 flow-file-added="vm.fileAdded($file)"
-                 flow-file-success="vm.fileSuccess($file, $message)"
-                 flow-complete="vm.uploadComplete()"
-                 flow-drop
-                 flow-drag-enter="vm.dropping=true"
-                 flow-drag-leave="vm.dropping=false"
-                 ng-class="{'dropping':vm.dropping}">
-
-              <div class="drop-text hint-text" layout="row" layout-align="center center">
-                <span>Drop to upload</span>
-              </div>
-
-              <div class="upload-button" layout="column" layout-align="center center">
-                <md-button class="md-accent md-raised" flow-btn>
-                  Upload
-                </md-button>
-                <span class="secondary-text mt-8">You can also drop images here to upload. Only PNG, JPG - Max. 8MB</span>
-              </div>
-
-              <div class="mv-32" layout="row" layout-align="center center">
-                <div class="image-zoom-area">
-                  <img wip-image-zoom="vm.imageZoomOptions">
-                </div>
-              </div>
-
-              <div layout="row" layout-align="start start" layout-wrap>
-                <div ng-repeat="image in vm.listing.images" ng-switch="image.type">
-                  <div class="listing-image uploading" ng-switch-when="uploading" layout="row"
-                       layout-align="center center">
-                    <div class="overlay" layout="column" layout-align="center center">
-                      <md-progress-linear md-mode="determinate"
-                                          value="{{image.file.progress() * 100}}">
-                      </md-progress-linear>
-                    </div>
-                    <img class="media" flow-img="image.file">
-                  </div>
-
-                  <div class="listing-image" ng-switch-when="image" layout="row"
-                       layout-align="center center">
-                    <img class="media" ng-src="{{image.url}}"
-                         ng-click="vm.updateImageZoomOptions(image.url)">
-                  </div>
-                </div>
-              </div>
-
-              <div class="p-8 font-size-12" layout="row" layout-align="center center">
-                Click on images to activate the zoom!
+            <div class="upload-button" layout="column" layout-align="center center">
+              <md-button id="listing-image-uploader"
+                     type="file"
+                     name="file"
+                     accept="image/*"
+                     ngf-select
+                     ngf-max-size="8MB"
+                     ngf-drag-over-class="'dragover'"
+                     ng-model="vm.listing.images"
+                     ngf-multiple="true"
+                     ngf-pattern="'image/*'"
+                     ngf-keep="'distinct'"
+                     ngf-model-invalid="errorFile"
+                     ng-class="{'dropping':vm.dropping}"
+                     class="md-accent md-raised"
+                     required>
+                Upload
+              </md-button>
+              <span class="secondary-text mt-8">You can also drop images here to upload. Only PNG, JPG - Max. 8MB</span>
+            </div>
+              
+            <div class="mv-32" layout="row" layout-align="center center">
+              <div class="image-featured-area">
+                <img ngf-thumbnail="vm.featuredImage">
               </div>
             </div>
+
+            <div layout="row" layout-align="start start" layout-wrap>
+              <div ng-repeat="file in vm.listing.images">
+                <div class="listing-image" layout="row"
+                     layout-align="center center">
+                  <img ngf-thumbnail="file" class="media" data-ng-show="file.length > 0" ng-click="vm.setListingFeaturedImage(file)">
+                </div>
+              </div>
+            </div>
+
+            <div class="p-8 font-size-12" layout="row" layout-align="center center">
+              Click on images to choose the featured!
+            </div>
+              
           </div>
         </md-tab-body>
       </md-tab>

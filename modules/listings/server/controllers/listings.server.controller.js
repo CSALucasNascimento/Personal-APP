@@ -19,6 +19,13 @@ exports.create = function (req, res) {
   var listing = new Listing(req.body);
   listing.user = req.user;
 
+  var geo = new Array();
+  geo[0] = req.body.address.geo[0];
+  geo[1] = req.body.address.geo[1];
+  listing.address.geo = geo;
+
+  uploadMedia(req, listing);
+  
   listing.save(function (err) {
     if (err) {
       return res.status(422).send({
@@ -55,6 +62,8 @@ exports.update = function(req, res) {
 
   listing = _.extend(listing, req.body);
 
+  uploadMedia(req, listing);
+  
   listing.save(req, function(err) {
     if (err) {
       return res.status(400).send({
@@ -138,28 +147,38 @@ exports.listingByID = function(req, res, next, id) {
 /**
  * Update listing picture
  */
-exports.uploadImage = function (listing) {
-  var existingImageUrl;
+function uploadMedia(listing) {
+
+  var imageDestination = config.uploads.listing.image.original;
+  
+  var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, imageDestination);
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname + '_' + Date.now());
+    }
+  });
+
+  var upload = multer({ storage: storage });
+  var imageUploadFileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
 
   // Filtering to upload only images
-  var multerConfig = config.uploads.listing.image;
-  multerConfig.fileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
-  var upload = multer(multerConfig).single('newProfilePicture');
+  upload.fileFilter = imageUploadFileFilter;
 
-  if (user) {
-    existingImageUrl = user.profileImageURL;
+  if (listing) {
     uploadImage()
-      .then(updateUser)
-      .then(deleteOldImage)
+      // .then(resizeImage)
+      .then(updateMedia)
       .then(function () {
-        res.json(user);
+        res.json(media);
       })
       .catch(function (err) {
-        res.status(422).send(err);
+        res.status(400).send(err);
       });
   } else {
-    res.status(401).send({
-      message: 'User is not signed in'
+    res.status(400).send({
+      message: 'Media is not exist'
     });
   }
 
@@ -175,36 +194,78 @@ exports.uploadImage = function (listing) {
     });
   }
 
-  function updateUser () {
+  function slugify(text) {
+    return text.toString().toLowerCase()
+      .replace(/\s+/g, '-')           // Replace spaces with -
+      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+      .replace(/^-+/, '')             // Trim - from start of text
+      .replace(/-+$/, '');            // Trim - from end of text
+  }
+
+  function resizeImage () {
     return new Promise(function (resolve, reject) {
-      user.profileImageURL = config.uploads.profile.image.dest + req.file.filename;
-      user.save(function (err, theuser) {
+      media.originalUrl = imageDestination + req.file.filename;
+
+      var filetype = 'png';
+
+      var mmm = require('mmmagic'),
+        Magic = mmm.Magic;
+
+      var magic = new Magic(mmm.MAGIC_MIME_TYPE);
+      magic.detectFile(media.originalUrl, function(err, result) {
         if (err) {
           reject(err);
         } else {
-          resolve();
+          if (result === 'image/jpeg') {
+            filetype = 'jpg';
+          } else if (result === 'image/png') {
+            filetype = 'png';
+          } else if (result === 'image/gif') {
+            filetype = 'gif';
+          }
+
+          // obtain an image object:
+          lwip.open(media.originalUrl, filetype, function(err, image) {
+            var originalSize = {};
+            originalSize.width = image.width();
+            originalSize.height = image.height();
+
+            var newSize = {};
+            newSize.width = originalSize.width * 420 / originalSize.height;   // calculating aspect ratio (automatic width based on height)
+            newSize.height = 420;
+
+            // console.log(image);
+            if (err) {
+              reject(err);
+            } else {
+              image.resize(newSize.width, newSize.height, function(err, image) {
+                if (err) {
+                  reject(err);
+                } else {
+                  image.writeFile(imageDestination + req.file.filename, filetype, {
+                    quality: 100
+                  }, function (err) {
+                    if (err) {
+                      reject(err);
+                    } else {
+                      resolve();
+                    }
+                  });
+                }
+              });
+            }
+          });
         }
       });
     });
   }
 
-  function deleteOldImage () {
-    return new Promise(function (resolve, reject) {
-      if (existingImageUrl !== User.schema.path('profileImageURL').defaultValue) {
-        fs.unlink(existingImageUrl, function (unlinkError) {
-          if (unlinkError) {
-            console.log(unlinkError);
-            reject({
-              message: 'Error occurred while deleting old profile picture'
-            });
-          } else {
-            resolve();
-          }
-        });
-      } else {
-        resolve();
-      }
+  function updateMedia () {
+    return new Promise(function () {
+      listing.image.thumb.url = imageDestination + req.file.filename;
+      listing.image.url = imageDestination + req.file.filename;
     });
   }
-
-};
+  
+}

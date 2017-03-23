@@ -59,9 +59,10 @@ gulp.task('nodemon', function () {
 // Nodemon task without verbosity or debugging
 gulp.task('nodemon-nodebug', function () {
   return plugins.nodemon({
+    exec: 'node-debug --web-host 127.0.0.1',
     script: 'server.js',
-    nodeArgs: ['--debug'],
     ext: 'js,html',
+    verbose: true,
     watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
   });
 });

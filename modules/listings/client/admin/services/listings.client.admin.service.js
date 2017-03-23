@@ -11,6 +11,9 @@
     var Listing = $resource('/api/listings/:listingId', {
       listingId: '@_id'
     }, {
+      save: {
+        method: 'POST'
+      },
       update: {
         method: 'PUT'
       }

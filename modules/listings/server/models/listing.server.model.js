@@ -35,13 +35,27 @@ var ExceptionSchema = new Schema({
 });
 
 /**
+ * ImageSchema Schema
+ * Storing images array of images
+ **/
+var ImagesSchema = new Schema({
+  image: { 
+    data: Buffer, 
+    contentType: String 
+  }
+});
+
+/**
  * Listing Schema
  */
 var ListingSchema = new Schema({
-  category: [{
+  images: {
+    type: [ImagesSchema]
+  },
+  category: {
     type: Schema.ObjectId,
     ref: 'Category'
-  }],
+  },
   title: {
     type: String,
     default: '',
@@ -141,11 +155,6 @@ var ListingSchema = new Schema({
     type: Boolean,
     default: false
   },
-  images: [{
-    type: String,
-    default: '',
-    trim: true
-  }],
   stats: {
     clicks: {
       type: Number,
