@@ -35,23 +35,13 @@ var ExceptionSchema = new Schema({
 });
 
 /**
- * ImageSchema Schema
- * Storing images array of images
- **/
-var ImagesSchema = new Schema({
-  image: { 
-    data: Buffer, 
-    contentType: String 
-  }
-});
-
-/**
  * Listing Schema
  */
 var ListingSchema = new Schema({
-  images: {
-    type: [ImagesSchema]
-  },
+  images: [{
+    type: Schema.ObjectId,
+    ref: 'Media'
+  }],
   category: {
     type: Schema.ObjectId,
     ref: 'Category'

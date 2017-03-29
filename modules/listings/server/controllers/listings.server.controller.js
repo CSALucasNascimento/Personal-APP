@@ -9,7 +9,6 @@ var _ = require('lodash'),
   util = require('util'),
   Listing = mongoose.model('Listing'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
-  multer = require('multer'),
   config = require(path.resolve('./config/config'));
 
 /**
@@ -24,8 +23,6 @@ exports.create = function (req, res) {
   geo[1] = req.body.address.geo[1];
   listing.address.geo = geo;
 
-  uploadMedia(req, listing);
-  
   listing.save(function (err) {
     if (err) {
       return res.status(422).send({
@@ -63,7 +60,7 @@ exports.update = function(req, res) {
   listing = _.extend(listing, req.body);
 
   uploadMedia(req, listing);
-  
+
   listing.save(req, function(err) {
     if (err) {
       return res.status(400).send({
@@ -97,7 +94,14 @@ exports.delete = function (req, res) {
  */
 exports.list = function (req, res) {
   Listing.find({ status: { $ne: 'deleted' } })
-    .populate('user', 'displayName')
+    .populate({
+      path: 'user',
+      select: 'displayName'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail'
+    })
     .exec(function (err, listings) {
       if (err) {
         return res.status(422).send({
@@ -124,8 +128,11 @@ exports.listingByID = function(req, res, next, id) {
   Listing.findById(id)
     .populate({
       path: 'user',
-      populate: { path: 'profileImage', select: 'url' },
-      select: 'displayName email profileImageURL profileImage'
+      select: 'displayName'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail double_extra_small extra_small small medium'
     })
     .exec(function (err, listing) {
       if (err) {
@@ -143,129 +150,3 @@ exports.listingByID = function(req, res, next, id) {
       next();
     });
 };
-
-/**
- * Update listing picture
- */
-function uploadMedia(listing) {
-
-  var imageDestination = config.uploads.listing.image.original;
-  
-  var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, imageDestination);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname + '_' + Date.now());
-    }
-  });
-
-  var upload = multer({ storage: storage });
-  var imageUploadFileFilter = require(path.resolve('./config/lib/multer')).imageFileFilter;
-
-  // Filtering to upload only images
-  upload.fileFilter = imageUploadFileFilter;
-
-  if (listing) {
-    uploadImage()
-      // .then(resizeImage)
-      .then(updateMedia)
-      .then(function () {
-        res.json(media);
-      })
-      .catch(function (err) {
-        res.status(400).send(err);
-      });
-  } else {
-    res.status(400).send({
-      message: 'Media is not exist'
-    });
-  }
-
-  function uploadImage () {
-    return new Promise(function (resolve, reject) {
-      upload(req, res, function (uploadError) {
-        if (uploadError) {
-          reject(errorHandler.getErrorMessage(uploadError));
-        } else {
-          resolve();
-        }
-      });
-    });
-  }
-
-  function slugify(text) {
-    return text.toString().toLowerCase()
-      .replace(/\s+/g, '-')           // Replace spaces with -
-      .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-      .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-      .replace(/^-+/, '')             // Trim - from start of text
-      .replace(/-+$/, '');            // Trim - from end of text
-  }
-
-  function resizeImage () {
-    return new Promise(function (resolve, reject) {
-      media.originalUrl = imageDestination + req.file.filename;
-
-      var filetype = 'png';
-
-      var mmm = require('mmmagic'),
-        Magic = mmm.Magic;
-
-      var magic = new Magic(mmm.MAGIC_MIME_TYPE);
-      magic.detectFile(media.originalUrl, function(err, result) {
-        if (err) {
-          reject(err);
-        } else {
-          if (result === 'image/jpeg') {
-            filetype = 'jpg';
-          } else if (result === 'image/png') {
-            filetype = 'png';
-          } else if (result === 'image/gif') {
-            filetype = 'gif';
-          }
-
-          // obtain an image object:
-          lwip.open(media.originalUrl, filetype, function(err, image) {
-            var originalSize = {};
-            originalSize.width = image.width();
-            originalSize.height = image.height();
-
-            var newSize = {};
-            newSize.width = originalSize.width * 420 / originalSize.height;   // calculating aspect ratio (automatic width based on height)
-            newSize.height = 420;
-
-            // console.log(image);
-            if (err) {
-              reject(err);
-            } else {
-              image.resize(newSize.width, newSize.height, function(err, image) {
-                if (err) {
-                  reject(err);
-                } else {
-                  image.writeFile(imageDestination + req.file.filename, filetype, {
-                    quality: 100
-                  }, function (err) {
-                    if (err) {
-                      reject(err);
-                    } else {
-                      resolve();
-                    }
-                  });
-                }
-              });
-            }
-          });
-        }
-      });
-    });
-  }
-
-  function updateMedia () {
-    return new Promise(function () {
-      listing.image.thumb.url = imageDestination + req.file.filename;
-      listing.image.url = imageDestination + req.file.filename;
-    });
-  }
-  
-}

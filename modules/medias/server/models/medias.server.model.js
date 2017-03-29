@@ -14,7 +14,25 @@ var MediaSchema = new Schema({
     type: Date,
     default: Date.now
   },
-  url: {
+  thumbnail: {
+    type: String
+  },
+  medium: {
+    type: String
+  },
+  small: {
+    type: String
+  },
+  extra_small: {
+    type: String
+  },
+  double_extra_small: {
+    type: String
+  },
+  large: {
+    type: String
+  },
+  full: {
     type: String
   },
   featuredImage: {

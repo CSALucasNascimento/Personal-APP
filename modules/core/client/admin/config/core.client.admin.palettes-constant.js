@@ -25,7 +25,7 @@
       }
     },
     {
-      name: 'admin-paleblue',
+      name: 'admin-palered',
       options: {
         '50': '#ececee',
         '100': '#c5c6cb',
@@ -41,6 +41,28 @@
         'A200': '#9ea1a9',
         'A400': '#5c616f',
         'A700': '#2d323e',
+        'contrastDefaultColor': 'light',
+        'contrastDarkColors': '50 100 200 A100',
+        'contrastStrongLightColors': '300 400'
+      }
+    },
+    {
+      name: 'admin-paleblue',
+      options: {
+        '50': '#ff0000',
+        '100': '#ff0000',
+        '200': '#ff0000',
+        '300': '#ff0000',
+        '400': '#ff0000',
+        '500': '#ff0000',
+        '600': '#ff0000',
+        '700': '#ff0000',
+        '800': '#ff0000',
+        '900': '#ff0000',
+        'A100': '#ff0000',
+        'A200': '#ff0000',
+        'A400': '#ff0000',
+        'A700': '#ff0000',
         'contrastDefaultColor': 'light',
         'contrastDarkColors': '50 100 200 A100',
         'contrastStrongLightColors': '300 400'

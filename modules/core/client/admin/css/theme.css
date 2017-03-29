@@ -20,7 +20,7 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Text Colors */
 [md-theme="default"] a {
-  color: rgb(3,155,229);
+  color: rgb(255,77,88);
 }
 
 [md-theme="default"] .secondary-text,
@@ -144,7 +144,7 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Accent */
 [md-theme="default"] .md-accent-bg {
-  background-color: rgb(3,155,229);
+  background-color: rgb(255,88,77);
   color: rgba(255,255,255,1);
 }
 
@@ -165,7 +165,7 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Accent, Hue-1 */
 [md-theme="default"] .md-accent-bg.md-hue-1 {
-  background-color: rgb(41,182,246);
+  background-color: rgb(244,67,54);
   color: rgba(0,0,0,0.87);
 }
 
@@ -186,7 +186,7 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Accent, Hue-2 */
 [md-theme="default"] .md-accent-bg.md-hue-2 {
-  background-color: rgb(2,136,209);
+  background-color: rgb(198,40,40);
   color: rgba(255,255,255,1);
 }
 
@@ -207,7 +207,7 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Accent, Hue-3 */
 [md-theme="default"] .md-accent-bg.md-hue-3 {
-  background-color: rgb(128,216,255);
+  background-color: rgb(255,88,77);
   color: rgba(0,0,0,0.87);
 }
 
@@ -228,22 +228,22 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Accent foreground */
 [md-theme="default"] .md-accent-fg {
-  color: rgb(3,155,229) !important;
+  color: rgb(255,88,77) !important;
 }
 
 /* Accent foreground, Hue-1 */
 [md-theme="default"] .md-accent-fg.md-hue-1 {
-  color: rgb(41,182,246) !important;
+  color: rgb(244,67,54) !important;
 }
 
 /* Accent foreground, Hue-2 */
 [md-theme="default"] .md-accent-fg.md-hue-2 {
-  color: rgb(2,136,209) !important;
+  color: rgb(198,40,40) !important;
 }
 
 /* Accent foreground, Hue-3 */
 [md-theme="default"] .md-accent-fg.md-hue-3 {
-  color: rgb(128,216,255) !important;
+  color: rgb(255,115,115) !important;
 }
 
 /* Warn */
@@ -452,4 +452,12 @@ md-content.md-default-theme.md-hue-3 {
 /* Background foreground, Hue-3 */
 [md-theme="default"] .md-background-fg.md-hue-3 {
   color: rgb(224,224,224) !important;
+}
+
+[md-theme="default"].md-checked.md-primary .md-bar {
+  background-color: rgba(255, 0, 0, 0.38);
+}
+
+[md-theme="default"].md-checked.md-primary .md-thumb {
+  background-color: rgb(255,0,0);
 }

@@ -48,7 +48,7 @@ module.exports = {
   uploads: {
     profile: {
       image: {
-        dest: './modules/users/client/site/img/profile/uploads/',
+        dest: 'modules/users/client/site/img/profile/uploads/',
         limits: {
           fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }
@@ -56,10 +56,13 @@ module.exports = {
     },
     listing: {
       image: {
-        original: './modules/listings/client/admin/assets/images/',
-        thumb: './modules/listings/client/admin/assets/images/thumb',
-        medium: './modules/listings/client/admin/assets/images/medium',
-        large: './modules/listings/client/admin/assets/images/large',
+        full: 'modules/listings/client/admin/assets/images/full/',
+        thumbnail: 'modules/listings/client/admin/assets/images/thumbnail/',
+        medium: 'modules/listings/client/admin/assets/images/medium/',
+        small: 'modules/listings/client/admin/assets/images/small/',
+        extra_small: 'modules/listings/client/admin/assets/images/extra_small/',
+        double_extra_small: 'modules/listings/client/admin/assets/images/double_extra_small/',
+        large: 'modules/listings/client/admin/assets/images/large/',
         limits: {
           fileSize: 1 * 1024 * 1024 // Max file size in bytes (1 MB)
         }

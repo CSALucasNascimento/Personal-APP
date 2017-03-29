@@ -66,9 +66,9 @@
         }
       }
     },
-    'tealTheme': {
+    'spacenowTheme': {
       primary: {
-        name: 'admin-blue',
+        name: 'admin-palered',
         hues: {
           'default': '900',
           'hue-1': '600',
@@ -86,7 +86,7 @@
         }
       },
       warn: {
-        name: 'deep-orange'
+        name: 'red'
       },
       background: {
         name: 'grey',

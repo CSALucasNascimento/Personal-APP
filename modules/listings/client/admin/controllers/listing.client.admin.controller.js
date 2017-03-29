@@ -8,19 +8,26 @@
     }])
     .controller('ListingsAdminController', ListingsAdminController);
 
-  ListingsAdminController.$inject = ['$scope', '$state', '$document', 'listingResolve', 'categoryResolve', 'amenityResolve', 'Authentication'];
+  ListingsAdminController.$inject = ['$scope', '$state', '$timeout', 'listingResolve', 'categoryResolve', 'amenityResolve', 'Authentication'];
 
-  function ListingsAdminController($scope, $state, $document, listing, categories, amenities, Authentication) {
+  function ListingsAdminController($scope, $state, $timeout, listing, categories, amenities, Authentication) {
     var vm = this;
 
     // Methods
     vm.listing = listing;
+    vm.listingImages = vm.listingImages || [];
     vm.categories = categories;
     vm.amenities = amenities;
     vm.authentication = Authentication;
 
     vm.saveListing = saveListing;
     vm.gotoListings = gotoListings;
+    vm.fileAdded = fileAdded;
+    vm.upload = upload;
+    vm.fileSuccess = fileSuccess;
+    vm.uploadComplete = uploadComplete;
+    vm.updateImageZoomOptions = updateImageZoomOptions;
+    vm.setFeatured = setFeatured;
     vm.isFormValid = isFormValid;
     vm.toggle = toggle;
     vm.exists = exists;
@@ -40,12 +47,12 @@
     vm.categoriesSelectFilter = '';
     vm.ngFlowOptions = {
       // You can configure the ngFlow from here
-       target                   : '/api/medias',
-       chunkSize                : 15 * 1024 * 1024,
-       maxChunkRetries          : 1,
-       simultaneousUploads      : 1,
-       testChunks               : false,
-       progressCallbacksInterval: 100
+      target: '/api/medias',
+      chunkSize: 15 * 1024 * 1024,
+      maxChunkRetries: 1,
+      simultaneousUploads: 1,
+      testChunks: false,
+      progressCallbacksInterval: 100
     };
     vm.ngFlow = {
       // ng-flow will be injected into here through its directive
@@ -84,7 +91,7 @@
      *
      */
     vm.setOpeningHours = setOpeningHours;
-    vm.listing.price =vm.listing.price || {};
+    vm.listing.price = vm.listing.price || {};
     vm.listing.price.details = vm.listing.price.details || {};
     vm.listing.price.method = vm.listing.price.method || 'hourly';
     vm.hourlyPrice = '';
@@ -224,8 +231,13 @@
      * Initialize
      */
     function init() {
-      
+
       setListingStatus(vm.listing.status);
+      if (vm.listing._id)
+        if (vm.listingImages.length > 0)
+        {
+          vm.updateImageZoomOptions(vm.listingImages[0].url);
+        }
 
     }
 
@@ -375,6 +387,105 @@
       if ($scope[formName] && $scope[formName].$valid) {
         return $scope[formName].$valid;
       }
+    }
+
+    /**
+     * File added callback
+     * Triggers when files added to the uploader
+     *
+     * @param file
+     */
+    function fileAdded(file) {
+      // Prepare the temp file data for media list
+      var uploadingFile = {
+        id: file.uniqueIdentifier,
+        file: file,
+        type: 'uploading'
+      };
+
+      // Append it to the media list
+      vm.listingImages.unshift(uploadingFile);
+    }
+
+    /**
+     * Upload
+     * Automatically triggers when files added to the uploader
+     */
+    function upload() {
+      // Set headers
+      vm.ngFlow.flow.opts.headers = {
+        'X-Requested-With': 'XMLHttpRequest'
+        // 'X-XSRF-TOKEN'    : $cookies.get('XSRF-TOKEN')
+      };
+
+      vm.ngFlow.flow.upload();
+    }
+
+    /**
+     * File upload success callback
+     * Triggers when single upload completed
+     *
+     * @param file
+     * @param message
+     */
+    function fileSuccess(file, message) {
+      var response = angular.fromJson(message);
+      angular.forEach(vm.listingImages, function (media, index) {
+        if (media.id === file.uniqueIdentifier) {
+          vm.listing.images[index] = response;
+          var fileReader = new FileReader();
+          fileReader.readAsDataURL(media.file.file);
+          fileReader.onload = function (event) {
+            media.url = event.target.result;
+          };
+
+          // Update the image type so the overlay can go away
+          media.type = 'image';
+        }
+      });
+    }
+
+    /**
+     *
+     * Triggers when single upload completed
+     *
+     * @param message
+     */
+    function uploadComplete() {
+    }
+
+    /**
+     * Update image zoom options
+     *
+     * @param url
+     */
+    function updateImageZoomOptions(url) {
+      vm.imageZoomOptions = {
+        images: [
+          {
+            thumb: 'http://localhost:3000/' + url,
+            medium: 'http://localhost:3000/' + url,
+            large: 'http://localhost:3000/' + url
+          }
+        ]
+      };
+    }
+
+    /**
+     * Images as a featured
+     *
+     * @param url
+     */
+    function setFeatured(url) {
+      vm.featuredImage = {
+        images: [
+          {
+            thumb: url,
+            medium: url,
+            large: url
+          }
+        ]
+      };
     }
 
   }

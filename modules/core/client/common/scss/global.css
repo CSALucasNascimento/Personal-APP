@@ -43105,7 +43105,7 @@ img {
     padding: 0 16px 0 24px; }
     #vertical-navigation .navigation-header .logo .logo-image {
       display: block;
-      background: #039BE5;
+      background: #E53935;
       width: 32px;
       min-width: 32px;
       height: 32px;
@@ -43605,6 +43605,46 @@ img {
       display: -ms-flexbox;
       display: flex;
       margin: 16px 0; }
+    #listing .listing-detail-form-container #product-image-uploader {
+      position: relative; }
+      #listing .listing-detail-form-container #product-image-uploader.dropping .drop-text {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex; }
+      #listing .listing-detail-form-container #product-image-uploader .drop-text {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 16px;
+        text-align: center;
+        border: 2px dashed rgba(0, 0, 0, 0.12);
+        background: #FFFFFF;
+        font-size: 20px;
+        z-index: 100; }
+      #listing .listing-detail-form-container #product-image-uploader .upload-button {
+        margin-bottom: 16px; }
+      #listing .listing-detail-form-container #product-image-uploader .image-zoom-area {
+        border: 2px solid rgba(0, 0, 0, 0.12);
+        width: 500px; }
+      #listing .listing-detail-form-container #product-image-uploader .product-image {
+        position: relative;
+        width: 100px;
+        min-height: 100px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        margin: 8px; }
+        #listing .listing-detail-form-container #product-image-uploader .product-image.uploading .overlay {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background: rgba(0, 0, 0, 0.87); }
+        #listing .listing-detail-form-container #product-image-uploader .product-image .media {
+          cursor: pointer;
+          max-height: 100%; }
 
 #listing .main-sidenav md-list md-list-item .md-list-item-inner > md-checkbox {
   margin-right: 0; }

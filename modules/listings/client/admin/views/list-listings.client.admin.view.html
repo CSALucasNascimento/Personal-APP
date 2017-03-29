@@ -86,7 +86,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="listing in ::vm.listings">
-              <td><img class="product-image" ng-src="{{listing.featuredImage.url}}"></td>
+              <td><img class="product-image" ng-src="http://localhost:3000/{{listing.images[0].thumbnail}}"></td>
               <td>{{listing.title}}</td>
               <td>{{listing.category[0]}}</td>
               <td>{{listing.price}}</td>
