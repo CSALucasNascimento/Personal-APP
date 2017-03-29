@@ -15,7 +15,6 @@
 
     // Methods
     vm.listing = listing;
-    vm.listingImages = vm.listingImages || [];
     vm.categories = categories;
     vm.amenities = amenities;
     vm.authentication = Authentication;
@@ -35,7 +34,7 @@
     vm.setListingFeatured = setListingFeatured;
     vm.setListingFeaturedImage = setListingFeaturedImage;
     vm.setOpeningHours = setOpeningHours;
-    vm.amenitiesSelected = vm.listing.amenity || [];
+    vm.listing.amenity = vm.listing.amenity || [];
     vm.listing.images = vm.listing.images || [];
     vm.listing.status = vm.listing.status || 'draft';
 
@@ -234,9 +233,9 @@
 
       setListingStatus(vm.listing.status);
       if (vm.listing._id)
-        if (vm.listingImages.length > 0)
+        if (vm.listing.images.length > 0)
         {
-          vm.updateImageZoomOptions(vm.listingImages[0].url);
+          vm.updateImageZoomOptions(vm.listing.images[0].large);
         }
 
     }
@@ -281,8 +280,14 @@
      * Sets Listing Featured Image
      * @param file
      */
-    function setListingFeaturedImage(file) {
-      vm.featuredImage = file;
+    function setListingFeaturedImage(image) {
+      var idx = vm.listing.images.indexOf(image);
+      var aux;
+      if (idx !== 0) {
+        aux = vm.listing.images[0];
+        vm.listing.images[0] = vm.listing.images[idx];
+        vm.listing.images[idx] = aux;
+      }
     }
 
     /**
@@ -404,7 +409,7 @@
       };
 
       // Append it to the media list
-      vm.listingImages.unshift(uploadingFile);
+      vm.listing.images.unshift(uploadingFile);
     }
 
     /**
@@ -430,7 +435,7 @@
      */
     function fileSuccess(file, message) {
       var response = angular.fromJson(message);
-      angular.forEach(vm.listingImages, function (media, index) {
+      angular.forEach(vm.listing.images, function (media, index) {
         if (media.id === file.uniqueIdentifier) {
           vm.listing.images[index] = response;
           var fileReader = new FileReader();

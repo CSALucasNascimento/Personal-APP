@@ -196,7 +196,7 @@
             <form>
               <div layout="row" flex="100" layout-wrap>
                 <md-input-container layout="column" flex="100" flex-gt-xs="50" flex-gt-md="25" ng-repeat="amenity in vm.amenities">
-                  <md-checkbox ng-checked="vm.exists(amenity, vm.amenitiesSelected)" ng-click="vm.toggle(amenity, vm.amenitiesSelected)">
+                  <md-checkbox ng-checked="vm.exists(amenity, vm.listing.amenity)" ng-click="vm.toggle(amenity, vm.listing.amenity)">
                     {{ amenity.name }}
                   </md-checkbox>
                 </md-input-container>
@@ -206,7 +206,7 @@
         </md-tab-body>
       </md-tab>
       <!-- / AMENITIES -->
-      
+
       <!-- CATEGORY -->
       <md-tab>
         <md-tab-label>
@@ -216,7 +216,7 @@
         <md-tab-body>
           <div class="listing-detail-form-container md-background-bg md-whiteframe-1dp">
             <form id="listingForm" name="listingForm">
-              
+
               <div layout="column" layout-gt-sm="row">
                 <md-input-container flex>
                   <label>Categories</label>
@@ -243,7 +243,7 @@
                   <input type="number" step="1"  ng-model="vm.listing.boardroom">
                 </md-input-container>
               </div>
-              
+
             </form>
           </div>
         </md-tab-body>
@@ -483,26 +483,31 @@
 
                     <!-- CONTENT -->
 
-                    <md-list-item class="md-4-line" ng-repeat="days in vm.weekDays">
-
-                      <p flex="10" class="text-truncate font-weight-600">
-                        {{days}}
-                      </p>
-                      <md-input-container flex>
+                    <div ng-repeat="days in vm.weekDays" layout="row">
+                      <div layout="column" flex="10">
+                        <p class="text-truncate font-weight-600">
+                          {{days}}
+                        </p>
+                      </div>
+                      <div layout="column" flex="10">
                         <md-switch class="md-primary" ng-model="vm.statusDay[days]" ng-true-value="'Open'" ng-false-value="'Closed'" aria-label="Open">
                           {{ vm.statusDay[days] }}
                         </md-switch>
-                      </md-input-container>
-                      <md-input-container flex>
-                        <md-icon md-font-icon="icon icon-clock"></md-icon>
-                        <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
-                      </md-input-container>
-                      <md-input-container flex>
-                        <md-icon md-font-icon="icon icon-clock"></md-icon>
-                        <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
-                      </md-input-container>
+                      </div>
+                      <div layout="column" flex="30">
+                        <md-input-container flex>
+                          <md-icon md-font-icon="icon icon-clock"></md-icon>
+                          <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
+                        </md-input-container>
+                      </div>
+                      <div layout="column" flex="30">
+                        <md-input-container flex>
+                          <md-icon md-font-icon="icon icon-clock"></md-icon>
+                          <input type="number" step="0.01" ng-model="vm.listing.priceTaxExcl">
+                        </md-input-container>
+                      </div>
 
-                    </md-list-item>
+                    </div>
 
                     <!-- /CONTENT -->
 
@@ -651,7 +656,7 @@
         </md-tab-body>
       </md-tab>
       <!-- / ABOUT -->
-      
+
       <!-- IMAGES -->
       <md-tab>
         <md-tab-label>
@@ -695,7 +700,7 @@
                   <div class="listing-image" layout="row"
                        layout-align="center center">
                     <img class="media" ng-src="http://localhost:3000/{{image.thumbnail}}"
-                         ng-click="vm.updateImageZoomOptions(image.medium)">
+                         ng-click="vm.updateImageZoomOptions(image.large); vm.setListingFeaturedImage(image)">
                   </div>
                 </div>
               </div>
@@ -721,14 +726,14 @@
               -->
 
               <div class="p-8 font-size-12" layout="row" layout-align="center center">
-                Click on images to activate the zoom!
+                Click on images to activate the zoom and select as a FEATURED!
               </div>
             </div>
           </div>
         </md-tab-body>
       </md-tab>
       <!-- / IMAGES -->
-      
+
     </md-tabs>
 
   </div>

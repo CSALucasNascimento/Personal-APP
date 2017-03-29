@@ -59,8 +59,6 @@ exports.update = function(req, res) {
 
   listing = _.extend(listing, req.body);
 
-  uploadMedia(req, listing);
-
   listing.save(req, function(err) {
     if (err) {
       return res.status(400).send({
@@ -99,6 +97,10 @@ exports.list = function (req, res) {
       select: 'displayName'
     })
     .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate({
       path: 'images',
       select: 'thumbnail'
     })
@@ -132,7 +134,7 @@ exports.listingByID = function(req, res, next, id) {
     })
     .populate({
       path: 'images',
-      select: 'thumbnail double_extra_small extra_small small medium'
+      select: 'thumbnail double_extra_small extra_small small medium large'
     })
     .exec(function (err, listing) {
       if (err) {
