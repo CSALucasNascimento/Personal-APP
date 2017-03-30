@@ -25,6 +25,45 @@
           listingListResolve: getListingList
         }
       })
+      .state('admin.listings.draft', {
+        url: '/draft',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/listings/client/admin/views/draft-listings.client.admin.view.html',
+            controller: 'ListingsAdminDraftController',
+            controllerAs: 'vm'
+          }
+        },
+        resolve: {
+          listingDraftResolve: getListingDraft
+        }
+      })
+      .state('admin.listings.pending', {
+        url: '/pending',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/listings/client/admin/views/pending-listings.client.admin.view.html',
+            controller: 'ListingsAdminPendingController',
+            controllerAs: 'vm'
+          }
+        },
+        resolve: {
+          listingPendingResolve: getListingPending
+        }
+      })
+      .state('admin.listings.featured', {
+        url: '/featured',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/listings/client/admin/views/featured-listings.client.admin.view.html',
+            controller: 'ListingsAdminFeaturedController',
+            controllerAs: 'vm'
+          }
+        },
+        resolve: {
+          listingFeaturedResolve: getListingFeatured
+        }
+      })
       .state('admin.listings.create', {
         url: '/create',
         views: {
@@ -87,6 +126,24 @@
 
   function getListingList(ListingsService) {
     return ListingsService.query().$promise;
+  }
+
+  getListingDraft.$inject = ['ListingsDraftService'];
+
+  function getListingDraft(ListingsDraftService) {
+    return ListingsDraftService.query().$promise;
+  }
+
+  getListingPending.$inject = ['ListingsPendingService'];
+
+  function getListingPending(ListingsPendingService) {
+    return ListingsPendingService.query().$promise;
+  }
+
+  getListingFeatured.$inject = ['ListingsFeaturedService'];
+
+  function getListingFeatured(ListingsFeaturedService) {
+    return ListingsFeaturedService.query().$promise;
   }
 
 }());

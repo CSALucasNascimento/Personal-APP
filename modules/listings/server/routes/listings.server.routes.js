@@ -12,6 +12,18 @@ module.exports = function (app) {
     .get(listings.list)
     .post(listings.create);
 
+  // Listings DRAFT collection routes
+  app.route('/api/listings/draft').all(listingsPolicy.isAllowed)
+    .get(listings.draft);
+
+  // Listings PENDING collection routes
+  app.route('/api/listings/pending').all(listingsPolicy.isAllowed)
+    .get(listings.pending);
+
+  // Listings PENDING collection routes
+  app.route('/api/listings/featured').all(listingsPolicy.isAllowed)
+    .get(listings.featured);
+
   // Single listing routes
   app.route('/api/listings/:listingId').all(listingsPolicy.isAllowed)
     .get(listings.read)

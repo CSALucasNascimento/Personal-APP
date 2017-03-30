@@ -116,6 +116,93 @@ exports.list = function (req, res) {
 };
 
 /**
+ * List of Draft Listings
+ */
+exports.draft = function (req, res) {
+  Listing.find({ status: { $ne: 'deleted' } })
+    .where('status').equals('draft')
+    .populate({
+      path: 'user',
+      select: 'displayName'
+    })
+    .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail'
+    })
+    .exec(function (err, listings) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(listings);
+      }
+    });
+};
+
+/**
+ * List of Pending Listings
+ */
+exports.pending = function (req, res) {
+  Listing.find({ status: { $ne: 'deleted' } })
+    .where('status').equals('pending approval')
+    .populate({
+      path: 'user',
+      select: 'displayName'
+    })
+    .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail'
+    })
+    .exec(function (err, listings) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(listings);
+      }
+    });
+};
+
+/**
+ * List of Featured Listings
+ */
+exports.featured = function (req, res) {
+  Listing.find({ status: { $ne: 'deleted' } })
+    .where('featured').equals(true)
+    .populate({
+      path: 'user',
+      select: 'displayName'
+    })
+    .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail'
+    })
+    .exec(function (err, listings) {
+      if (err) {
+        return res.status(422).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.json(listings);
+      }
+    });
+};
+
+/**
  * Listing middleware
  */
 

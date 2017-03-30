@@ -16,7 +16,7 @@
       weight: 2
     });
 
-    msNavigationServiceProvider.saveItem('admin.listings.list', {
+    msNavigationServiceProvider.saveItem('admin.listings.dashboard', {
       title: 'Dashboard',
       state: 'admin.listings.dashboard',
       weight: 1
@@ -28,19 +28,19 @@
       weight: 2
     });
 
-    msNavigationServiceProvider.saveItem('admin.listings.list', {
+    msNavigationServiceProvider.saveItem('admin.listings.draft', {
       title: 'Draft',
       state: 'admin.listings.draft',
       weight: 3
     });
 
-    msNavigationServiceProvider.saveItem('admin.listings.list', {
+    msNavigationServiceProvider.saveItem('admin.listings.pending', {
       title: 'Pending',
       state: 'admin.listings.pending',
       weight: 4
     });
 
-    msNavigationServiceProvider.saveItem('admin.listings.list', {
+    msNavigationServiceProvider.saveItem('admin.listings.featured', {
       title: 'Featured',
       state: 'admin.listings.featured',
       weight: 5
