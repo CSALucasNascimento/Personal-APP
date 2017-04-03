@@ -12,9 +12,6 @@ module.exports = function(app) {
     .get(categories.list)
     .post(categories.create);
 
-  app.route('/api/categories/root').all(categoriesPolicy.isAllowed)
-    .get(categories.listRoot);
-
   app.route('/api/categories/:categoryId').all(categoriesPolicy.isAllowed)
     .get(categories.read)
     .put(categories.update)

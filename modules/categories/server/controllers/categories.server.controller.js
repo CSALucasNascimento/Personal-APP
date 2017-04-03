@@ -93,22 +93,6 @@ exports.list = function(req, res) {
   });
 };
 
-exports.listRoot = function(req, res) {
-  Category.find()
-    .where('parentCategory').equals(null)
-    .sort('-created')
-    .populate('user', 'displayName')
-    .exec(function(err, categories) {
-      if (err) {
-        return res.status(400).send({
-          message: errorHandler.getErrorMessage(err)
-        });
-      } else {
-        res.jsonp(categories);
-      }
-    });
-};
-
 /**
  * Category middleware
  */

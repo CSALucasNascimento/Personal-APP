@@ -22,10 +22,6 @@ var CategorySchema = new Schema({
     required: 'Please fill Category slug',
     trim: true
   },
-  parentCategory: {
-    type: Schema.ObjectId,
-    ref: 'Category'
-  },
   description: {
     type: String
   },

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core.site.config')
+    .module('core.site.config.routes')
     .config(routeConfig);
 
   routeConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
@@ -29,47 +29,56 @@
     $stateProvider
       .state('home', {
         url: '/',
-        templateUrl: '/modules/core/client/site/views/home.client.view.html',
-        controller: 'HomeController',
-        controllerAs: 'vm'
+        views: {
+          'app': {
+            templateUrl: 'modules/core/client/site/views/home.client.view.html'
+          }
+        },
+        sticky: true,
+        dsr: true
       })
       .state('not-found', {
         url: '/not-found',
-        templateUrl: '/modules/core/client/site/views/404.client.view.html',
-        controller: 'ErrorController',
-        controllerAs: 'vm',
-        params: {
-          message: function($stateParams) {
-            return $stateParams.message;
+        views: {
+          'app': {
+            templateUrl: 'modules/core/client/site/views/404.client.view.html'
           }
         },
+        sticky: true,
+        dsr: true,
         data: {
           ignoreState: true,
-          pageTitle: 'Not Found'
+          pageTitle: 'Not-Found'
         }
       })
       .state('bad-request', {
         url: '/bad-request',
-        templateUrl: '/modules/core/client/site/views/400.client.view.html',
-        controller: 'ErrorController',
-        controllerAs: 'vm',
-        params: {
-          message: function($stateParams) {
-            return $stateParams.message;
+        views: {
+          'app': {
+            templateUrl: 'modules/core/client/site/views/400.client.view.html'
           }
         },
+        sticky: true,
+        dsr: true,
         data: {
           ignoreState: true,
-          pageTitle: 'Bad Request'
+          pageTitle: 'Bad-Request'
         }
       })
       .state('forbidden', {
         url: '/forbidden',
-        templateUrl: '/modules/core/client/site/views/403.client.view.html',
+        views: {
+          'app': {
+            templateUrl: 'modules/core/client/site/views/403.client.view.html'
+          }
+        },
+        sticky: true,
+        dsr: true,
         data: {
           ignoreState: true,
           pageTitle: 'Forbidden'
         }
       });
   }
+
 }());

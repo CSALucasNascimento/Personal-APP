@@ -1,0 +1,69 @@
+  <div>
+    <sn-addthis-toolbox class="addthis_custom_sharing">
+    </sn-addthis-toolbox>
+  </div>
+  <nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header nav-comp pull-left">
+      <a class="navbar-brand page-scroll" href="/">
+        <img src="modules/core/client/img/brand/space-now-logo-white.png">
+      </a>
+  </div>
+
+  <div role="profile-menu" class="pull-right nav-comp" ng-show="hhc.authentication.user">
+    <a class="btn-header" ui-sref="settings.profile"><span class="hidden-xs-down">{{hhc.authentication.user.displayName}}</span><div class="user-image-profile pull-right"><img src="{{hhc.authentication.user.profileImageURL}}" class="img-fluid img-circle" width="30" height="30"></div></a>
+    <div class="panel drop-down-menu authentication-dropdown">
+      <a class="panel-body hover-item" ui-sref="settings.myspaces" target="_self" class="btn-header" ng-show="userHasSpaces">
+        <div class="hover-item__content">
+          My Space
+        </div>
+      </a>
+      <a class="panel-body hover-item" ng-repeat="item in hhc.accountMenu.items" ui-sref="{{item.state}}">
+        <div class="hover-item__content">
+         {{item.title}}
+        </div>
+      </a>
+      <a class="panel-body hover-item" href="/api/auth/signout" target="_self" class="btn-header">
+        <div class="hover-item__content">
+          Sign Out
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="pull-right nav-comp" ng-hide="hhc.authentication.user">
+    <a class="btn-header" data-ui-sref="authentication.signin">Sign In</a>
+  </div>
+
+  <div class="pull-right nav-comp hidden-xs-down">
+    <a class="btn-header" data-ui-sref="articles.view({ articleId: '584627a1d59d5ea73045ab08' })">Help</a> <!-- data-ui-sref="articles.view({ articleId: '57ea126dcb3086017e8fca0e' })" -->
+  </div>
+
+  <div class="pull-right nav-comp">
+    <a class="btn-header text-bolder" data-ui-sref="listings.create.address">List Space</a>
+  </div>
+
+  <div class="pull-right nav-comp nav-comp-search-header no-border hidden-sm-down">
+    <div class="pull-left frm-search-header">
+      <!-- <input type="text" id="hsQuery" placeholder="Looking for..." class="no-border"> -->
+      <input placeholder="Location..."
+             vs-google-autocomplete="options"
+             ng-model="hhc.qLocation"
+             vs-place="address.place"
+             vs-place-id="address.components.placeId"
+             vs-home-number=""
+             vs-street-number=""
+             vs-street=""
+             vs-city=""
+             vs-state=""
+             vs-post-code=""
+             name="qLocation"
+             type="text"
+             id="qLocation"
+             class="no-border"
+            >   <!-- style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;" -->
+    </div>
+    <a id="btn-hsearch-deactivated" ui-sref="listings.advancedSearch({ qLocation: hhc.qLocation })" class="btn-header text-red pull-left" ><i class="fa fa-search"></i></a>
+  </div>
+
+</nav>

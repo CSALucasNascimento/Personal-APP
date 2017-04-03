@@ -35,17 +35,27 @@
   {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
   {{#each cssCommonFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
   {{#each cssSiteFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-76237766-1', 'auto');
+
+  </script>
+  
 </head>
 
-<body ng-cloak layout="column">
-  <md-button class="md-fab md-primary md-hue-2" aria-label="Profile" ng-click="vm.showSidebar()" ng-controller="HeaderController as vm">
-    <i class="material-icons md-24">menu</i>
-  </md-button>
+<body ng-cloak layout="column" class="header-fixed">
 
-  <md-sidenav class="md-sidenav-left" md-component-id="left"
-              ng-include="'/modules/core/client/site/views/sidebar.client.view.html'" ng-controller="SidebarController as vm">
-  </md-sidenav>
+  <span class="loading" us-spinner="{radius:8, width:3, length: 7}"></span>
+
+  <ng-include src="'/modules/core/client/views/website/header.website.client.view.html'" ng-controller="HomeHeaderController as hhc"></ng-include>
   {{{block "content"}}}
+  <ng-include src="'/modules/core/client/views/website/footer.website.client.view.html'" ng-controller="HomeFooterController as hfc" ng-show="showFooter"></ng-include>
+
   <noscript>
     <style>
       [ng\:cloak], [ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {

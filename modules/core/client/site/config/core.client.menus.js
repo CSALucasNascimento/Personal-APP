@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('core.site.config')
+    .module('core.site.config.menus')
     .run(menuConfig);
 
   menuConfig.$inject = ['menuService'];
@@ -19,24 +19,20 @@
       roles: ['user']
     });
 
+    // menuService.addSubMenuItem('account', 'settings', {
+    //   title: 'My Space',
+    //   state: 'settings.myspaces'
+    // });
+
     menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile',
+      title: 'Profile',
       state: 'settings.profile'
     });
 
     menuService.addSubMenuItem('account', 'settings', {
-      title: 'Edit Profile Picture',
-      state: 'settings.picture'
+      title: 'Favorites',
+      state: 'settings.favorites'
     });
 
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Change Password',
-      state: 'settings.password'
-    });
-
-    menuService.addSubMenuItem('account', 'settings', {
-      title: 'Manage Social Accounts',
-      state: 'settings.accounts'
-    });
   }
 }());

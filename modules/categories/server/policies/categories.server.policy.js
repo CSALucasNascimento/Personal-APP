@@ -18,9 +18,6 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/categories',
       permissions: '*'
     }, {
-      resources: '/api/categories/root',
-      permissions: '*'
-    }, {
       resources: '/api/categories/:categoryId',
       permissions: '*'
     }]
@@ -30,9 +27,6 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/categories',
       permissions: ['get', 'post']
     }, {
-      resources: '/api/categories/root',
-      permissions: '*'
-    }, {
       resources: '/api/categories/:categoryId',
       permissions: ['get']
     }]
@@ -41,9 +35,6 @@ exports.invokeRolesPolicies = function () {
     allows: [{
       resources: '/api/categories',
       permissions: ['get']
-    }, {
-      resources: '/api/categories/root',
-      permissions: '*'
     }, {
       resources: '/api/categories/:categoryId',
       permissions: ['get']

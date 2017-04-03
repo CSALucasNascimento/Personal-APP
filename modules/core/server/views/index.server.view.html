@@ -1,5 +1,6 @@
 {{!< layout}}
 
 {{#contentFor 'content'}}
-<ui-view flex layout="row"></ui-view>
+<div ui-view="app" autoscroll="true"></div>
+<div ui-view="modal"></div>
 {{/contentFor}}

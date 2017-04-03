@@ -40,8 +40,8 @@ module.exports = {
     p3p: 'ABCDEF',
     xssProtection: true
   },
-  logo: 'modules/core/client/site/img/brand/logo.png',
-  favicon: 'modules/core/client/site/img/brand/favicon.ico',
+  logo: 'modules/core/client/site/assets/img/brand/logo.png',
+  favicon: 'modules/core/client/site/assets/img/brand/favicon.ico',
   illegalUsernames: ['meanjs', 'administrator', 'password', 'admin', 'user',
     'unknown', 'anonymous', 'null', 'undefined', 'api'
   ],

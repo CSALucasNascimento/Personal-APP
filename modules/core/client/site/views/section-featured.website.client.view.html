@@ -1,0 +1,53 @@
+<section class="margin-top-50 margin-bottom-60 featured-section ">
+  <div class="container">
+    <div class="row">
+      <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Begin Heading -->
+        <div>
+          <h4>Featured Listings</h4>
+        </div>
+        <!-- End Heading -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <div class="margin-top-35 col col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer"
+               ng-repeat="listing in hfc.featuredlistings"
+               ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category[0].name), suburb: slugify(listing.address.suburb) })">
+            <div class="listing">
+              <div class="image-panel" style="background: url('{{listing.featuredImage.url}}') center center; background-size: cover">
+                <div class="text-price">
+                  <div class="row">
+                    <!-- <span class="pull-md-right pull-sm-right pull-xs-right">$ {{listing.price}} AUD {{listing.period}}</span> -->
+                    <span class="pull-md-right pull-sm-right pull-xs-right" ng-show="listing.price.length > 1">$ {{listing.price}} AUD {{listing.period}}</span>
+                    <span class="pull-md-right pull-sm-right pull-xs-right" ng-show="listing.price.length === 1">POA</span>
+                  </div>
+                </div>
+                <div class="text-category">
+                  <div class="row">
+                    <span class="pull-md-right pull-sm-right pull-xs-right">{{listing.category[0].name}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="body-panel">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="row">
+                    <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                      <img src="{{listing.user.profileImage ? listing.user.profileImage.url : listing.user.profileImageURL}}" class="img-circle pull-xs-right margin-top-25-negative" data-ng-class="listing.user.profileImage ? 'border' : 'no-border'" width="50">
+                    </div>
+                    <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                      <p class="no-margin-bottom margin-top-10 no-padding">{{listing.address.streetNumber}} {{listing.address.streetName}}</p>
+                      <p class="no-margin no-padding">{{listing.address.suburb}}, {{listing.address.state}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
