@@ -493,5 +493,15 @@
       };
     }
 
+    /**
+     * Calc time in minutes
+     *
+     * @param time in hours
+     */
+    function calcTimeMinutes(time) {
+      time = time.split(':');
+      return (+time[0]) * 60 + (+time[1]);
+    }
+
   }
 }());
