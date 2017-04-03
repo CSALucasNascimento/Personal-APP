@@ -233,8 +233,7 @@
 
       setListingStatus(vm.listing.status);
       if (vm.listing._id)
-        if (vm.listing.images.length > 0)
-        {
+        if (vm.listing.images.length > 0) {
           vm.updateImageZoomOptions(vm.listing.images[0].large);
         }
 
@@ -310,14 +309,14 @@
       vm.exception.to = vm.dateException;
       vm.exception.status = vm.statusDay.exception;
       vm.exception.description = vm.statusDay.description;
-      if (vm.statusDay.exception === "Open") {
+      if (vm.statusDay.exception === 'Open') {
         vm.exception.open = 0;
         vm.exception.close = 1440;
-        vm.exception.description = vm.exception.description || "Open";
+        vm.exception.description = vm.exception.description || 'Open';
       } else {
         vm.exception.open = 0;
         vm.exception.close = 0;
-        vm.exception.description = vm.exception.description || "Closed";
+        vm.exception.description = vm.exception.description || 'Closed';
       }
       exceptionDates.push(vm.dateException.toLocaleDateString());
       vm.listing.exception.push(vm.exception);
@@ -345,8 +344,8 @@
           vm.listing.availability[wd.toLowerCase()].open = 0;
           vm.listing.availability[wd.toLowerCase()].close = 0;
         } else {
-          vm.listing.availability[wd.toLowerCase()].open = calcTimeMinutes(vm.startTime[wd].toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}));
-          vm.listing.availability[wd.toLowerCase()].close = calcTimeMinutes(vm.endTime[wd].toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}));
+          vm.listing.availability[wd.toLowerCase()].open = calcTimeMinutes(vm.startTime[wd].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
+          vm.listing.availability[wd.toLowerCase()].close = calcTimeMinutes(vm.endTime[wd].toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
         }
         vm.listing.availability[wd.toLowerCase()].description = vm.statusDay[wd];
       });

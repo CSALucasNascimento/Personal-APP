@@ -10,26 +10,34 @@
 
   function routeConfig($stateProvider) {
     $stateProvider
-      .state('admin.profile', {
-        url: '/profile',
+      // .state('admin.users', {
+      //   url: '/profile',
+      //   views: {
+      //     'content@admin': {
+      //       templateUrl: ''
+      //     }
+      //   }
+      // })
+      .state('admin.users', {
+        abstract: true,
+        url: '/users'
+      })
+      .state('admin.users.list', {
+        url: '/list',
         views: {
           'content@admin': {
-            templateUrl: ''
+            templateUrl: '/modules/users/client/admin/views/list-users.client.view.html',
+            controller: 'UserListController',
+            controllerAs: 'vm'
           }
-        }
-      })
-      .state('admin.users', {
-        url: '/users',
-        templateUrl: '/modules/users/client/views/admin/list-users.client.view.html',
-        controller: 'UserListController',
-        controllerAs: 'vm',
+        },
         data: {
           pageTitle: 'Users List'
         }
       })
       .state('admin.user', {
         url: '/users/:userId',
-        templateUrl: '/modules/users/client/views/admin/view-user.client.view.html',
+        templateUrl: '/modules/users/client/admin/views/view-user.client.view.html',
         controller: 'UserController',
         controllerAs: 'vm',
         resolve: {
@@ -41,7 +49,7 @@
       })
       .state('admin.user-edit', {
         url: '/users/:userId/edit',
-        templateUrl: '/modules/users/client/views/admin/edit-user.client.view.html',
+        templateUrl: '/modules/users/client/admin/views/edit-user.client.view.html',
         controller: 'UserController',
         controllerAs: 'vm',
         resolve: {

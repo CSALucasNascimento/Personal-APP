@@ -1,21 +1,109 @@
-<section>
-  <div class="page-header">
-    <div class="row">
-      <div class="col-md-4">
-        <h1>Users</h1>
+<div id="users_list" class="page-layout carded fullwidth" layout="row">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center" layout="column" flex>
+
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="space-between center">
+      <div class="white-fg" layout="column" layout-align="start start">
+        <div class="h1" layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-cube-outline"></md-icon>
+          <span>Users</span>
+        </div>
+        <div class="product-count secondary-text">
+          <span>Total users:</span>
+          <span>{{vm.users.length}}</span>
+        </div>
       </div>
-      <div class="col-md-4" style="margin-top: 2em">
-        <input class="form-control col-md-4" type="text" ng-model="vm.search" placeholder="Search" ng-change="vm.figureOutItemsToDisplay()" />
+
+      <div class="search" layout="row" layout-align="start center" flex>
+        <md-icon md-font-icon="icon-magnify" class="white-text icon search-icon"></md-icon>
+        <input id="users-search" class="search-input" type="text" placeholder="Search"
+               translate flex>
+      </div>
+
+      <div>
+        <md-button class="md-raised md-background" ng-click="vm.gotoAddUser()">
+          <span>Add New User</span>
+        </md-button>
       </div>
     </div>
-  </div>
-  <div class="list-group">
-    <a ng-repeat="user in vm.pagedItems" ui-sref="admin.user({userId: user._id})" class="list-group-item">
-      <h4 class="list-group-item-heading" ng-bind="user.username"></h4>
-      <p class="list-group-item-text pull-right small" ng-bind="user.roles"></p>
-      <p class="list-group-item-text" ng-bind="user.email"></p>
-    </a>
-  </div>
+    <!-- / CONTENT HEADER -->
 
-  <uib-pagination boundary-links="true" max-size="8" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
-</section>
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- CONTENT TOOLBAR -->
+
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT -->
+      <div class="content fullpage-datatable" layout="column" flex>
+
+        <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions">
+          <thead>
+            <tr>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Image</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Name</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Username</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Email</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Roles</span>
+                </div>
+              </th>
+              <th class="secondary-text">
+                <div class="table-header">
+                  <span class="column-title">Actions</span>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="user in ::vm.users">
+              <!-- <td>{{ user._id }}</td> -->
+              <td><img class="product-image" ng-src="{{ user.profileImageURL }}"></td>
+              <td>{{ user.displayName }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td><p ng-bind="user.roles"></p></td>
+              <td>
+                <md-button class="edit-button md-icon-button" ng-click="vm.gotoUserDetail(user._id)" aria-label="User details"
+                           translate>
+                  <md-icon md-font-icon="icon-pencil" class="s16"></md-icon>
+                </md-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <!-- / CONTENT -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+
+  </div>
+  <!-- / CENTER -->
+
+</div>
