@@ -198,17 +198,17 @@
     vm.statusDay.exception = vm.statusDay.exception === 'Closed' ? 'Open' : 'Closed';
     vm.weekDays.forEach(function(wd) {
       if (wd === 'Sun') {
-        eval('vm.startTime.' + wd + ' = new Date();');
-        eval('vm.startTime.' + wd + '.setHours(0, 0, 0, 0);');
-        eval('vm.endTime.' + wd + ' = new Date();');
-        eval('vm.endTime.' + wd + '.setHours(0, 0, 0, 0);');
-        eval('vm.statusDay.' + wd + '= "Closed" ;');
+        vm.startTime[wd] = new Date();
+        vm.endTime[wd] = new Date();
+        vm.startTime[wd].setHours(0, 0, 0, 0);
+        vm.endTime[wd].setHours(0, 0, 0, 0);
+        vm.statusDay[wd] = 'Closed';
       } else {
-        eval('vm.startTime.' + wd + ' = new Date();');
-        eval('vm.startTime.' + wd + '.setHours(9, 0, 0, 0);');
-        eval('vm.endTime.' + wd + ' = new Date();');
-        eval('vm.endTime.' + wd + '.setHours(17, 0, 0, 0);');
-        eval('vm.statusDay.' + wd + '= "Open" ;');
+        vm.startTime[wd] = new Date();
+        vm.endTime[wd] = new Date();
+        vm.startTime[wd].setHours(9, 0, 0, 0);
+        vm.endTime[wd].setHours(17, 0, 0, 0);
+        vm.statusDay[wd] = 'Open';
       }
     });
     vm.setAvailability = setAvailability;
@@ -340,15 +340,15 @@
     function setAvailability() {
       vm.listing.availability = vm.listing.availability || {};
       $scope.weekDays.forEach(function(wd) {
-        eval('vm.listing.availability.' + wd.toLowerCase() + ' = {}');
-        if (eval('vm.statusDay.' + wd + ' === "Closed"')) {
-          eval('vm.listing.availability.' + wd.toLowerCase() + '.open = 0');
-          eval('vm.listing.availability.' + wd.toLowerCase() + '.close = 0');
+        vm.listing.availability[wd.toLowerCase()] = {};
+        if (vm.statusDay[wd] === 'Closed') {
+          vm.listing.availability[wd.toLowerCase()].open = 0;
+          vm.listing.availability[wd.toLowerCase()].close = 0;
         } else {
-          eval('vm.listing.availability.' + wd.toLowerCase() + '.open = calcTimeMinutes(vm.startTime.' + wd + '.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}))');
-          eval('vm.listing.availability.' + wd.toLowerCase() + '.close = calcTimeMinutes(vm.endTime.' + wd + '.toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}))');
+          vm.listing.availability[wd.toLowerCase()].open = calcTimeMinutes(vm.startTime[wd].toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}));
+          vm.listing.availability[wd.toLowerCase()].close = calcTimeMinutes(vm.endTime[wd].toLocaleTimeString([], {hour: "2-digit", minute:"2-digit"}));
         }
-        eval('vm.listing.availability.' + wd.toLowerCase() + '.description = vm.statusDay.' + wd);
+        vm.listing.availability[wd.toLowerCase()].description = vm.statusDay[wd];
       });
     }
 
