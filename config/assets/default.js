@@ -122,7 +122,9 @@ module.exports = {
         'public/lib/bootstrap/dist/css/bootstrap.css'
       ],
       jsSite: [
-        'public/lib/bootstrap/dist/js/bootstrap.js'
+        'public/lib/bootstrap/dist/js/bootstrap.js',
+        'public/lib/angular-spinner/dist/angular-spinner.js',
+        'public/lib/angular-addthis/dist/angular-addthis.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

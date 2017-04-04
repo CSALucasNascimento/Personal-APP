@@ -189,7 +189,7 @@ exports.featured = function (req, res) {
     })
     .populate({
       path: 'images',
-      select: 'thumbnail medium'
+      select: 'thumbnail extra_small medium'
     })
     .exec(function (err, listings) {
       if (err) {
