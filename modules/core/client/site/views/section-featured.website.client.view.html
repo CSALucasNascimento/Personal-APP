@@ -15,9 +15,9 @@
         <div class="row">
           <div class="margin-top-35 col col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer"
                ng-repeat="listing in hfc.featuredlistings"
-               ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category[0].name), suburb: slugify(listing.address.suburb) })">
+               ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })">
             <div class="listing">
-              <div class="image-panel" style="background: url('{{listing.featuredImage.url}}') center center; background-size: cover">
+              <div class="image-panel" style="background: url('{{listing.images[0].medium}}') center center; background-size: cover">
                 <div class="text-price">
                   <div class="row">
                     <!-- <span class="pull-md-right pull-sm-right pull-xs-right">$ {{listing.price}} AUD {{listing.period}}</span> -->
@@ -27,7 +27,7 @@
                 </div>
                 <div class="text-category">
                   <div class="row">
-                    <span class="pull-md-right pull-sm-right pull-xs-right">{{listing.category[0].name}}</span>
+                    <span class="pull-md-right pull-sm-right pull-xs-right">{{listing.category.name}}</span>
                   </div>
                 </div>
               </div>
