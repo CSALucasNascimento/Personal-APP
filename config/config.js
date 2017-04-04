@@ -180,7 +180,13 @@ var initGlobalConfigFiles = function (config, assets) {
   // Setting Globbed js files
   config.files.client.js = getGlobbedPaths(assets.client.lib.js, 'public/');
 
-  // Setting Globbed js files
+  // Setting Globbed Admin js files
+  config.files.client.jsAdmin = getGlobbedPaths(assets.client.lib.jsAdmin, 'public/');
+
+  // Setting Globbed Site js files
+  config.files.client.jsSite = getGlobbedPaths(assets.client.lib.jsSite, 'public/');
+
+  // Setting App js files
   config.files.client.app.js = getGlobbedPaths(assets.client.js);
 
   // Setting Common js files
@@ -194,6 +200,12 @@ var initGlobalConfigFiles = function (config, assets) {
 
   // Setting Globbed css files
   config.files.client.css = getGlobbedPaths(assets.client.lib.css, 'public/');
+
+  // Setting Globbed cssAdmin files
+  config.files.client.cssAdmin = getGlobbedPaths(assets.client.lib.cssAdmin, 'public/');
+
+  // Setting Globbed cssSite files
+  config.files.client.cssSite = getGlobbedPaths(assets.client.lib.cssSite, 'public/');
 
   // Setting App css files
   config.files.client.commonApp.css = getGlobbedPaths(assets.client.cssCommon);

@@ -13,6 +13,11 @@
   // Setting HTML5 Location Mode
   angular
     .module(app.applicationModuleName)
+    .run(hideFooter);
+
+  // Setting HTML5 Location Mode
+  angular
+    .module(app.applicationModuleName)
     .run(runBlock);
 
   bootstrapConfig.$inject = ['$compileProvider', '$locationProvider', '$httpProvider', '$logProvider'];
@@ -54,6 +59,16 @@
 
     // Then init the app
     angular.bootstrap(document, [app.applicationModuleName]);
+  }
+
+  var statesToShowOnFooter = ['home', 'articles.view', 'listings.view', 'accounts.view'];
+
+  hideFooter.$inject = ['$rootScope', '$state'];
+
+  function hideFooter($rootScope, $state) {
+    $rootScope.$on('$stateChangeSuccess', function (event) {
+      $rootScope.showFooter = statesToShowOnFooter.indexOf($state.current.name) > -1;
+    });
   }
 
   runBlock.$inject = ['$rootScope', '$timeout'];

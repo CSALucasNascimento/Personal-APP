@@ -30,6 +30,9 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/listings',
       permissions: ['get']
     }, {
+      resources: '/api/listings/featured',
+      permissions: ['get']
+    }, {
       resources: '/api/listings/:listingId',
       permissions: ['get']
     }]
@@ -37,6 +40,9 @@ exports.invokeRolesPolicies = function () {
     roles: ['guest'],
     allows: [{
       resources: '/api/listings',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/featured',
       permissions: ['get']
     }, {
       resources: '/api/listings/:listingId',

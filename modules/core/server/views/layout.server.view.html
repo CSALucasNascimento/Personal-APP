@@ -33,6 +33,7 @@
 
   <!-- Application CSS Files -->
   {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
+  {{#each cssFilesSite}}<link rel="stylesheet" href="/{{this}}">{{/each}}
   {{#each cssCommonFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
   {{#each cssSiteFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
 
@@ -52,9 +53,9 @@
 
   <span class="loading" us-spinner="{radius:8, width:3, length: 7}"></span>
 
-  <ng-include src="'/modules/core/client/views/website/header.website.client.view.html'" ng-controller="HomeHeaderController as hhc"></ng-include>
+  <ng-include src="'/modules/core/client/site/views/header.website.client.view.html'" ng-controller="HomeHeaderController as hhc"></ng-include>
   {{{block "content"}}}
-  <ng-include src="'/modules/core/client/views/website/footer.website.client.view.html'" ng-controller="HomeFooterController as hfc" ng-show="showFooter"></ng-include>
+  <ng-include src="'/modules/core/client/site/views/footer.website.client.view.html'" ng-controller="HomeFooterController as hfc" ng-show="showFooter"></ng-include>
 
   <noscript>
     <style>
@@ -78,6 +79,7 @@
 
   <!--Application JavaScript Files-->
   {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
+  {{#each jsFilesSite}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
   {{#each jsAppFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
   {{#each jsCommonFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
   {{#each jsSiteFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}

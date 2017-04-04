@@ -6,12 +6,9 @@
     .module('core.site.controllers')
     .controller('HomeFooterController', HomeFooterController);
 
-  HomeFooterController.$inject = ['$rootScope', '$scope', 'LinksService', '$location'];
+  HomeFooterController.$inject = ['$rootScope', '$scope', '$location'];
 
-  function HomeFooterController($rootScope, $scope, LinksService, $location) {
+  function HomeFooterController($rootScope, $scope, $location) {
     var hfc = this;
-
-    hfc.links = LinksService.query();
-
   }
 }());

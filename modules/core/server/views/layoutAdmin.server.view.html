@@ -33,6 +33,7 @@
 
   <!-- Application CSS Files -->
   {{#each cssFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
+  {{#each cssFilesAdmin}}<link rel="stylesheet" href="/{{this}}">{{/each}}
   {{#each cssCommonFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
   {{#each cssAdminFiles}}<link rel="stylesheet" href="/{{this}}">{{/each}}
 </head>
@@ -63,6 +64,7 @@
 
   <!--Application JavaScript Files-->
   {{#each jsFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
+  {{#each jsFilesAdmin}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
   {{#each jsAppFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
   {{#each jsCommonFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}
   {{#each jsAdminFiles}}<script type="text/javascript" src="/{{this}}"></script>{{/each}}

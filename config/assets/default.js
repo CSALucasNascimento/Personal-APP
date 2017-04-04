@@ -7,6 +7,21 @@ module.exports = {
     lib: {
       css: [
         // bower:css
+      ],
+      js: [
+        'public/lib/jquery/dist/jquery.js',
+        'public/lib/angular/angular.js',
+        'public/lib/angular-bootstrap/ui-bootstrap.js',
+        'public/lib/angular-animate/angular-animate.js',
+        'public/lib/angular-aria/angular-aria.js',
+        'public/lib/angular-cookies/angular-cookies.js',
+        'public/lib/angular-messages/angular-messages.js',
+        'public/lib/angular-material/angular-material.js',
+        'public/lib/angular-resource/angular-resource.js',
+        'public/lib/angular-sanitize/angular-sanitize.js',
+        'public/lib/angular-ui-router/release/angular-ui-router.js'
+      ],
+      cssAdmin: [
         'public/lib/chartist/dist/chartist.min.css',
         'public/lib/angular-datatables/dist/css/angular-datatables.css',
         'public/lib/angular-datatables/dist/plugins/bootstrap/datatables.bootstrap.min.css',
@@ -23,15 +38,9 @@ module.exports = {
         'public/lib/perfect-scrollbar/css/perfect-scrollbar.css',
         'public/lib/textAngular/dist/textAngular.css',
         'public/lib/wip-image-zoom/dist/wip-image-zoom.css',
-        '//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic'
+        '//fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic',
       ],
-      js: [
-
-        'public/lib/jquery/dist/jquery.js',
-        'public/lib/angular/angular.js',
-        'public/lib/angular-bootstrap/ui-bootstrap.js',
-        'public/lib/angular-animate/angular-animate.js',
-        'public/lib/angular-aria/angular-aria.js',
+      jsAdmin: [
         'public/lib/chart.js/dist/Chart.js',
         'public/lib/angular-chart.js/dist/angular-chart.js',
         'public/lib/chartist/dist/chartist.min.js',
@@ -108,6 +117,12 @@ module.exports = {
         'public/lib/wip-image-zoom/dist/wip-image-zoom.js',
         '//maps.googleapis.com/maps/api/js?key=AIzaSyDgxlpA4sdSzSFFC1iitqzJ_wRe0hdsdDg&libraries=places',
         'public/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js'
+      ],
+      cssSite: [
+        'public/lib/bootstrap/dist/css/bootstrap.css'
+      ],
+      jsSite: [
+        'public/lib/bootstrap/dist/js/bootstrap.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },
