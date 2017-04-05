@@ -141,9 +141,9 @@ var ListingSchema = new Schema({
     default: 0,
     required: 'Please fill the number of Board Rooms'
   },
-  featured: {
-    type: Boolean,
-    default: false
+  ordination: {
+    type: Number,
+    default: 100
   },
   stats: {
     clicks: {

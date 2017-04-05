@@ -2,10 +2,10 @@
 
   <!-- HEADER -->
   <div class="header md-accent-bg" layout="row" layout-align="start center">
-    <div class="white-fg" layout="row" layout-align="start center" flex>
+    <div layout="row" layout-align="start center" flex>
       <md-button class="goto-listings-button md-icon-button" aria-label="Go to listings"
                  ng-click="vm.gotoListings()">
-        <md-icon md-font-icon="icon-arrow-left"></md-icon>
+        <md-icon md-font-icon="icon-arrow-left" style="color: #ffffff"></md-icon>
       </md-button>
 
       <div layout="row" layout-align="start center">
@@ -22,17 +22,36 @@
           </div>
         </div>
 
-        <div>
-          <md-button class="md-icon-button" aria-label="Add Featured"
-                     ng-click="vm.setListingFeatured()">
-            <md-icon md-font-icon="icon-star" class="amber-600-fg s24"
-                     ng-hide="!vm.listing.featured"></md-icon>
-            <md-icon md-font-icon="icon-star-outline" class="s24"
-                     ng-hide="vm.listing.featured"></md-icon>
-            <md-tooltip md-direction="bottom">Click to {{vm.listing.featured ? 'remove' : 'add'}} featured</md-tooltip>
-          </md-button>
-        </div>
-
+        <md-menu-bar id="status-menu">
+          <md-menu md-position-mode="left bottom">
+            <md-button class="status-button" ng-click="$mdMenu.open()"
+                       aria-label="Status settings">
+              <div layout="row" layout-align="space-between center">
+                <div class="avatar-wrapper">
+                  <md-icon md-font-icon ng-class="vm.listingOrdination.icon"
+                           ng-style="{'color': vm.listingOrdination.color }"
+                           class="icon status">
+                  </md-icon>
+                </div>
+                <span class="status" hide show-gt-sm>{{vm.listingOrdination.title}}</span>
+                <md-icon md-font-icon="icon-chevron-down"
+                         class="icon s16" hide-xs></md-icon>
+              </div>
+            </md-button>
+            <md-menu-content width="1">
+              <md-menu-item class="status md-indent"
+                            ng-class="{'selected': order === vm.listingOrdination}"
+                            ng-repeat="order in vm.listingOrdinationOptions">
+                <md-icon md-font-icon="{{order.icon}}" ng-style="{'color': order.color }"
+                         class="icon"></md-icon>
+                <md-button ng-click="vm.setListingOrdination(order)">
+                  {{order.title}}
+                </md-button>
+              </md-menu-item>
+            </md-menu-content>
+          </md-menu>
+        </md-menu-bar>
+        
       </div>
     </div>
 

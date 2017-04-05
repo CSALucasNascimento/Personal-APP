@@ -21,6 +21,12 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/listings/featured',
       permissions: '*'
     }, {
+      resources: '/api/listings/draft',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/pending',
+      permissions: '*'
+    }, {
       resources: '/api/listings/:listingId',
       permissions: '*'
     }]
@@ -33,6 +39,12 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/listings/featured',
       permissions: ['get']
     }, {
+      resources: '/api/listings/draft',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/pending',
+      permissions: ['get']
+    }, {
       resources: '/api/listings/:listingId',
       permissions: ['get']
     }]
@@ -43,6 +55,12 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/listings/featured',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/draft',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/pending',
       permissions: ['get']
     }, {
       resources: '/api/listings/:listingId',

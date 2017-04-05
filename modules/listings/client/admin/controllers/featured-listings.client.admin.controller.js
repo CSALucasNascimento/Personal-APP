@@ -58,7 +58,7 @@
           filterable: false,
           render: function (data, type) {
             if (type === 'display') {
-              if (data === 'true') {
+              if (data === 10) {
                 return '<i class="icon-star amber-600-fg s24"></i>';
               }
 
@@ -67,10 +67,10 @@
 
             if (type === 'filter') {
               if (data) {
-                return '1';
+                return 10;
               }
 
-              return '0';
+              return 100;
             }
 
             return data;

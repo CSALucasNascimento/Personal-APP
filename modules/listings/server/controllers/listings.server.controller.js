@@ -178,7 +178,7 @@ exports.pending = function (req, res) {
  */
 exports.featured = function (req, res) {
   Listing.find({ status: { $ne: 'deleted' } })
-    .where('featured').equals(true)
+    .where('ordination').equals(10)
     .populate({
       path: 'user',
       select: 'displayName'

@@ -31,12 +31,13 @@
     vm.toggle = toggle;
     vm.exists = exists;
     vm.setListingStatus = setListingStatus;
-    vm.setListingFeatured = setListingFeatured;
+    vm.setListingOrdination = setListingOrdination;
     vm.setListingFeaturedImage = setListingFeaturedImage;
     vm.setOpeningHours = setOpeningHours;
     vm.listing.amenity = vm.listing.amenity || [];
     vm.listing.images = vm.listing.images || [];
     vm.listing.status = vm.listing.status || 'draft';
+    vm.listing.ordination = vm.listing.ordination || 100;
 
     // Data
     vm.taToolbar = [
@@ -80,6 +81,40 @@
         'title': 'Expired',
         'icon': 'icon-minus-circle',
         'color': '#F44336'
+      }
+    ];
+
+    vm.listingOrdination = {};
+    vm.listingOrdinationOptions = [
+      {
+        'title': 'Featured',
+        'icon': 'icon-star',
+        'color': '#4CAF50 !important',
+        'value': 10
+      },
+      {
+        'title': 'Level 2',
+        'icon': 'icon-star',
+        'color': '#FFC107 !important',
+        'value': 20
+      },
+      {
+        'title': 'Level 3',
+        'icon': 'icon-star',
+        'color': '#2196f3 !important',
+        'value': 30
+      },
+      {
+        'title': 'Level 4',
+        'icon': 'icon-star',
+        'color': '#F44336 !important',
+        'value': 40
+      },
+      {
+        'title': 'Standard',
+        'icon': 'icon-star',
+        'color': '#F4F4F4 !important',
+        'value': 100
       }
     ];
 
@@ -232,6 +267,7 @@
     function init() {
 
       setListingStatus(vm.listing.status);
+      setListingOrdination(vm.listing.ordination);
       if (vm.listing._id)
         if (vm.listing.images.length > 0) {
           vm.updateImageZoomOptions(vm.listing.images[0].large);
@@ -271,8 +307,13 @@
     /**
      * Sets Listing Featured
      */
-    function setListingFeatured() {
-      vm.listing.featured = !vm.listing.featured;
+    function setListingOrdination(order) {
+      vm.listingOrdinationOptions.forEach(function(orderOpt) {
+        if (orderOpt.value === order || orderOpt.value === order.value) {
+          vm.listing.ordination = orderOpt.value;
+          vm.listingOrdination = orderOpt;
+        }
+      });
     }
 
     /**
