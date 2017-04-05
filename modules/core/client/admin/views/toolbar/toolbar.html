@@ -21,13 +21,13 @@
                            translate translate-attr-aria-label="TOOLBAR.USER_SETTINGS">
                     <div layout="row" layout-align="space-between center">
                         <div class="avatar-wrapper">
-                            <img md-menu-align-target class="avatar" src="modules/core/client/common/assets/images/avatars/profile.png">
+                            <img md-menu-align-target class="avatar" src="{{vm.authentication.user.profileImageURL}}" alt="{{vm.authentication.user.displayName}}" >
                             <md-icon md-font-icon ng-class="vm.userStatus.icon"
                                      ng-style="{'color': vm.userStatus.color }"
                                      class="icon status s16">
                             </md-icon>
                         </div>
-                        <span class="username" hide show-gt-sm>Barrett Ovens</span>
+                        <span class="username" hide show-gt-sm>{{vm.authentication.user.displayName}}</span>
                         <md-icon md-font-icon="icon-chevron-down"
                                  class="icon s16" hide-xs></md-icon>
                     </div>

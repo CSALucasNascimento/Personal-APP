@@ -5,9 +5,9 @@
     .module('users.admin.controllers')
     .controller('UserListController', UserListController);
 
-  UserListController.$inject = ['$scope', '$filter', 'AdminService'];
+  UserListController.$inject = ['$scope', '$filter', 'AdminService', '$state'];
 
-  function UserListController($scope, $filter, AdminService) {
+  function UserListController($scope, $filter, AdminService, $state) {
     var vm = this;
     // vm.buildPager = buildPager;
     // vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
@@ -82,7 +82,7 @@
      * @param id
      */
     function gotoUserDetail(id) {
-      $state.go('admin.users.edit', { userId: id });
+      $state.go('admin.user-edit', { userId: id });
     }
     // function buildPager() {
     //   vm.pagedItems = [];

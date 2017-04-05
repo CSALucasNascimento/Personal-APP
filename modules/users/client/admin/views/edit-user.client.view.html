@@ -35,3 +35,144 @@
     </form>
   </div>
 </section>
+
+<div id="user" class="page-layout simple tabbed" layout="column">
+
+  <!-- HEADER -->
+  <div class="header md-accent-bg" layout="row" layout-align="start center">
+    <div class="white-fg" layout="row" layout-align="start center" flex>
+      <md-button class="goto-users-button md-icon-button" aria-label="Go to users"
+                 ng-click="vm.gotoUsers()">
+        <md-icon md-font-icon="icon-arrow-left"></md-icon>
+      </md-button>
+
+      <div layout="row" layout-align="start center">
+        <div class="listing-image" hide-xs>
+          <img class="product-image" ng-src="{{vm.user.profileImageURL}}">
+        </div>
+
+        <div layout="column" layout-align="start start">
+          <div class="h2">
+            {{vm.user.displayName}}
+          </div>
+          <div class="subtitle secondary-text">
+            <span>User Details</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <md-button class="md-raised md-background" ng-click="vm.saveUser()"
+                 ng-disabled="!vm.isFormValid('userForm')">
+        <span>SAVE</span>
+      </md-button>
+    </div>
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT -->
+  <div class="content" layout="column">
+    <div layout="row">
+      <!-- BASIC FORM -->
+      <div class="form-wrapper md-whiteframe-1dp" flex="60">
+
+        <form name="userForm" class="md-inline-form" ng-submit="vm.save(userForm.$valid)" novalidate>
+
+          <div layout="column" flex layout-gt-sm="row">
+            <md-input-container flex>
+              <label>First Name</label>
+              <input type="text" name="firstName" ng-model="vm.user.firstName"
+                     placeholder="John "
+                     required>
+              <div ng-messages="userForm.firstName.$error" role="alert">
+                <div ng-message="required">
+                  <span>First Name field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+            <md-input-container flex>
+              <label>Last Name</label>
+              <input type="text" name="lastName" ng-model="vm.user.lastName"
+                     placeholder="Example"
+                     required>
+              <div ng-messages="userForm.lastName.$error" role="alert">
+                <div ng-message="required">
+                  <span>Last Name field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="column" flex layout-gt-sm="row">
+            <md-input-container flex>
+              <label>Email</label>
+              <input type="text" name="email" ng-model="vm.user.email"
+                     placeholder="johnexample@company.com"
+                     required>
+              <div ng-messages="userForm.email.$error" role="alert">
+                <div ng-message="required">
+                  <span>Email field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="column" flex layout-gt-sm="row">
+            <md-input-container flex>
+              <label>Username</label>
+              <input type="text" name="username" ng-model="vm.user.username"
+                     placeholder="username"
+                     required>
+              <div ng-messages="userForm.username.$error" role="alert">
+                <div ng-message="required">
+                  <span>Username field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="column" flex layout-gt-sm="row">
+            <md-input-container flex>
+              <label>Gender</label>
+              <md-select ng-model="vm.user.gender" >
+                <md-option value=""></md-option>
+                <md-option value="male">Male</md-option>
+                <md-option value="female">Female</md-option>
+                <md-option value="other">Other</md-option>
+              </md-select>
+            </md-input-container>
+            <md-input-container flex>
+              <label>Phone</label>
+              <input type="text" name="phone" ng-model="vm.user.phone"
+                     placeholder="(02) 1231 2323" >
+              <div ng-messages="userForm.phone.$error" role="alert">
+                <div ng-message="required">
+                  <span>Phone number field is required.</span>
+                </div>
+              </div>
+            </md-input-container>
+          </div>
+          <div layout="column" flex layout-gt-sm="row">
+            <label>Roles</label>
+            <md-input-container layout="column" flex ng-repeat="role in vm.roles">
+              <md-checkbox ng-checked="vm.exists(role, vm.user.roles)" ng-click="vm.toggle(role, vm.user.roles)">{{ role }}</md-checkbox>
+            </md-input-container>
+          </div>
+
+        </form>
+
+      </div>
+      <!-- / BASIC FORM -->
+
+      <!-- BASIC FORM DATA -->
+      <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="40">
+        <div class="form-title">Form ng-model data</div>
+        <div class="json-data-wrapper">
+          <pre>{{userForm | json}}</pre>
+        </div>
+      </div>
+      <!-- / BASIC FORM DATA -->
+    </div>
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>

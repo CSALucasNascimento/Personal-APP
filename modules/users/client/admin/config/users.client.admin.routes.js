@@ -37,9 +37,13 @@
       })
       .state('admin.user', {
         url: '/users/:userId',
-        templateUrl: '/modules/users/client/admin/views/view-user.client.view.html',
-        controller: 'UserController',
-        controllerAs: 'vm',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/users/client/admin/views/view-user.client.view.html',
+            controller: 'UserController',
+            controllerAs: 'vm'
+          }
+        },
         resolve: {
           userResolve: getUser
         },
@@ -49,9 +53,13 @@
       })
       .state('admin.user-edit', {
         url: '/users/:userId/edit',
-        templateUrl: '/modules/users/client/admin/views/edit-user.client.view.html',
-        controller: 'UserController',
-        controllerAs: 'vm',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/users/client/admin/views/edit-user.client.view.html',
+            controller: 'UserController',
+            controllerAs: 'vm'
+          }
+        },
         resolve: {
           userResolve: getUser
         },
