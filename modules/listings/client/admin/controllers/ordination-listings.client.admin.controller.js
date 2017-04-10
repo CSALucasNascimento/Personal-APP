@@ -3,14 +3,14 @@
 
   angular
     .module('listings.admin.controllers')
-    .controller('ListingsAdminFeaturedController', ListingsAdminFeaturedController);
+    .controller('ListingsAdminOrdinationController', ListingsAdminOrdinationController);
 
-  ListingsAdminFeaturedController.$inject = ['$state', 'listingFeaturedResolve'];
+  ListingsAdminOrdinationController.$inject = ['$state', 'listingOrdinationResolve'];
 
-  function ListingsAdminFeaturedController($state, listingFeaturedResolve) {
+  function ListingsAdminOrdinationController($state, listingOrdinationResolve) {
     var vm = this;
 
-    vm.listings = listingFeaturedResolve;
+    vm.listings = listingOrdinationResolve;
 
     vm.dtInstance = {};
     vm.dtOptions = {

@@ -18,7 +18,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/listings/:status',
       permissions: '*'
     }, {
-      resources: '/api/listings/featured',
+      resources: '/api/listings/ordination',
       permissions: '*'
     }, {
       resources: '/api/listings/draft',
@@ -28,15 +28,27 @@ exports.invokeRolesPolicies = function () {
       permissions: '*'
     }, {
       resources: '/api/listings/:listingId',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/advancedSearch/:qLocation/location/:qCategory/category',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/advancedSearch/location/:qCategory/category',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/advancedSearch/:qLocation/location/category',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/advancedSearch/location/category',
       permissions: '*'
     }]
   }, {
     roles: ['user'],
     allows: [{
       resources: '/api/listings',
-      permissions: ['get']
+      permissions: ['get', 'post']
     }, {
-      resources: '/api/listings/featured',
+      resources: '/api/listings/ordination',
       permissions: ['get']
     }, {
       resources: '/api/listings/draft',
@@ -46,6 +58,18 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/listings/:listingId',
+      permissions: ['get', 'post']
+    }, {
+      resources: '/api/listings/advancedSearch/:qLocation/location/:qCategory/category',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/location/:qCategory/category',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/:qLocation/location/category',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/location/category',
       permissions: ['get']
     }]
   }, {
@@ -54,7 +78,7 @@ exports.invokeRolesPolicies = function () {
       resources: '/api/listings',
       permissions: ['get']
     }, {
-      resources: '/api/listings/featured',
+      resources: '/api/listings/ordination',
       permissions: ['get']
     }, {
       resources: '/api/listings/draft',
@@ -64,6 +88,18 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/listings/:listingId',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/:qLocation/location/:qCategory/category',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/location/:qCategory/category',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/:qLocation/location/category',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/advancedSearch/location/category',
       permissions: ['get']
     }]
   }]);

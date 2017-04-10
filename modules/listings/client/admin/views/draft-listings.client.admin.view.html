@@ -89,7 +89,7 @@
               <td><img class="product-image" ng-src="http://localhost:3000/{{listing.images[0].thumbnail}}"></td>
               <td>{{listing.title}}</td>
               <td>{{listing.category.name}}</td>
-              <td>{{listing.price}}</td>
+              <td><price method="listing.price.method" details="listing.price.details" poa="listing.poa"></price></td>
               <td>{{listing.status}}</td>
               <td>{{listing.ordination}}</td>
               <td>

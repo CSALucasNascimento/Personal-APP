@@ -24,17 +24,6 @@
           width: '80px'
         },
         {
-          // Target the price column
-          targets: 3,
-          render: function (data, type) {
-            if (type === 'display') {
-              return '<div class="layout-align-start-start layout-row">' + '<i class="s16 icon-currency-usd"></i>' + '<span>' + data + '</span>' + '</div>';
-            }
-
-            return data;
-          }
-        },
-        {
           // Target the status column
           targets: 4,
           filterable: false,
@@ -58,16 +47,40 @@
           filterable: false,
           render: function (data, type) {
             if (type === 'display') {
-              if (data === 10) {
-                return '<i class="icon-star amber-600-fg s24"></i>';
+              if (data === '10') {
+                return '<div class="layout-align-start-start layout-row"><i class="icon-star s16" style="color: #4CAF50"></i><span>Featured</span></div>';
               }
 
-              return '<i class="icon-star-outline s24"></i>';
+              if (data === '20') {
+                return '<div class="layout-align-start-start layout-row"><i class="icon-star s16" style="color: #FFC107"></i><span>Level 2</span></div>';
+              }
+
+              if (data === '30') {
+                return '<div class="layout-align-start-start layout-row"><i class="icon-star s16" style="color: #2196f3"></i><span>Level 3</span></div>';
+              }
+
+              if (data === '40') {
+                return '<div class="layout-align-start-start layout-row"><i class="icon-star s16" style="color: #F44336"></i><span>Level 4</span></div>';
+              }
+
+              return '<div class="layout-align-start-start layout-row"><i class="icon-star s16" style="color: #F4F4F4"></i><span>Standard</span></div>';
             }
 
             if (type === 'filter') {
-              if (data) {
+              if (data === '10') {
                 return '10';
+              }
+
+              if (data === '20') {
+                return '20';
+              }
+
+              if (data === '30') {
+                return '30';
+              }
+
+              if (data === '40') {
+                return '40';
               }
 
               return '100';

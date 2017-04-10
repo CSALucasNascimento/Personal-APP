@@ -24,17 +24,6 @@
           width: '80px'
         },
         {
-          // Target the price column
-          targets: 3,
-          render: function (data, type) {
-            if (type === 'display') {
-              return '<div class="layout-align-start-start layout-row">' + '<i class="s16 icon-currency-usd"></i>' + '<span>' + data + '</span>' + '</div>';
-            }
-
-            return data;
-          }
-        },
-        {
           // Target the status column
           targets: 4,
           filterable: false,

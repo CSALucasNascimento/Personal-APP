@@ -714,7 +714,15 @@
                 </div>
               </div>
 
-              <div layout="row" layout-align="start start" layout-wrap>
+              <div class="font-size-12" layout="row" layout-align="center center" style="margin: -15px 0 10px 0; color: #666">
+                FEATURED
+              </div>
+
+              <div class="p-8 font-size-12" layout="row" layout-align="center center">
+                Click an image to set featured
+              </div>
+              
+              <div layout="row" layout-align="center start" layout-wrap>
                 <div ng-repeat="image in vm.listing.images">
                   <div class="listing-image" layout="row"
                        layout-align="center center">
@@ -723,30 +731,7 @@
                   </div>
                 </div>
               </div>
-              <!-- <div layout="row" layout-align="start start" layout-wrap>
-                <div ng-repeat="image in vm.listingImages" ng-switch="image.type">
-                  <div class="listing-image uploading" ng-switch-when="uploading" layout="row"
-                       layout-align="center center">
-                    <div class="overlay" layout="column" layout-align="center center">
-                      <md-progress-linear md-mode="determinate"
-                                          value="{{image.file.progress() * 100}}">
-                      </md-progress-linear>
-                    </div>
-                    <img class="media" flow-img="image.file">
-                  </div>
-
-                  <div class="product-image" ng-switch-when="image" layout="row"
-                       layout-align="center center">
-                    <img class="media" ng-src="{{image.url}}"
-                         ng-click="vm.updateImageZoomOptions(image.url)">
-                  </div>
-                </div>
-              </div>
-              -->
-
-              <div class="p-8 font-size-12" layout="row" layout-align="center center">
-                Click on images to activate the zoom and select as a FEATURED!
-              </div>
+              
             </div>
           </div>
         </md-tab-body>

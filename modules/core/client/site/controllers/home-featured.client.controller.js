@@ -6,12 +6,12 @@
     .module('core.site.controllers')
     .controller('HomeFeaturedController', HomeFeaturedController);
 
-  HomeFeaturedController.$inject = ['$scope', 'ListingsFeaturedService'];
+  HomeFeaturedController.$inject = ['$scope', 'ListingsOrdinationService'];
 
-  function HomeFeaturedController($scope, ListingsFeaturedService) {
+  function HomeFeaturedController($scope, ListingsOrdinationService) {
     var hfc = this;
 
-    hfc.featuredlistings = ListingsFeaturedService.query();
+    hfc.featuredlistings = ListingsOrdinationService.query();
 
   }
 }());

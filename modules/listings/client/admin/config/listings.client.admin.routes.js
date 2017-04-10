@@ -51,17 +51,17 @@
           listingPendingResolve: getListingPending
         }
       })
-      .state('admin.listings.featured', {
-        url: '/featured',
+      .state('admin.listings.ordination', {
+        url: '/ordination',
         views: {
           'content@admin': {
-            templateUrl: '/modules/listings/client/admin/views/featured-listings.client.admin.view.html',
-            controller: 'ListingsAdminFeaturedController',
+            templateUrl: '/modules/listings/client/admin/views/ordination-listings.client.admin.view.html',
+            controller: 'ListingsAdminOrdinationController',
             controllerAs: 'vm'
           }
         },
         resolve: {
-          listingFeaturedResolve: getListingFeatured
+          listingOrdinationResolve: getListingOrdination
         }
       })
       .state('admin.listings.create', {
@@ -140,10 +140,10 @@
     return ListingsPendingService.query().$promise;
   }
 
-  getListingFeatured.$inject = ['ListingsFeaturedService'];
+  getListingOrdination.$inject = ['ListingsOrdinationService'];
 
-  function getListingFeatured(ListingsFeaturedService) {
-    return ListingsFeaturedService.query().$promise;
+  function getListingOrdination(ListingsOrdinationService) {
+    return ListingsOrdinationService.query().$promise;
   }
 
 }());

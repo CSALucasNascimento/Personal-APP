@@ -14,15 +14,15 @@
       <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="row">
           <div class="margin-top-35 col col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer"
-               ng-repeat="listing in hfc.featuredlistings"
+               ng-repeat="listing in hfc.featuredlistings | limitTo: 9"
                ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })">
             <div class="listing">
-              <div class="image-panel" style="background: url('{{listing.images[0].extra_small}}') center center; background-size: cover">
-                <div class="text-price">
-                  <div class="row">
-                    <!-- <span class="pull-md-right pull-sm-right pull-xs-right">$ {{listing.price}} AUD {{listing.period}}</span> -->
-                    <span class="pull-md-right pull-sm-right pull-xs-right" ng-show="listing.price.length > 1">$ {{listing.price}} AUD {{listing.period}}</span>
-                    <span class="pull-md-right pull-sm-right pull-xs-right" ng-show="listing.price.length === 1">POA</span>
+              <div class="image-panel" style="background: url('{{listing.images[0].extra_small}}') center center; background-size: cover; text-align: right">
+                <div class='text-price'>
+                  <div class='row'>
+                    <span class='pull-md-right pull-sm-right pull-xs-right'>
+                      <price method="listing.price.method" details="listing.price.details" poa="listing.poa"></price>
+                    </span>
                   </div>
                 </div>
                 <div class="text-category">

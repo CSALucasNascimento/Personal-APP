@@ -8,7 +8,12 @@ var _ = require('lodash'),
   mongoose = require('mongoose'),
   util = require('util'),
   Listing = mongoose.model('Listing'),
+  Category = mongoose.model('Category'),
+  // emails = require(path.resolve('./modules/emails/server/controllers/emails.server.controller')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
+  http = require('http'),
+  https = require('https'),
+  async = require('async'),
   config = require(path.resolve('./config/config'));
 
 /**
@@ -176,12 +181,13 @@ exports.pending = function (req, res) {
 /**
  * List of Featured Listings
  */
-exports.featured = function (req, res) {
+exports.ordination = function (req, res) {
   Listing.find({ status: { $ne: 'deleted' } })
     .where('ordination').equals(10)
     .populate({
       path: 'user',
-      select: 'displayName'
+      populate: { path: 'profileImage', select: 'url' },
+      select: 'displayName email profileImageURL profileImage'
     })
     .populate({
       path: 'category',
@@ -198,6 +204,275 @@ exports.featured = function (req, res) {
         });
       } else {
         res.json(listings);
+      }
+    });
+};
+
+/**
+ * List of listings by Advanced search category and location
+ */
+exports.advancedSearch = function(req, res) {
+  var qLocation = req.params.qLocation;
+  var qCategory = req.params.qCategory;
+  var origRes = res;
+  var categoryId;
+
+  var getCategoryId = function(callback) {
+    Category.find({ 'name': qCategory }).exec(function(err, categories) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        // findByCategoryId(categories);
+        callback(null, categories);
+      }
+    });
+  };
+
+  var getGeoLocation = function(callback) {
+    // get lat long for the location
+    // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+    var mapsUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+    var addressUrl = '?address=' + qLocation;
+    var keyUrl = '&key=AIzaSyAq_CqCdUptAgsfsQWFYcPEAV8MH0Fi81Y';
+    var reqUrl = encodeURI(mapsUrl + addressUrl + keyUrl);
+    https.get(reqUrl, function(res) {
+      var body = '';
+
+      res.on('data', function(chunk) {
+        body += chunk;
+      });
+
+      res.on('end', function() {
+        var mapsResponse = JSON.parse(body);
+        console.log('\naddress: ' + reqUrl);
+        var geo = new Array();
+        geo[0] = mapsResponse.results[0].geometry.location.lat;
+        geo[1] = mapsResponse.results[0].geometry.location.lng;
+        // findByGeo(geo);
+        var dist = distance(
+          mapsResponse.results[0].geometry.bounds.northeast.lat,
+          mapsResponse.results[0].geometry.bounds.northeast.lng,
+          mapsResponse.results[0].geometry.bounds.southwest.lat,
+          mapsResponse.results[0].geometry.bounds.southwest.lng);
+
+        var ret = {};
+        ret.geo = geo;
+        ret.dist = dist / 2;
+
+        // findByGeo(geo, dist / 2);
+        callback(null, ret);
+
+      });
+    }).on('error', function(e) {
+      console.log('Got an error: ', e);
+    });
+  };
+
+  // Here the magician happen
+  async.parallel([
+    getGeoLocation,
+    getCategoryId
+  ], function(err, results) {
+    console.log(results);
+    findByCategoryAndLocation(results[0], results[1]);
+  });
+
+  function findByCategoryAndLocation(locat, categories) {
+
+    var geo = locat.geo;
+    categoryId = categories[0]._id;
+
+    var maxDistance = locat.dist / 111;  // transformed to degrees   - 0.0015696123
+    Listing.find({
+      'address.geo': {
+        $near: geo,
+        $maxDistance: maxDistance
+      },
+      category: { $in: [categoryId] },
+      status: 'active'
+    }, { category: 1, title: 1, period: 1, price: 1, user: 1, address: 1, featuredImage: 1 })
+      .sort({ featured: -1, created: -1 })
+      .populate({
+        path: 'category',
+        select: 'name'
+      })
+      .populate({
+        path: 'user',
+        populate: { path: 'profileImage', select: 'url' },
+        select: 'displayName email profileImageURL profileImage'
+      })
+      .exec(function(err, listings) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          // stats increase listing impression
+          // for (var x = 0; x < listings.length; x ++) {
+          //   listings[x].incImpressionsPerDay(new Date());
+          //   listings[x].save();
+          // }
+          origRes.jsonp(listings);
+        }
+      });
+
+  }
+
+};
+
+exports.advancedSearchCategory = function(req, res) {
+
+  var qCategory = req.params.qCategory;
+  var origRes = res;
+  var categoryId;
+
+  var getCategoryId = function() {
+    Category.find({ 'name': qCategory }).exec(function(err, categories) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        // findByCategoryId(categories);
+        findByCategoryId(categories);
+      }
+    });
+  };
+
+
+  function findByCategoryId(categories) {
+    categoryId = categories[0]._id;
+
+    Listing.find({
+      category: { $in: [categoryId] }
+    })
+      .where('status').equals('active')
+      .sort({ featured: -1, created: -1 })
+      .populate({
+        path: 'category',
+        select: 'name'
+      })
+      .populate({
+        path: 'user',
+        populate: { path: 'profileImage', select: 'url' },
+        select: 'displayName email profileImageURL profileImage'
+      })
+      .exec(function(err, listings) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          origRes.jsonp(listings);
+        }
+      });
+  }
+
+  getCategoryId();
+
+};
+
+exports.advancedSearchLocation = function(req, res) {
+  var qLocation = req.params.qLocation;
+  var origRes = res;
+
+  var getGeoLocation = function() {
+    var mapsUrl = 'https://maps.googleapis.com/maps/api/geocode/json';
+    var addressUrl = '?address=' + qLocation;
+    var keyUrl = '&key=AIzaSyAq_CqCdUptAgsfsQWFYcPEAV8MH0Fi81Y';
+    var reqUrl = encodeURI(mapsUrl + addressUrl + keyUrl);
+    https.get(reqUrl, function(res) {
+      var body = '';
+
+      res.on('data', function(chunk) {
+        body += chunk;
+      });
+
+      res.on('end', function() {
+        var mapsResponse = JSON.parse(body);
+        console.log('\naddress: ' + reqUrl);
+        var geo = new Array();
+        geo[0] = mapsResponse.results[0].geometry.location.lat;
+        geo[1] = mapsResponse.results[0].geometry.location.lng;
+
+        var dist = distance(
+          mapsResponse.results[0].geometry.bounds.northeast.lat,
+          mapsResponse.results[0].geometry.bounds.northeast.lng,
+          mapsResponse.results[0].geometry.bounds.southwest.lat,
+          mapsResponse.results[0].geometry.bounds.southwest.lng);
+
+        findByGeo(geo, dist / 2);
+
+      });
+    }).on('error', function(e) {
+      console.log('Got an error: ', e);
+    });
+  };
+
+  function findByGeo(geo, kmDistance) {
+
+    var maxDistance = kmDistance / 111;  // kms transformed to degrees   - 0.0015696123
+    Listing.find({
+      'address.geo': {
+        $near: geo,
+        $maxDistance: maxDistance
+      },
+      status: 'active'
+    })
+      .where('status').equals('active')
+      .sort({ featured: -1, created: -1 })
+      .populate({
+        path: 'category',
+        select: 'name'
+      })
+      .populate({
+        path: 'user',
+        populate: { path: 'profileImage', select: 'url' },
+        select: 'displayName email profileImageURL profileImage'
+      })
+      .exec(function(err, listings) {
+        if (err) {
+          return res.status(400).send({
+            message: errorHandler.getErrorMessage(err)
+          });
+        } else {
+          // stats increase listing impression
+          // for (var x = 0; x < listings.length; x ++) {
+          //   listings[x].incImpressionsPerDay(new Date());
+          //   listings[x].save();
+          // }
+          origRes.jsonp(listings);
+        }
+      });
+  }
+
+  getGeoLocation();
+};
+
+exports.searchAll = function(req, res) {
+  Listing.find({ status: 'active' }).sort({ featured: -1, created: -1 })
+    .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail extra_small thumbnail'
+    })
+    .populate({
+      path: 'user',
+      populate: { path: 'profileImage', select: 'url' },
+      select: 'displayName email profileImageURL profileImage'
+    })
+    .exec(function(err, listings) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.jsonp(listings);
       }
     });
 };

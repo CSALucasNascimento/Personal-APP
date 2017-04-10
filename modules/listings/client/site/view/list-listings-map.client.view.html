@@ -1,0 +1,110 @@
+<section id="cards-map" class="no-padding">
+  <div class="col-md-7 col-xs-12">
+    <div class="row">
+      <div class="nav-search">
+        
+      <div class="container">
+    <!-- Intro Search -->
+        <div class="col-md-3 col-xs-12">
+          <div class="row">
+            <div class="pull-left nav-search-comp no-border-right nav-search-comp-white-hover" style="width: 100%">
+              <a href="#" class="btn-header" data-ng-click="vm.setClicked()" click-outside="hideDropdown()"><span>{{vm.qCategory || 'Type of Space'}}</span></a>
+              <div class="panel drop-down-menu drop-down-menu-left" data-ng-show="vm.clicked">
+                <a href="#" class="panel-body hover-item" ng-repeat="category in vm.categories" data-ng-click="vm.setCategory(category); vm.setClicked()" >
+                  <div class="hover-item__content">
+                    {{category.name}}
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-12" style="border-left: 1px solid #CCC;" >
+          <div class="row">
+            <input placeholder="Location..."
+             vs-google-autocomplete="options"
+             ng-model="vm.qLocation"
+             vs-place="address.place"
+             vs-place-id="address.components.placeId"
+             vs-home-number=""
+             vs-street-number=""
+             vs-street=""
+             vs-city=""
+             vs-state=""
+             vs-post-code=""
+             name="qLocation"
+             type="text"
+             id="qLocation"
+             class="form-control form-control-lg no-border"
+             style="border-top-left-radius: 5px; border-bottom-left-radius: 5px;"
+            >
+          </div>
+        </div>
+        <div class="col-md-2 col-xs-12">
+          <div class="row padding-right-10 padding-top-10 padding-bottom-10 no-border-left" >
+            <a ui-sref="listings.advancedSearch({ qLocation: vm.qLocation, qCategory: vm.qCategory })" id="btn-search-WRONG" class="btn btn-primary pull-right no-padding-top" style="height: 40px; border-radius: 3px !important;"><i class="fa fa-search"></i> Search</a>
+          </div>
+        </div>
+      </div>
+        <div class="pull-left nav-search-comp nav-comp-active" data-ng-show="vm.selectedCategory">
+          <a class="btn-header btn-header-filter" data-ng-show="vm.selectedCategory" ng-click="vm.selectedCategory = ''">{{vm.selectedCategory.name}}<span class="badge">&times;</span></a>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-hide="!vm.listings.$promise.$resolved">
+      <div class="vertical-align-center horizontal-align-center">
+        <img src="./modules/listings/client/common/assets/img/loading_dots.gif" width="100">
+      </div>
+    </div>
+    <div class="row" ng-hide="vm.listings.length > 0">
+      <div class="vertical-align-center horizontal-align-center">
+        <p>Sorry, no results found today for your search!</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="filtered-listings"> 
+        <div class="margin-top-25 col col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-bottom-20 pointer"
+             ng-repeat="listing in vm.pagedItems"
+             ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })">
+          <div class="listing">
+            <div class="image-panel" style="background: url('{{listing.images[0].extra_small}}') center center; background-size: cover; text-align: right">
+              <div class="text-price">
+                <div class="row">
+                  <span class='pull-md-right pull-sm-right pull-xs-right'>
+                      <price method="listing.price.method" details="listing.price.details" poa="listing.poa"></price>
+                    </span>
+                </div>
+              </div>
+              <div class="text-category">
+                <div class="row">
+                  <span class="pull-md-right pull-sm-right pull-xs-right">{{listing.category.name}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="body-panel">
+              <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="row">
+                  <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                    <img src="{{listing.user.profileImage ? listing.user.profileImage.url : listing.user.profileImageURL}}" class="img-circle pull-xs-right margin-top-40-negative" data-ng-class="listing.user.profileImage ? 'border' : 'no-border'" width="70" height="70" alt="{{listing.user.displayName}}" title="{{listing.user.displayName}}">
+                  </div>
+                  <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                    <p class="no-margin-bottom margin-top-10 no-padding">{{listing.address.streetName}},</p>
+                    <p class="no-margin no-padding">{{listing.address.suburb}}, {{listing.address.state}} </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 margin-bottom-10 text-center">
+          <uib-pagination class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" boundary-link-numbers="true" rotate="false" boundary-links="true" max-size="5" items-per-page="vm.itemsPerPage" total-items="vm.filterLength" ng-model="vm.currentPage" ng-change="vm.pageChanged()"></uib-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 col-xs-12 hidden-xs-down">
+    <div class="row">
+      <div id="mapSearch" class="listing-map"></div>
+    </div>
+  </div>
+</section>

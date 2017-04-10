@@ -25,10 +25,10 @@ exports.invokeRolesPolicies = function () {
     roles: ['user'],
     allows: [{
       resources: '/api/medias',
-      permissions: ['get']
+      permissions: ['get', 'post']
     }, {
       resources: '/api/medias/:mediaId',
-      permissions: ['get']
+      permissions: ['get', 'post']
     }]
   }, {
     roles: ['guest'],

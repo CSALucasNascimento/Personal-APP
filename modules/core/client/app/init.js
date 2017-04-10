@@ -10,12 +10,14 @@
     .module(app.applicationModuleName)
     .config(bootstrapConfig);
 
-  // Setting HTML5 Location Mode
   angular
     .module(app.applicationModuleName)
     .run(hideFooter);
 
-  // Setting HTML5 Location Mode
+  angular
+    .module(app.applicationModuleName)
+    .run(addSlugifyToRootScope);
+
   angular
     .module(app.applicationModuleName)
     .run(runBlock);
@@ -69,6 +71,19 @@
     $rootScope.$on('$stateChangeSuccess', function (event) {
       $rootScope.showFooter = statesToShowOnFooter.indexOf($state.current.name) > -1;
     });
+  }
+
+  addSlugifyToRootScope.$inject = ['$rootScope'];
+
+  function addSlugifyToRootScope($rootScope) {
+    $rootScope.slugify = function (text) {
+      return (text === 'undefined') ? '' : text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
+    };
   }
 
   runBlock.$inject = ['$rootScope', '$timeout'];

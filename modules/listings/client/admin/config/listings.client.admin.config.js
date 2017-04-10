@@ -40,9 +40,9 @@
       weight: 4
     });
 
-    msNavigationServiceProvider.saveItem('admin.listings.featured', {
-      title: 'Featured',
-      state: 'admin.listings.featured',
+    msNavigationServiceProvider.saveItem('admin.listings.ordination', {
+      title: 'Plans',
+      state: 'admin.listings.ordination',
       weight: 5
     });
 
