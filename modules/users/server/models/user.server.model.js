@@ -52,10 +52,10 @@ var validateLocalStrategyPhone = function (phone) {
 
 var validateUsername = function(username) {
   var usernameRegex = /^(?=[\w.-]+$)(?!.*[._-]{2})(?!\.)(?!.*\.$).{3,34}$/;
-  var userPhoneRegex = /^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/;
+  // var userPhoneRegex = /^[(][0-9]{3}[)] [0-9]{3}-[0-9]{4}$/;
   return (
     this.provider !== 'local' ||
-    (username && (usernameRegex.test(username) || userPhoneRegex.test(username)) && config.illegalUsernames.indexOf(username) < 0)
+    (username && usernameRegex.test(username) && config.illegalUsernames.indexOf(username) < 0)     // (usernameRegex.test(username) || userPhoneRegex.test(username))
   );
 };
 
@@ -86,8 +86,8 @@ var UserSchema = new Schema({
     index: {
       unique: true,
       sparse: true // For this to work on a previously indexed field, the index must be dropped & the application restarted.
-    },
-    validate: [validateLocalStrategyPhone, 'Please fill a valid phone number']
+    }
+    // validate: [validateLocalStrategyPhone, 'Please fill a valid phone number']
   },
   email: {
     type: String,
@@ -97,16 +97,20 @@ var UserSchema = new Schema({
     },
     lowercase: true,
     trim: true,
-    default: '',
-    validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
+    default: ''
+    // validate: [validateLocalStrategyEmail, 'Please fill a valid email address']
   },
   username: {
     type: String,
     unique: 'Username already exists',
     required: 'Please fill in a username',
-    validate: [validateUsername, 'Please enter a valid username: 3+ characters long, non restricted word, characters "_-.", no consecutive dots, does not begin or end with dots, letters a-z and numbers 0-9.'],
+    // validate: [validateUsername, 'Please enter a valid username: 3+ characters long, non restricted word, characters "_-.", no consecutive dots, does not begin or end with dots, letters a-z and numbers 0-9.'],
     lowercase: true,
     trim: true
+  },
+  gender: {
+    type: String,
+    default: ''
   },
   password: {
     type: String,
@@ -157,9 +161,9 @@ UserSchema.pre('save', function (next) {
     this.salt = crypto.randomBytes(16).toString('base64');
     this.password = this.hashPassword(this.password);
   }
-  if (this.phone.length > 0) {
-    this.username = this.phone;
-  }
+  // if (this.phone.length > 0) {
+  //   this.username = this.phone;
+  // }
 
   next();
 });

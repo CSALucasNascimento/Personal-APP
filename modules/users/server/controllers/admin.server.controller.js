@@ -25,6 +25,10 @@ exports.update = function (req, res) {
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
   user.displayName = user.firstName + ' ' + user.lastName;
+  user.phone = req.body.phone;
+  user.username = req.body.username;
+  user.gender = req.body.gender;
+  user.password = req.body.password;
   user.roles = req.body.roles;
 
   user.save(function (err) {
@@ -33,7 +37,7 @@ exports.update = function (req, res) {
         message: errorHandler.getErrorMessage(err)
       });
     }
-
+    user.password = undefined;
     res.json(user);
   });
 };
