@@ -6,7 +6,7 @@
 
     display: block;
     position: relative;
-    color: rgba(255, 255, 255, 0.70);
+    color: rgb(45,50,62);
     user-select: none;
 
     ul, li {
@@ -40,7 +40,7 @@
             display: block;
             position: relative;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.70);
+            color: rgb(45,50,62);
 
             &:hover {
                 background: rgba(0, 0, 0, 0.1);
@@ -57,13 +57,13 @@
                 justify-content: flex-start;
                 align-items: center;
                 padding-right: 16px;
-                color: rgba(255, 255, 255, 0.70);
+                color: rgb(45,50,62);
                 text-decoration: none;
                 white-space: nowrap;
                 overflow: hidden;
 
                 .icon {
-                    color: rgba(255, 255, 255, 0.7);
+                    color: rgb(45,50,62);
                     margin: 0 16px 0 0;
                 }
 
@@ -107,10 +107,10 @@
                 }
 
                 &.active {
-                    color: #FFFFFF;
+                    color: rgb(45,50,62);;
 
                     .icon {
-                        color: #FFFFFF;
+                        color: rgb(45,50,62);;
                     }
 
                     .badge {

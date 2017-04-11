@@ -6,9 +6,9 @@
     .module('listings.site.controllers')
     .controller('ListingsViewController', ListingsViewController);
 
-  ListingsViewController.$inject = ['$scope', '$state', '$window', 'Authentication', 'listingResolve', 'listingSimilarResolve', 'listingSaveResolve', 'listingUnsaveResolve', 'categoryListResolve', 'amenityListResolve', 'dialogs', 'NgMap', '$location', 'accountResolve', '$meta'];
+  ListingsViewController.$inject = ['$scope', '$state', '$window', 'Authentication', 'listingResolve', 'listingSimilarResolve', 'listingSaveResolve', 'listingUnsaveResolve', 'categoryListResolve', 'amenityListResolve', '$meta'];
 
-  function ListingsViewController ($scope, $state, $window, Authentication, listingResolve, listingSimilarResolve, listingSaveResolve, listingUnsaveResolve, categoryListResolve, amenityListResolve, dialogs, NgMap, $location, accountResolve, $meta) {
+  function ListingsViewController ($scope, $state, $window, Authentication, listingResolve, listingSimilarResolve, listingSaveResolve, listingUnsaveResolve, categoryListResolve, amenityListResolve, $meta) {
     var vm = this;
 
     vm.authentication = Authentication;
@@ -26,9 +26,7 @@
     vm.save = save;
     vm.setSave = setSave;
     vm.setUnsave = setUnsave;
-    vm.openMediaFeaturedImage = openMediaFeaturedImage;
-    vm.openMediaGalleryImage = openMediaGalleryImage;
-    vm.account = accountResolve.get({ userId: vm.listing.user._id });
+    // vm.account = accountResolve.get({ userId: vm.listing.user._id });
 
     var latLon;
     var map;
@@ -77,24 +75,6 @@
       }
     }
 
-    function openMediaFeaturedImage() {
-      var modalInstance = dialogs.create('modules/media/client/views/list-media-select.client.view.html', 'ModalMediaListController', {}, 'lg', 'vm');
-      modalInstance.result.then(function (res) {
-        vm.listing.featuredImage = res;
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
-    }
-
-    function openMediaGalleryImage() {
-      var modalInstance = dialogs.create('modules/media/client/views/list-media-select.client.view.html', 'ModalMediaListController', { data: 'list' }, 'lg', 'vm');
-      modalInstance.result.then(function (res) {
-        vm.listing.galleryImage = res;
-      }, function () {
-        console.log('Modal dismissed at: ' + new Date());
-      });
-    }
-
     function setSave() {
       vm.isSave = vm.listingsSave.updateSave(vm.listing);
     }
@@ -108,7 +88,7 @@
       $meta.setTitle(result.title);
       $meta.setDescription(result.description.substring(0, 157) + '...');
       $meta.setSiteName(result.title);
-      $meta.setImage(siteurl + result.featuredImage.url);
+      $meta.setImage(siteurl + result.images[0].small);
 
       latLon = { lat: result.address.geo[0], lng: result.address.geo[1] };
       map = new google.maps.Map(document.getElementById('map'), {
@@ -133,7 +113,7 @@
         title: result.title
       });
 
-      var featuredImage = typeof result.featuredImage !== 'undefined' ? result.featuredImage.url : 'modules/core/client/img/brand/space-now-logo-white.png';
+      var featuredImage = typeof result.featuredImage !== 'undefined' ? result.images[0].small : 'modules/core/client/img/brand/space-now-logo-white.png';
 
       var infowindow = new google.maps.InfoWindow({
         content: '<div><img src="' + featuredImage + '" width="50"><strong class="margin-left-10">' + result.title + '</strong></div>'
@@ -159,7 +139,7 @@
           map: map,
           title: res.title
         });
-        var featuredImage = typeof res.featuredImage !== 'undefined' ? res.featuredImage.url : 'modules/core/client/img/brand/space-now-logo-white.png';
+        var featuredImage = typeof res.featuredImage !== 'undefined' ? result.images[0].small : 'modules/core/client/img/brand/space-now-logo-white.png';
         var listingId = res._id;
         var infowindow = new google.maps.InfoWindow();
 
@@ -179,7 +159,7 @@
           '</div></div>' +
           '<div class="row"><div class="col-md-12"><p class="margin-left-5 no-margin-bottom">AUD $' + res.price + ' per ' + res.period + '</p>' +
           '</div></div>' +
-          '<div class="row"><div class="col-md-12"><p class="margin-left-5 no-margin-bottom">' + res.category[0].name + '</p>' +
+          '<div class="row"><div class="col-md-12"><p class="margin-left-5 no-margin-bottom">' + res.category.name + '</p>' +
           '</div></div>' +
           '</div>' +
           '</div>' +

@@ -217,12 +217,13 @@
 	position: absolute;
 	z-index: 99999999;
 	top: 50%;
-	margin-top: -70px;
+	margin-top: -300px;
 	width: 100%;
 	font-size: 85px;
 	font-weight: 100;
 	font-family: "Courier New";
 	color: #FFF;
+	cursor: pointer;
 }
 
 .owl-next {
@@ -237,14 +238,21 @@
 	/*background-color: rgba(0,0,0,0.5);*/
 }
 
+.owl-item {
+	display: inline-block;
+}
+
 .slide-image {
 	position:absolute;
-	top:50%;
 	min-height:100%;
+	/* 
+	top:50%; 
 	display:block;
 	left:50%;
 	-webkit-transform: translate(-50%, -50%);
 	min-width:100%;
+	*/
+	
 }
 
 #map-container, #map-container ng-map, #map {

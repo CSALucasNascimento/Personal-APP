@@ -127,16 +127,16 @@ exports.invokeRolesPolicies = function () {
       permissions: ['get']
     }, {
       resources: '/api/listings/similar/:listingId',
-      permissions: ['post']
+      permissions: ['get']
     }, {
       resources: '/api/listings/owned',
-      permissions: ['post']
+      permissions: ['get']
     }, {
       resources: '/api/listings/favorites',
-      permissions: ['post']
+      permissions: ['get']
     }, {
       resources: '/api/listings/favoritesByUser',
-      permissions: ['post']
+      permissions: ['get']
     }]
   }]);
 };

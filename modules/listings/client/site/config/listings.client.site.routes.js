@@ -104,7 +104,7 @@
       })
       .state('listings.view', {
         url: '/:streetName/:category-:suburb/:listingId',
-        templateUrl: 'modules/listings/client/views/view-listing.client.view.html',
+        templateUrl: 'modules/listings/client/site/view/view-listing.client.view.html',
         controller: 'ListingsViewController',
         controllerAs: 'vm',
         resolve: {
@@ -113,8 +113,8 @@
           listingSaveResolve: getListingSave,
           listingUnsaveResolve: getListingUnsave,
           categoryListResolve: getListCategory,
-          amenityListResolve: getListAmenity,
-          accountResolve: getAccountByUser
+          amenityListResolve: getListAmenity
+          // accountResolve: getAccountByUser
         },
         data: {
           pageTitle: 'Listing {{ listingResolve.title }}'

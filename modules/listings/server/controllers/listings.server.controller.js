@@ -585,7 +585,7 @@ exports.listFavorites = function(req, res) {
  * Similar listings
  */
 exports.listSimilar = function(req, res) {
-  var categoryId = req.listing.category[0]._id;
+  var categoryId = req.listing.category._id;
   var listingId = req.listing._id;
   var location = req.listing.address.geo;
   var maxDistance = 15 / 111.12;  // transformed to radians   - 0.0015696123

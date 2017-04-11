@@ -129,6 +129,7 @@ module.exports = {
         '//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js',
         '//maps.googleapis.com/maps/api/js?key=AIzaSyDgxlpA4sdSzSFFC1iitqzJ_wRe0hdsdDg&libraries=places',
         'public/lib/easy-markerwithlabel/src/markerwithlabel.js',
+        'public/lib/owl.carousel/dist/owl.carousel.js',
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

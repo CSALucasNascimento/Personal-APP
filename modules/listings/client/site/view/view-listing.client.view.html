@@ -3,7 +3,7 @@
 
   <data-owl-carousel class="owl-carousel owl-loaded">
     <div owl-carousel-item="" ng-repeat="images in vm.listing.images" class="item wrapper">
-      <img class="slide-image" src="{{images.medium}}" class="owl-lazy" alt="{{vm.listing.category.name}} {{vm.listing.address.suburb}} {{vm.listing.address.streetName}}" title="{{vm.listing.category.name}} {{vm.listing.address.suburb}} {{vm.listing.address.streetName}}">
+      <img class="slide-image" src="{{images.extra_small}}" class="owl-lazy" alt="{{vm.listing.category.name}} {{vm.listing.address.suburb}} {{vm.listing.address.streetName}}" title="{{vm.listing.category.name}} {{vm.listing.address.suburb}} {{vm.listing.address.streetName}}">
     </div>
   </data-owl-carousel>
   <div class="container hidden-md-down">
@@ -108,7 +108,7 @@
         <div class="row hidden-lg-up margin-top-20 padding-right-20 padding-left-20">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="row bg-dark-gray-opacity text-lighter-gray">
-              <h6 class="padding-left-20 padding-right-20 padding-top-10 padding-bottom-10"><span class="pull-left text-bolder" style="font-size: 22px; margin-top: -7px">AUD ${{vm.listing.price}}</span><span class="pull-right text-bolder" style="text-transform: uppercase; font-size: 14px;">per {{vm.listing.period}}</span></h6>
+              <h6 class="padding-left-20 padding-right-20 padding-top-10 padding-bottom-10"><span class="pull-left text-bolder" style="font-size: 22px; margin-top: -7px"><price method="vm.listing.price.method" details="vm.listing.price.details" poa="vm.listing.poa"></price></span></h6>
             </div>
             <div class="row padding-20 border-light-gray">
               <div class="col-md-12 col-xs-12">
