@@ -478,9 +478,154 @@ exports.searchAll = function(req, res) {
 };
 
 /**
+ * Save as a favorite
+ */
+exports.saveFavorite = function(req, res) {
+  var listing = req.listing;
+  var userId = mongoose.Types.ObjectId(req.user._id);
+  var isUserExist = false;
+  listing.listUserLikes.map(function(user) {
+    if (user.id === userId.id)
+      isUserExist = true;
+    return user;
+  });
+
+  if (isUserExist) {
+    return res.status(208).send({
+      message: 'Already Favorited',
+      isSave: true
+    });
+  } else {
+    listing.listUserLikes.push(userId);
+    listing.stats.clicks += 1;
+    listing.save(req, function(err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err),
+          isSave: false
+        });
+      } else {
+        return res.status(200).send({
+          message: 'Listing is favorited',
+          isSave: true
+        });
+      }
+    });
+  }
+
+};
+
+/**
+ * Update favorite count
+ */
+exports.unsaveFavorite = function(req, res) {
+
+  var listing = req.listing;
+  var userId = mongoose.Types.ObjectId(req.user._id);
+  var isUserExist = false;
+  var i = 0;
+  var userIndex = -1;
+  listing.listUserLikes.map(function(user) {
+    if (user.id === userId.id) {
+      isUserExist = true;
+      userIndex = i;
+    }
+    i++;
+    return user;
+  });
+
+  if (isUserExist) {
+    listing.listUserLikes.splice(userIndex, 1);
+    listing.stats.clicks -= 1;
+    listing.save(req, function(err) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err),
+          isSave: true
+        });
+      } else {
+        return res.status(200).send({
+          message: 'Listing is removed from favorites',
+          isSave: false
+        });
+      }
+    });
+  } else {
+    return res.status(208).send({
+      message: 'Already removed from favorites',
+      isSave: false
+    });
+  }
+
+};
+
+/**
+ * List of Favorites
+ */
+exports.listFavorites = function(req, res) {
+  Listing.find({ 'stats.clicks': { $gt: 1 } })
+    .sort('-created')
+    .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate('user', 'displayName')
+    .exec(function(err, listings) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.jsonp(listings);
+      }
+    });
+};
+
+/**
+ * Similar listings
+ */
+exports.listSimilar = function(req, res) {
+  var categoryId = req.listing.category[0]._id;
+  var listingId = req.listing._id;
+  var location = req.listing.address.geo;
+  var maxDistance = 15 / 111.12;  // transformed to radians   - 0.0015696123
+  Listing.find({
+    'address.geo': {
+      $near: location,
+      $maxDistance: maxDistance
+    },
+    category: { $in: [categoryId] },
+    status: 'active',
+    '_id': { $ne: listingId }
+  })
+    .limit(3)
+    .populate({
+      path: 'category',
+      select: 'name'
+    })
+    .populate({
+      path: 'images',
+      select: 'thumbnail extra_small thumbnail'
+    })
+    .populate({
+      path: 'user',
+      populate: { path: 'profileImage', select: 'url' },
+      select: 'displayName email profileImageURL profileImage'
+    })
+    .exec(function(err, listings) {
+      if (err) {
+        return res.status(400).send({
+          message: errorHandler.getErrorMessage(err)
+        });
+      } else {
+        res.jsonp(listings);
+      }
+    });
+};
+
+/**
  * Listing middleware
  */
-
 exports.listingByID = function(req, res, next, id) {
 
   if (!mongoose.Types.ObjectId.isValid(id)) {

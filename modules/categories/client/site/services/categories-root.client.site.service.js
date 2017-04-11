@@ -9,6 +9,8 @@
   CategoriesRootService.$inject = ['$resource'];
 
   function CategoriesRootService($resource) {
-    return $resource('api/categories/root');
+    return $resource('api/categories/root', {}, {
+      get: { method: 'GET', isArray: true }
+    });
   }
 }());

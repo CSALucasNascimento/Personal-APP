@@ -5,10 +5,12 @@
     .module('listings.site.services')
     .factory('ListingsService', ListingsService);
 
-  ListingsService.$inject = ['$resource', '$log'];
+  ListingsService.$inject = ['$resource'];
 
-  function ListingsService($resource, $log) {
-    var Listing = $resource('/api/listings');
+  function ListingsService($resource) {
+    var Listing = $resource('/api/listings', {}, {
+      get: { method: 'GET', isArray: true }
+    });
     return Listing;
   }
 }());

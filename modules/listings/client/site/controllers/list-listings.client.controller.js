@@ -109,16 +109,13 @@
       var id = marker.listing._id;
       var title = marker.listing.title;
       var category = marker.listing.category.name;
-      var method = marker.listing.price.method;
-      var details = marker.listing.price.details;
-      var poa = marker.listing.poa;
       var streetName = marker.listing.address.streetName;
       var suburb = marker.listing.address.suburb;
       var state = marker.listing.address.state;
       var image = marker.listing.images[0].thumbnail;
       var iwContent = '<div flex layout="column" style="cursor: pointer" ui-sref="listings.view({ listingId:\'' + id + '\', streetName:\'' + streetName + '\', category:\'' + $rootScope.slugify(category) + '\', suburb:\'' + $rootScope.slugify(suburb) + '\'})">' +
         '<md-card>' +
-        '<div style="background: url(' + image + '); background-size: cover; width: 100%; height: 150px; box-shadow: inset 0 0 0 5px #fff;" class="md-card-image img-fluid" alt="' + title + '"></div>' +
+        '<div style="background: url(\'' + image + '\') center center; background-size: cover; width: 100%; height: 150px; box-shadow: inset 0 0 0 5px #fff;" class="md-card-image img-fluid" alt="' + title + '"></div>' +
         '<md-card-content>' +
         '<p class="no-margin no-padding text-bolder">' + returnPrice(marker.listing) + '</p>' +
         '<p class="no-margin no-padding">' + streetName + '</p>' +

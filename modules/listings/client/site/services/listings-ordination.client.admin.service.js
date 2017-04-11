@@ -8,7 +8,9 @@
   ListingsOrdinationService.$inject = ['$resource'];
 
   function ListingsOrdinationService($resource) {
-    var Listing = $resource('/api/listings/ordination');
+    var Listing = $resource('/api/listings/ordination', {}, {
+      get: { method: 'GET', isArray: true }
+    });
     return Listing;
   }
 }());

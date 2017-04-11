@@ -41,6 +41,18 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/listings/advancedSearch/location/category',
       permissions: '*'
+    }, {
+      resources: '/api/listings/similar/:listingId',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/owned',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/favorites',
+      permissions: '*'
+    }, {
+      resources: '/api/listings/favoritesByUser',
+      permissions: '*'
     }]
   }, {
     roles: ['user'],
@@ -71,6 +83,18 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/listings/advancedSearch/location/category',
       permissions: ['get']
+    }, {
+      resources: '/api/listings/similar/:listingId',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/owned',
+      permissions: ['get']
+    }, {
+      resources: '/api/listings/favorites',
+      permissions: ['get', 'post']
+    }, {
+      resources: '/api/listings/favoritesByUser',
+      permissions: ['get', 'post']
     }]
   }, {
     roles: ['guest'],
@@ -101,6 +125,18 @@ exports.invokeRolesPolicies = function () {
     }, {
       resources: '/api/listings/advancedSearch/location/category',
       permissions: ['get']
+    }, {
+      resources: '/api/listings/similar/:listingId',
+      permissions: ['post']
+    }, {
+      resources: '/api/listings/owned',
+      permissions: ['post']
+    }, {
+      resources: '/api/listings/favorites',
+      permissions: ['post']
+    }, {
+      resources: '/api/listings/favoritesByUser',
+      permissions: ['post']
     }]
   }]);
 };

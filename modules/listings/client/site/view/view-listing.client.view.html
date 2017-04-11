@@ -1,0 +1,504 @@
+
+<section id="section-intern" class="intro-slider no-padding">
+
+  <data-owl-carousel class="owl-carousel owl-loaded">
+    <div owl-carousel-item="" ng-repeat="images in vm.listing.images" class="item wrapper">
+      <img class="slide-image" src="{{images.medium}}" class="owl-lazy" alt="{{vm.listing.category.name}} {{vm.listing.address.suburb}} {{vm.listing.address.streetName}}" title="{{vm.listing.category.name}} {{vm.listing.address.suburb}} {{vm.listing.address.streetName}}">
+    </div>
+  </data-owl-carousel>
+  <div class="container hidden-md-down">
+    <div class="row">
+      <div class="offset-md-8 col-md-4 offset-sm-8 col-sm-4 col-xs-12 text-center">
+        <div class="row bg-dark-gray-opacity text-lighter-gray margin-left-20 margin-right-20">
+            <h6 class="padding-left-20 padding-right-20 padding-top-10 padding-bottom-10"><span class="pull-left text-bolder" style="font-size: 22px; margin-top: -7px"><price method="vm.listing.price.method" details="vm.listing.price.details" poa="vm.listing.poa"></price></span></h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="no-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-8 offset-xl-0 col-lg-8 offset-lg-0 col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-xs-12 margin-top-40">
+
+        <div class="row margin-bottom-20">
+          <div class="col-md-2 col-sm-3 col-xs-3 hidden-sm-down">
+            <img src="{{vm.listing.user.profileImage ? vm.listing.user.profileImage.url : vm.listing.user.profileImageURL}}" class="img-circle img-red-border" width="80" height="80" alt="{{vm.listing.user.displayName}}" title="{{vm.listing.user.displayName}}">
+          </div>
+          <div class="col-md-10 col-sm-9 col-xs-9 margin-top-10 hidden-sm-down">
+            <div class="row">
+              <h3 ng-bind="vm.listing.title" class="text-red"></h3>
+            </div>
+            <div class="row">
+              <h6>{{vm.listing.address.streetNumber}} {{vm.listing.address.streetName}}, {{vm.listing.address.suburb}}, {{vm.listing.address.state}}</h6>
+            </div>
+          </div>
+          <div class="col-md-12 col-sm-12 col-xs-12 margin-top-10 hidden-md-up">
+            <div class="row">
+              <h3 ng-bind="vm.listing.title" class="text-red text-center padding-right-10 padding-left-10"></h3>
+            </div>
+            <div class="row">
+              <h6 class="text-center padding-right-10 padding-left-10">{{vm.listing.address.streetNumber}} {{vm.listing.address.streetName}}, {{vm.listing.address.suburb}}, {{vm.listing.address.state}}</h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row padding-10">
+          <div class="col-md-1 hidden-xs-down">
+          </div>
+          <div class="col-md-2 col-xs-6 text-center hidden-xs-down">
+            <div class="row">
+              <picture>
+                <img src="./modules/listings/client/site/img/category-icon.png" height="30">
+              </picture>
+            </div>
+            <div class="row margin-top-5">
+              <span class="small">{{vm.listing.category.name}} </span>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-6 text-center">
+            <div class="row">
+              <picture>
+                <img src="./modules/listings/client/site/img/meeting-rooms-icon.png" height="30">
+              </picture>
+            </div>
+            <div class="row margin-top-5">
+              <span class="small">{{vm.listing.boardrooms}} Meeting Rooms</span>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-6 text-center">
+            <div class="row">
+              <picture>
+                <img src="./modules/listings/client/site/img/seats-icon.png" height="30">
+              </picture>
+            </div>
+            <div class="row margin-top-5">
+              <span class="small">{{vm.listing.desks > 0 ? vm.listing.desks : 1}} Capacity</span>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-6 text-center">
+            <div class="row">
+              <picture>
+                <img src="./modules/listings/client/site/img/calendar-icon.png" height="30">
+              </picture>
+            </div>
+            <div class="row margin-top-5">
+              <span class="small">{{vm.listing.leasePeriodMin}} - {{vm.listing.leasePeriodMax}}</span>
+            </div>
+          </div>
+          <div class="col-md-2 col-xs-6 text-center">
+            <div class="row">
+              <picture>
+                <img src="./modules/listings/client/site/img/parking-icon.png" height="30">
+              </picture>
+            </div>
+            <div class="row margin-top-5">
+              <span class="small">{{vm.listing.parking > 0 ? vm.listing.parking : 0}} Parking</span>
+            </div>
+          </div>
+          <div class="col-md-1 hidden-xs-down">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row hidden-lg-up margin-top-20 padding-right-20 padding-left-20">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="row bg-dark-gray-opacity text-lighter-gray">
+              <h6 class="padding-left-20 padding-right-20 padding-top-10 padding-bottom-10"><span class="pull-left text-bolder" style="font-size: 22px; margin-top: -7px">AUD ${{vm.listing.price}}</span><span class="pull-right text-bolder" style="text-transform: uppercase; font-size: 14px;">per {{vm.listing.period}}</span></h6>
+            </div>
+            <div class="row padding-20 border-light-gray">
+              <div class="col-md-12 col-xs-12">
+                <div class="row">
+                  <enquiry></enquiry>
+                  <!-- <messagefrm></messagefrm> -->
+                  <!-- <a data-ui-sref='book' class="btn btn-red text-white full-width">Book it Now</a> -->
+                </div>
+              </div>
+            </div>
+            <div class="row margin-top-20 no-margin-bottom padding-20 border-light-gray">
+              <div class="col-md-12 col-xs-12">
+                <div class="row text-center row-favorites">
+                  <a data-ng-click="vm.setSave()" data-ng-show="!vm.isSave">
+                    <span class="col-md-12">
+                      <img src="./modules/core/client/site/img/brand/favorite.png" width="20">
+                        Add to Favourites
+                    </span>
+                        </a>
+                        <a data-ng-click="vm.setUnsave()" data-ng-show="vm.isSave">
+                    <span class="col-md-12">
+                      <img src="./modules/core/client/site/img/brand/favorited.png" width="20">
+                        Remove from Favourites
+                    </span>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-12 col-xs-12 margin-top-10" data-ng-show="vm.listing.listUserLikes.length > 1">
+                <div class="row text-center">
+                  {{vm.listing.listUserLikes.length}} people favorited this space
+                </div>
+              </div>
+            </div>
+            <div class="row no-margin-top margin-bottom-20 border-light-gray">
+              <div class="col-md-4 col-xs-4 text-center nav-comp" style="border-left: none">
+                <a class="btn-header" socialshare
+                   socialshare-provider="email"
+                   socialshare-trigger="click"
+                   socialshare-subject="{{vm.listing.title}}"
+                   socialshare-body="{{vm.listing.title}} - {{vm.listing.description}} - {{$location.absUrl()}}"
+                   socialshare-to="info@spacenow.com.au" >
+                  <i class="fa fa-envelope-o"></i>
+                </a>
+              </div>
+              <div class="col-md-4 col-xs-4 text-center nav-comp">
+                <a class="btn-header" socialshare
+                   socialshare-provider="facebook"
+                   socialshare-text="{{vm.listing.title}}"
+                   socialshare-description="{{vm.listing.description}}"
+                   socialshare-url="{{$location.absUrl()}}">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </div>
+              <div class="col-md-4 col-xs-4 text-center nav-comp">
+                <a class="btn-header">
+                  <i class="fa fa-share"></i>
+                </a>
+                <div class="panel drop-down-menu">
+                  <a class="panel-body hover-item"
+                     socialshare
+                     socialshare-provider="google"
+                     socialshare-url="{{$location.absUrl()}}">
+                    <div class="hover-item__content">
+                      <i class="fa fa-google-plus"></i>  Google +
+                    </div>
+                  </a>
+
+                  <a class="panel-body hover-item"
+                     socialshare
+                     socialshare-provider="twitter"
+                     socialshare-text="{{vm.listing.title}}"
+                     socialshare-hashtags="spacenow"
+                     socialshare-url="{{$location.absUrl()}}">
+                    <div class="hover-item__content">
+                      <i class="fa fa-twitter"></i> Twitter
+                    </div>
+                  </a>
+
+                  <a class="panel-body hover-item"
+                     socialshare
+                     socialshare-provider="linkedin"
+                     socialshare-text="{{vm.listing.title}}"
+                     socialshare-description="{{vm.listing.description}}"
+                     socialshare-url="{{$location.absUrl()}}">
+                    <div class="hover-item__content">
+                      <i class="fa fa-linkedin"></i> Linkedin
+                    </div>
+                  </a>
+
+                  <a class="panel-body hover-item"
+                     socialshare
+                     socialshare-provider="skype"
+                     socialshare-text="{{vm.listing.title}}"
+                     socialshare-url="{{$location.absUrl()}}">
+                    <div class="hover-item__content">
+                      <i class="fa fa-skype"></i> Skype
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12 hidden-md-up">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <a data-ui-sref="listingReport({listingId: vm.listing._id})" class="btn btn-default full-width" >Report Listing</a>   <!-- btn btn-red  -->
+          </div>
+        </div>
+        <div class="divider hidden-lg-up"></div>
+
+        <div class="row margin-bottom-40 margin-top-40">
+          <div class="divider hidden-lg-up margin-top-20"></div>
+          <div class="col-md-12">
+            <h6 class="text-bolder margin-bottom-20">Amenities</h6>
+            <div class="col-md-4 col-sm-6 col-xs-12 margin-bottom-20" ng-repeat="amenity in vm.listing.amenity ">
+              <span><img src="{{amenity.icon.url}}" alt="{{amenity.name}}" title="{{amenity.name}}" width="30" height="30"></span>
+              <span ng-bind="amenity.name"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="row margin-bottom-40 margin-top-40">
+          <div class="col-md-12">
+            <h6 class="text-bolder margin-bottom-20">About Space</h6>
+            <div class="row">
+              <div class="col-md-12">
+                <p class="description-with-breaklines">{{vm.listing.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hidden-md-down col-xl-4 offset-xl-0 col-lg-4 offset-lg-0">
+        <div class="row margin-left-20 margin-right-20 padding-20 border-light-gray">
+          <div class="col-md-12 col-xs-12">
+            <div class="row">
+              <enquiry></enquiry>
+              <!-- <messagefrm></messagefrm> -->
+              <!-- <a data-ui-sref='book' class="btn btn-red text-white full-width">Book it Now</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="row margin-top-20 margin-left-20 margin-right-20 no-margin-bottom padding-20 border-light-gray" ng-show="vm.authentication.user">
+          <div class="col-md-12 col-xs-12">
+            <div class="row text-center row-favorites">
+              <a data-ng-click="vm.setSave()" data-ng-show="!vm.isSave">
+              <span class="col-md-12">
+                <img src="./modules/core/client/site/img/brand/favorite.png" width="20">
+                  Add to Favourites
+              </span>
+              </a>
+              <a data-ng-click="vm.setUnsave()" data-ng-show="vm.isSave">
+              <span class="col-md-12">
+                <img src="./modules/core/client/site/img/brand/favorited.png" width="20">
+                  Remove from Favourites
+              </span>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-12 col-xs-12 margin-top-10" data-ng-show="vm.listing.listUserLikes.length > 1">
+            <div class="row text-center">
+              {{vm.listing.listUserLikes.length}} people favorited this space
+            </div>
+          </div>
+        </div>
+
+        <div class="row no-margin-top margin-left-20 margin-right-20 margin-bottom-20 border-light-gray">
+          <div class="col-md-4 col-xs-4 text-center nav-comp" style="border-left: none">
+            <a class="btn-header" socialshare
+               socialshare-provider="email"
+               socialshare-trigger="click"
+               socialshare-subject="{{vm.listing.title}}"
+               socialshare-body="{{vm.listing.title}} - {{vm.listing.description}} - {{$location.absUrl()}}"
+               socialshare-to="info@spacenow.com.au" >
+              <i class="fa fa-envelope-o"></i>
+            </a>
+          </div>
+          <div class="col-md-4 col-xs-4 text-center nav-comp">
+            <a class="btn-header" socialshare
+               socialshare-provider="facebook"
+               socialshare-text="{{vm.listing.title}}"
+               socialshare-description="{{vm.listing.description}}"
+               socialshare-url="{{$location.absUrl()}}">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </div>
+          <div class="col-md-4 col-xs-4 text-center nav-comp">
+            <a class="btn-header">
+              <i class="fa fa-share"></i>
+            </a>
+            <div class="panel drop-down-menu">
+              <a class="panel-body hover-item"
+                 socialshare
+                 socialshare-provider="google"
+                 socialshare-url="{{$location.absUrl()}}">
+                <div class="hover-item__content">
+                  <i class="fa fa-google-plus"></i>  Google +
+                </div>
+              </a>
+
+              <a class="panel-body hover-item"
+                 socialshare
+                 socialshare-provider="twitter"
+                 socialshare-text="{{vm.listing.title}}"
+                 socialshare-hashtags="spacenow"
+                 socialshare-url="{{$location.absUrl()}}">
+                <div class="hover-item__content">
+                  <i class="fa fa-twitter"></i> Twitter
+                </div>
+              </a>
+
+              <a class="panel-body hover-item"
+                 socialshare
+                 socialshare-provider="linkedin"
+                 socialshare-text="{{vm.listing.title}}"
+                 socialshare-description="{{vm.listing.description}}"
+                 socialshare-url="{{$location.absUrl()}}">
+                <div class="hover-item__content">
+                  <i class="fa fa-linkedin"></i> Linkedin
+                </div>
+              </a>
+
+              <a class="panel-body hover-item"
+                 socialshare
+                 socialshare-provider="skype"
+                 socialshare-text="{{vm.listing.title}}"
+                 socialshare-url="{{$location.absUrl()}}">
+                <div class="hover-item__content">
+                  <i class="fa fa-skype"></i> Skype
+                </div>
+              </a>
+
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <a data-ui-sref="listingReport({listingId: vm.listing._id})" class="btn btn-default full-width" >Report Listing</a>   <!-- btn btn-red  -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col col-md-10 col-sm-10 col-xs-10">
+        <div id="map-container">
+          <div id="map"></div>
+        </div>
+      </div>
+      <div class="col col-md-2 col-sm-2 col-xs-2 panel-filter-map">
+        <div class="row">
+          <div class="nav-comp d-block">
+            <a class="btn-header" ng-click="vm.searchType('cafe')" ><i class="material-icons">&#xe541;</i> <span class="hidden-xs-down">Cafe</span></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="nav-comp d-block">
+            <a class="btn-header" ng-click="vm.searchType('train_station')" ><i class="material-icons">&#xe534;</i> <span class="hidden-xs-down">Train</span></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="nav-comp d-block">
+            <a class="btn-header" ng-click="vm.searchType('bus_station')" ><i class="material-icons">&#xe530;</i> <span class="hidden-xs-down">Bus</span></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="nav-comp d-block">
+            <a class="btn-header" ng-click="vm.searchType('gym')" ><i class="material-icons">&#xeb43;</i> <span class="hidden-xs-down">Gym</span></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="nav-comp d-block">
+            <a class="btn-header" ng-click="vm.searchType('restaurant')" ><i class="material-icons">&#xe56c;</i> <span class="hidden-xs-down">Food</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" data-ng-show="vm.account.name.length > 0">
+    <div class="row">
+      <div class="col-xl-3 col-lg-3 col-md-2 col-sm-2 col-xs-12 margin-top-40 text-center">
+        <a ui-sref="accounts.view({ accountId: vm.account._id })" ><img alt="{{vm.account.name}}" title="{{vm.account.name}}" class="margin-top-50" src="{{vm.account.companyLogoURL}}"></a>
+      </div>
+      <div class="col-xl-9 offset-xl-0 col-lg-9 offset-lg-0 col-md-10 offset-md-1 col-sm-10 offset-sm-1 col-xs-12 margin-top-40">
+        <div class="divider hidden-lg-up"></div>
+        <div class="row margin-bottom-15 margin-top-40">
+          <div class="col-md-12">
+            <a ui-sref="accounts.view({ accountId: vm.account._id })" ><h6 class="text-bolder margin-bottom-20" ng-bind="vm.account.name"></h6></a>
+            <div class="row">
+              <div class="col-md-12">
+                <span compile="vm.account.shortDescription"></span>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-red" ><a ui-sref="accounts.view({ accountId: vm.account._id })" class="text-red" >Read More</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div style="display: none">
+    <div id="info-content">
+      <table>
+        <tr id="iw-url-row" class="iw_table_row">
+          <td id="iw-icon" class="iw_table_icon"></td>
+          <td id="iw-url"></td>
+        </tr>
+        <tr id="iw-address-row" class="iw_table_row">
+          <td class="iw_attribute_name">Address:</td>
+          <td id="iw-address"></td>
+        </tr>
+        <tr id="iw-phone-row" class="iw_table_row">
+          <td class="iw_attribute_name">Telephone:</td>
+          <td id="iw-phone"></td>
+        </tr>
+        <tr id="iw-rating-row" class="iw_table_row">
+          <td class="iw_attribute_name">Rating:</td>
+          <td id="iw-rating"></td>
+        </tr>
+        <tr id="iw-website-row" class="iw_table_row">
+          <td class="iw_attribute_name">Website:</td>
+          <td id="iw-website"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+</section>
+
+<section class="margin-bottom-50 featured-section">
+  <div class="container">
+    <div class="row">
+      <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <!-- Begin Heading -->
+        <div>
+          <h6 class="text-bolder margin-bottom-20 ">Similar Space</h6>
+        </div>
+        <!-- End Heading -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <div class="margin-top-25 col col-lg-4 col-md-4 col-sm-6 col-xs-12 pointer"
+               ng-repeat="listing in vm.listingSimilar"
+               ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category[0].name), suburb: slugify(listing.address.suburb) })">
+            <div class="listing">
+              <div class="image-panel" style="background: url('{{listing.images[0].extra_small}}') center center; background-size: cover">
+                <div class="text-price">
+                  <div class="row">
+                    <span class="pull-md-right pull-sm-right pull-xs-right">
+                      <price method="listing.price.method" details="listing.price.details" poa="listing.poa"></price>
+                    </span>
+                  </div>
+                </div>
+                <div class="text-category">
+                  <div class="row">
+                    <span class="pull-md-right pull-sm-right pull-xs-right">{{listing.category.name}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="body-panel">
+                <div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="row">
+                    <div class="col col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                      <img src="{{listing.user.profileImageURL}}" class="img-circle pull-xs-right margin-top-25-negative" width="50">
+                    </div>
+                    <div class="col col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                      <p class="no-margin-bottom margin-top-10 no-padding">{{listing.address.streetNumber}} {{listing.address.streetName}}</p>
+                      <p class="no-margin no-padding">{{listing.address.suburb}}, {{listing.address.state}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+

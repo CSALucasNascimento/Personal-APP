@@ -11,6 +11,8 @@
   function AmenitiesService($resource) {
     return $resource('api/amenities/:amenityId', {
       amenityId: '@_id'
+    }, {
+      get: { method: 'GET', isArray: true }
     });
   }
 }());

@@ -30,6 +30,18 @@ module.exports = function (app) {
     .put(listings.update)
     .delete(listings.delete);
 
+  app.route('/api/listings/favorites').all(listingsPolicy.isAllowed)
+    .get(listings.listFavorites);
+
+  app.route('/api/listings/similar/:listingId').all(listingsPolicy.isAllowed)
+    .get(listings.listSimilar);
+
+  app.route('/api/listings/saveFavorite/:listingId')
+    .put(listings.saveFavorite);
+
+  app.route('/api/listings/unsaveFavorite/:listingId')
+    .put(listings.unsaveFavorite);
+
   /**
    * ADVANCED SEARCH
    */

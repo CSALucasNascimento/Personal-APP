@@ -34,8 +34,7 @@
     "css-element-queries": "0.3.2",
     "d3": "3.5.17",
     "datatables-responsive": "2.1.0",
-    "easy-markerwithlabel": "^0.0.1",
-    "flow": "*",
+    "easy-markerwithlabel": "^0.0.1"
     "highlightjs": "8.9.1",
     "imagesloaded": "4.1.1",
     "jquery": "3.1.1",
@@ -50,7 +49,8 @@
     "Sortable": "1.4.2",
     "textAngular": "1.5.16",
     "vsGoogleAutocomplete": "vs-google-autocomplete#^0.5.0",
-    "wip-image-zoom": "^0.1.6-beta"
+    "wip-image-zoom": "^0.1.6-beta",
+    "flow": "*"
   },
   "devDependencies": {
     "angular-mocks": "1.5.11"
