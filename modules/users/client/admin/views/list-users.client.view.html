@@ -82,7 +82,7 @@
           <tbody>
             <tr ng-repeat="user in ::vm.users">
               <!-- <td>{{ user._id }}</td> -->
-              <td><img class="product-image" ng-src="{{ user.profileImageURL }}"></td>
+              <td><img class="product-image" ng-src="{{ vm.getProfileImage(user) }}"></td>
               <td>{{ user.displayName }}</td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>

@@ -21,9 +21,27 @@
     vm.toggle = toggle;
     vm.exists = exists;
     vm.roles = ['admin', 'user'];
+    vm.uploadComplete = uploadComplete;
+    vm.fileSuccess = fileSuccess;
+    vm.getProfileImage = getProfileImage;
+
+    vm.ngFlowOptions = {
+      // You can configure the ngFlow from here
+      target: '/api/medias',
+      chunkSize: 15 * 1024 * 1024,
+      maxChunkRetries: 1,
+      singleFile: true,
+      testChunks: false,
+      progressCallbacksInterval: 100
+    };
+    vm.ngFlow = {
+      // ng-flow will be injected into here through its directive
+      flow: {}
+    };
+    vm.dropping = false;
 
     /**
-     * Save product
+     * Save user
      */
     function saveUser() {
       vm.user.createOrUpdate()
@@ -46,6 +64,24 @@
       }
     }
 
+
+    function getProfileImage(){
+      if(vm.user.profileImage !== null && vm.user.profileImage !== undefined){
+        if (vm.user.profileImage.thumbnail.startsWith('module')) {
+          return '/' + vm.user.profileImage.thumbnail;
+        } else {
+          return vm.user.profileImage.thumbnail;
+        }
+      } else {
+        var imgurl = vm.user.profileImageURL.replace('client/img', 'client/site/img');
+        if (imgurl.startsWith('module')) {
+          return '/' + imgurl;
+        } else {
+          return imgurl;
+        }
+      }
+
+    }
     /**
      * Toggle function select checkbok
      */
@@ -101,5 +137,30 @@
     // function isContextUserSelf() {
     //   return vm.user.username === vm.authentication.user.username;
     // }
+
+
+    /**
+     * File upload success callback
+     * Triggers when single upload completed
+     *
+     * @param file
+     * @param message
+     */
+    function fileSuccess(file, message) {
+      var response = angular.fromJson(message);
+      vm.user.profileImage = response;
+      console.log('file success');
+      console.log(vm.user.profileImage);
+      // console.log(file);
+    }
+
+    /**
+     *
+     * Triggers when single upload completed
+     *
+     * @param message
+     */
+    function uploadComplete(file, message) {
+    }
   }
 }());

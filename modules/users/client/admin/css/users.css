@@ -13,10 +13,7 @@
   right: 10px;
   top: 10px;
 }
-.user-profile-picture {
-  max-height: 150px;
-  min-height: 150px;
-}
+
 .social-button {
   -webkit-transition-duration: 0.4s;
   -moz-transition-duration: 0.4s;
@@ -25,4 +22,28 @@
 }
 .social-button:hover {
   opacity: 0.65;
+}
+
+.user-profile-picture {
+  max-width: 100px;
+  max-height: 100px;
+  width: auto;
+  border: 3px solid rgba(0, 0, 0, 0.12);
+}
+
+.user-profile-picture-box {
+  width: 100%;
+  padding: 10px;
+}
+
+.user-change-btn {
+  cursor: pointer;
+}
+
+.user-change-btn:hover {
+  text-decoration: underline;
+}
+
+.user-detail-form-container {
+  padding: 24px;
 }

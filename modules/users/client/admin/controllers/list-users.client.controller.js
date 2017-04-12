@@ -12,6 +12,7 @@
     // vm.buildPager = buildPager;
     // vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
     // vm.pageChanged = pageChanged;
+    vm.getProfileImage = getProfileImage;
 
     AdminService.query(function (data) {
       vm.users = data;
@@ -74,6 +75,23 @@
      */
     function gotoAddUser() {
       $state.go('admin.users.create');
+    }
+
+    function getProfileImage(user){
+      if(user.profileImage !== null && user.profileImage !== undefined){
+        if (user.profileImage.thumbnail.startsWith('module')) {
+          return '/' + user.profileImage.thumbnail;
+        } else {
+          return user.profileImage.thumbnail;
+        }
+      } else {
+        var imgurl = user.profileImageURL.replace('client/img', 'client/site/img');
+        if (imgurl.startsWith('module')) {
+          return '/' + imgurl;
+        } else {
+          return imgurl;
+        }
+      }
     }
 
     /**

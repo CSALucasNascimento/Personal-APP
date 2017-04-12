@@ -9,8 +9,25 @@
       </md-button>
 
       <div layout="row" layout-align="start center">
-        <div class="listing-image" hide-xs>
-          <img class="product-image" ng-src="{{vm.user.profileImageURL}}">
+        <div>
+          <!-- <img class="product-image" ng-src="{{vm.getProfileImage()}}"> -->
+          <div 
+              flow-init="vm.ngFlowOptions"
+              flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" 
+              flow-files-submitted="$flow.upload()"
+              flow-file-success="vm.fileSuccess($file, $message)"
+              flow-complete="vm.uploadComplete($file, $message, $flow)"
+              class="user-profile-picture-box">
+              <div class="text-center" ng-show="!$flow.files.length">
+                <img src="{{vm.getProfileImage()}}" class="user-profile-picture">
+              </div>
+              <div class="text-center ng-hide" ng-show="$flow.files.length">
+                <img flow-img="$flow.files[0]" class="user-profile-picture">
+              </div>
+              <div class="text-center">
+                <span flow-btn="" class="user-change-btn">Change<input type="file" style="visibility: hidden; position: absolute;"></span>
+              </div>
+            </div>
         </div>
 
         <div layout="column" layout-align="start start">
@@ -36,21 +53,8 @@
   <!-- CONTENT -->
   <div class="content" layout="column">
     <div layout="row">
-      <!-- BASIC FORM DATA -->
-      <div class="form-wrapper form-data-wrapper md-whiteframe-1dp" flex="30">
-        <div layout="column" flex layout-gt-sm="row">
-          
-        </div>
-        <div layout="column" flex layout-gt-sm="row">
-          <div class="form-title">Form ng-model data</div>
-          <div class="json-data-wrapper">
-            <pre>{{userForm | json}}</pre>
-          </div>
-        </div>
-      </div>
-      <!-- / BASIC FORM DATA -->
       <!-- BASIC FORM -->
-      <div class="form-wrapper md-whiteframe-1dp" flex="70">
+      <div class="form-wrapper md-whiteframe-1dp" flex>
 
         <form name="userForm" class="md-inline-form" ng-submit="vm.save(userForm.$valid)" novalidate>
 

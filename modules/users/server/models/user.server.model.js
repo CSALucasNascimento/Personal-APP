@@ -123,6 +123,10 @@ var UserSchema = new Schema({
     type: String,
     default: 'modules/users/client/img/profile/default.png'
   },
+  profileImage: {
+    type: Schema.ObjectId,
+    ref: 'Media'
+  },
   provider: {
     type: String,
     required: 'Provider is required'
