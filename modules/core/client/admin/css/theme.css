@@ -40,8 +40,8 @@ md-content.md-default-theme.md-hue-3 {
 
 /* Primary */
 [md-theme="default"] .md-primary-bg {
-  background-color: rgba(255,255,255,1);
-  color: rgb(45,50,62);
+  background-color: rgb(45,50,62);
+  color: rgba(255,255,255,1);
 }
 
 [md-theme="default"] .md-primary-bg .secondary-text,

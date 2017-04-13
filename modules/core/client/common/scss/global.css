@@ -43113,7 +43113,8 @@ img {
       color: #FFFFFF;
       border-radius: 2px; }
       #vertical-navigation .navigation-header .logo .logo-image img {
-        max-height: 100%; }
+        max-height: 70%;
+        margin-top: 7px; }
     #vertical-navigation .navigation-header .fold-toggle {
       -webkit-transition: -webkit-transform 0.3s ease-in-out 0.1s;
       transition: -webkit-transform 0.3s ease-in-out 0.1s;
@@ -44084,7 +44085,7 @@ ms-nav {
 .ms-navigation {
   display: block;
   position: relative;
-  color: #2d323e;
+  color: rgba(255, 255, 255, 0.7);
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -44106,7 +44107,7 @@ ms-nav {
     display: block;
     position: relative;
     cursor: pointer;
-    color: #2d323e; }
+    color: rgba(255, 255, 255, 0.7); }
     .ms-navigation .ms-navigation-node .ms-navigation-item:hover {
       background: rgba(0, 0, 0, 0.1); }
     .ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button {
@@ -44128,12 +44129,12 @@ ms-nav {
           -ms-flex-align: center;
               align-items: center;
       padding-right: 16px;
-      color: #2d323e;
+      color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
       white-space: nowrap;
       overflow: hidden; }
       .ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button .icon {
-        color: #2d323e;
+        color: rgba(255, 255, 255, 0.7);
         margin: 0 16px 0 0; }
       .ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button span {
         white-space: nowrap;
@@ -44170,9 +44171,9 @@ ms-nav {
         -webkit-transition: opacity 0.2s ease-in-out 0.1s;
         transition: opacity 0.2s ease-in-out 0.1s; }
       .ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button.active {
-        color: #2d323e; }
+        color: #FFF; }
         .ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button.active .icon {
-          color: #2d323e; }
+          color: #FFF; }
         .ms-navigation .ms-navigation-node .ms-navigation-item > .ms-navigation-button.active .badge {
           background: #FFFFFF !important;
           color: rgba(0, 0, 0, 0.87) !important; }

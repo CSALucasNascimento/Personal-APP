@@ -37,20 +37,15 @@
 
       // Handle successful response
       function onSuccess(listing) {
-        // Any required internal processing from inside the service, goes here.
+        return listing;
       }
 
       // Handle error response
       function onError(errorResponse) {
         var error = errorResponse.data;
         // Handle error internally
-        handleError(error);
+        return error;
       }
-    }
-
-    function handleError(error) {
-      // Log error
-      $log.error(error);
     }
   }
 }());

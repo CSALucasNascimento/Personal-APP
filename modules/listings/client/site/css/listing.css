@@ -560,3 +560,8 @@ md-card-content p {
 .description-with-breaklines {
 	white-space: pre-wrap;
 }
+
+
+picture .w30p {
+	width: 30%;
+}

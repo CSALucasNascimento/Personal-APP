@@ -120,16 +120,18 @@ module.exports = {
       ],
       cssSite: [
         'public/lib/bootstrap/dist/css/bootstrap.css',
-        'public/lib/font-awesome/css/font-awesome.css',
+        'public/lib/font-awesome/css/font-awesome.css'
       ],
       jsSite: [
+        'public/lib/tether/dist/js/tether.js',
         'public/lib/bootstrap/dist/js/bootstrap.js',
+        'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/lib/angular-spinner/dist/angular-spinner.js',
         'public/lib/angular-addthis/dist/angular-addthis.js',
         '//developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js',
         '//maps.googleapis.com/maps/api/js?key=AIzaSyDgxlpA4sdSzSFFC1iitqzJ_wRe0hdsdDg&libraries=places',
         'public/lib/easy-markerwithlabel/src/markerwithlabel.js',
-        'public/lib/owl.carousel/dist/owl.carousel.js',
+        'public/lib/owl.carousel/dist/owl.carousel.js'
       ],
       tests: ['public/lib/angular-mocks/angular-mocks.js']
     },

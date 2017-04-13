@@ -65,7 +65,8 @@
       <div class="filtered-listings"> 
         <div class="margin-top-25 col col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-bottom-20 pointer"
              ng-repeat="listing in vm.pagedItems"
-             ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })">
+             ng-mouseover="vm.setMarkerHover(listing._id)" >
+             <!-- ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })" -->
           <div class="listing">
             <div class="image-panel" style="background: url('{{listing.images[0].extra_small}}') center center; background-size: cover; text-align: right">
               <div class="text-price">

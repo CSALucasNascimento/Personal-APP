@@ -35,6 +35,27 @@ var ExceptionSchema = new Schema({
 });
 
 /**
+ * SEO Schema
+ **/
+var SEOSchema = new Schema({
+  title: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  description: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  keywords: [{
+    type: String,
+    default: '',
+    trim: true
+  }]
+});
+
+/**
  * Listing Schema
  */
 var ListingSchema = new Schema({
@@ -109,6 +130,9 @@ var ListingSchema = new Schema({
   bookingSystem: {
     type: Boolean,
     default: false
+  },
+  seo: {
+    type: SEOSchema
   },
   availability: {
     type: AvailabilitySchema

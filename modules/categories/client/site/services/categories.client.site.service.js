@@ -9,12 +9,8 @@
   CategoriesService.$inject = ['$resource'];
 
   function CategoriesService($resource) {
-    return $resource('api/categories/:categoryId', {
-      categoryId: '@_id'
-    }, {
-      update: {
-        method: 'PUT'
-      }
+    return $resource('api/categories', {}, {
+      query: { method: 'GET', isArray: true }
     });
   }
 }());

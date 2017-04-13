@@ -936,7 +936,7 @@ h4.underline::after {
 	border: 1px solid #5c5c5c;
 	border-radius: 50%;
 	margin: 0 2px;
-	padding: 10px 6px;
+	padding: 10px;
 }
 
 #footer .social-media-footer a:hover {

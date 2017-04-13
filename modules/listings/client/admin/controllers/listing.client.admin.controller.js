@@ -8,9 +8,9 @@
     }])
     .controller('ListingsAdminController', ListingsAdminController);
 
-  ListingsAdminController.$inject = ['$scope', '$state', '$timeout', 'listingResolve', 'categoryResolve', 'amenityResolve', 'Authentication'];
+  ListingsAdminController.$inject = ['$scope', '$state', '$timeout', 'listingResolve', 'categoryResolve', 'amenityResolve', 'Authentication', '$mdToast'];
 
-  function ListingsAdminController($scope, $state, $timeout, listing, categories, amenities, Authentication) {
+  function ListingsAdminController($scope, $state, $timeout, listing, categories, amenities, Authentication, $mdToast) {
     var vm = this;
 
     // Methods
@@ -35,6 +35,7 @@
     vm.setListingFeaturedImage = setListingFeaturedImage;
     vm.setOpeningHours = setOpeningHours;
     vm.listing.amenity = vm.listing.amenity || [];
+    vm.listing.seo.keywords = vm.listing.seo.keywords || [];
     vm.listing.images = vm.listing.images || [];
     vm.listing.status = vm.listing.status || 'draft';
     vm.listing.ordination = vm.listing.ordination || 100;
@@ -409,10 +410,18 @@
     function saveListing() {
       vm.listing.createOrUpdate()
         .then(function (res) {
-          console.log(res);
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Saved Success')
+                .position('top right')
+                .hideDelay(3000));
         })
         .catch(function (res) {
-          console.log(res);
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent(res.data.message)
+              .position('top right')
+              .hideDelay(3000));
         });
     }
 

@@ -9,10 +9,8 @@
   AmenitiesService.$inject = ['$resource'];
 
   function AmenitiesService($resource) {
-    return $resource('api/amenities/:amenityId', {
-      amenityId: '@_id'
-    }, {
-      get: { method: 'GET', isArray: true }
+    return $resource('api/amenities', {}, {
+      query: { method: 'GET', isArray: true }
     });
   }
 }());

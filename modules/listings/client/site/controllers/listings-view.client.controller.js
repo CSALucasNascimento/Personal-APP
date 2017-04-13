@@ -85,8 +85,8 @@
 
     vm.listing.$promise.then(function(result) {
 
-      $meta.setTitle(result.title);
-      $meta.setDescription(result.description.substring(0, 157) + '...');
+      $meta.setTitle(result.seo.title || result.title);
+      $meta.setDescription(result.seo.description.substring(0, 157) + '...' || result.description.substring(0, 157) + '...');
       $meta.setSiteName(result.title);
       $meta.setImage(siteurl + result.images[0].small);
 

@@ -22,6 +22,7 @@
     vm.setCategory = setCategory;
     vm.setClicked = setClicked;
     vm.cleanMarkers = cleanMarkers;
+    vm.setMarkerHover = setMarkerHover;
     vm.categories = CategoriesService.query();
     vm.qLocation = '';
     vm.qCategory = '';
@@ -66,7 +67,7 @@
         end = vm.filterLength;
       vm.pagedItems = vm.filteredItems.slice(begin, end);
       vm.cleanMarkers();
-      vm.mapChanged(begin);
+      vm.mapChanged();
       $scope.beginPrevious = begin;
       $scope.endPrevious = end;
     }
@@ -75,35 +76,36 @@
       vm.figureOutItemsToDisplay();
     }
 
-    function mapChanged(begin) {
+    function setMarkerHover(listingId) {
+      google.maps.event.trigger(vm.marker[listingId], 'click');
+    }
+
+    function mapChanged() {
       vm.marker = [];
       var bounds = new google.maps.LatLngBounds();
       vm.pagedItems.forEach(function (listing) {
         var latLng = new google.maps.LatLng(parseFloat(listing.address.geo[0]), parseFloat(listing.address.geo[1]));
         var markerLabel = returnPrice(listing);
         var imageIcon = 'modules/listings/client/site/assets/img/background_icon_map.png';
-        vm.marker[begin] = new MarkerWithLabel({
-          map: map,
+        vm.marker[listing._id] = new MarkerWithLabel({
+          map: vm.map,
           position: latLng,
           icon: imageIcon,
           labelContent: markerLabel,
           labelAnchor: new google.maps.Point(40, 25),
           labelClass: "customLabelForPrice"
         });
-        bounds.extend(vm.marker[begin].position);
-        vm.marker[begin].listing = listing;
-        attachMarkerInfoWindow(vm.marker[begin]);
-        begin++;
+        bounds.extend(vm.marker[listing._id].position);
+        vm.marker[listing._id].listing = listing;
+        attachMarkerInfoWindow(vm.marker[listing._id]);
       });
-      map.fitBounds(bounds);
+      vm.map.fitBounds(bounds);
     }
 
     $scope.hideDropdown = function () {
       if (vm.clicked)
         vm.clicked = !vm.clicked;
     };
-
-    var map;
 
     function attachMarkerInfoWindow(marker) {
       var id = marker.listing._id;
@@ -130,13 +132,13 @@
       marker.addListener('click', function() {
         typeof $scope.infoWindowOpened !== 'undefined' ? $scope.infoWindowOpened.close() : $scope.infoWindowOpened = infoWindow;
         typeof $scope.activeMarker !== 'undefined' ? $scope.activeMarker.set('labelClass', 'customLabelForPrice customLabelVisited') : $scope.activeMarker = marker;
-        infoWindow.open(marker.get('map'), marker);
+        infoWindow.open(marker.get('vm.map'), marker);
         marker.set('labelClass', 'd-none');
         $scope.infoWindowOpened = infoWindow;
         $scope.activeMarker = marker;
       });
 
-      map.addListener('click', function() {
+      vm.map.addListener('click', function() {
         if (typeof $scope.activeMarker !== 'undefined')
           $scope.activeMarker.set('labelClass', 'customLabelForPrice customLabelVisited');
         $scope.infoWindowOpened.close();
@@ -151,7 +153,7 @@
 
     vm.listings.$promise.then(function (result) {
       vm.listListings = result;
-      map = new google.maps.Map(document.getElementById('mapSearch'), {
+      vm.map = new google.maps.Map(document.getElementById('mapSearch'), {
         center: { lat: -28.024, lng: 140.887 },
         scrollwheel: false,
         mapTypeControl: false,

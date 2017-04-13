@@ -52,7 +52,7 @@
           <div class="col-md-2 col-xs-6 text-center hidden-xs-down">
             <div class="row">
               <picture>
-                <img src="./modules/listings/client/site/img/category-icon.png" height="30">
+                <img src="./modules/listings/client/site/assets/img/category-icon.png" class="w30p">
               </picture>
             </div>
             <div class="row margin-top-5">
@@ -62,7 +62,7 @@
           <div class="col-md-2 col-xs-6 text-center">
             <div class="row">
               <picture>
-                <img src="./modules/listings/client/site/img/meeting-rooms-icon.png" height="30">
+                <img src="./modules/listings/client/site/assets/img/meeting-rooms-icon.png" class="w30p">
               </picture>
             </div>
             <div class="row margin-top-5">
@@ -72,7 +72,7 @@
           <div class="col-md-2 col-xs-6 text-center">
             <div class="row">
               <picture>
-                <img src="./modules/listings/client/site/img/seats-icon.png" height="30">
+                <img src="./modules/listings/client/site/assets/img/seats-icon.png" class="w30p">
               </picture>
             </div>
             <div class="row margin-top-5">
@@ -82,17 +82,17 @@
           <div class="col-md-2 col-xs-6 text-center">
             <div class="row">
               <picture>
-                <img src="./modules/listings/client/site/img/calendar-icon.png" height="30">
+                <img src="./modules/listings/client/site/assets/img/calendar-icon.png" class="w30p">
               </picture>
             </div>
             <div class="row margin-top-5">
-              <span class="small">{{vm.listing.leasePeriodMin}} - {{vm.listing.leasePeriodMax}}</span>
+              <span class="small">{{vm.listing.price.method}}</span>
             </div>
           </div>
           <div class="col-md-2 col-xs-6 text-center">
             <div class="row">
               <picture>
-                <img src="./modules/listings/client/site/img/parking-icon.png" height="30">
+                <img src="./modules/listings/client/site/assets/img/parking-icon.png" class="w30p">
               </picture>
             </div>
             <div class="row margin-top-5">
@@ -108,7 +108,7 @@
         <div class="row hidden-lg-up margin-top-20 padding-right-20 padding-left-20">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="row bg-dark-gray-opacity text-lighter-gray">
-              <h6 class="padding-left-20 padding-right-20 padding-top-10 padding-bottom-10"><span class="pull-left text-bolder" style="font-size: 22px; margin-top: -7px"><price method="vm.listing.price.method" details="vm.listing.price.details" poa="vm.listing.poa"></price></span></h6>
+              <h6 class="padding-left-20 padding-right-20 padding-top-10 padding-bottom-10"><span class="pull-left text-bolder" style="font-size: 22px; margin-top: -7px">AUD ${{vm.listing.price}}</span><span class="pull-right text-bolder" style="text-transform: uppercase; font-size: 14px;">per {{vm.listing.period}}</span></h6>
             </div>
             <div class="row padding-20 border-light-gray">
               <div class="col-md-12 col-xs-12">
@@ -124,13 +124,13 @@
                 <div class="row text-center row-favorites">
                   <a data-ng-click="vm.setSave()" data-ng-show="!vm.isSave">
                     <span class="col-md-12">
-                      <img src="./modules/core/client/site/img/brand/favorite.png" width="20">
+                      <img src="./modules/core/client/site/assets/img/brand/favorite.png" width="20">
                         Add to Favourites
                     </span>
                         </a>
                         <a data-ng-click="vm.setUnsave()" data-ng-show="vm.isSave">
                     <span class="col-md-12">
-                      <img src="./modules/core/client/site/img/brand/favorited.png" width="20">
+                      <img src="./modules/core/client/site/assets/img/brand/favorited.png" width="20">
                         Remove from Favourites
                     </span>
                   </a>
@@ -259,13 +259,13 @@
             <div class="row text-center row-favorites">
               <a data-ng-click="vm.setSave()" data-ng-show="!vm.isSave">
               <span class="col-md-12">
-                <img src="./modules/core/client/site/img/brand/favorite.png" width="20">
+                <img src="./modules/core/client/site/assets/img/brand/favorite.png" width="20">
                   Add to Favourites
               </span>
               </a>
               <a data-ng-click="vm.setUnsave()" data-ng-show="vm.isSave">
               <span class="col-md-12">
-                <img src="./modules/core/client/site/img/brand/favorited.png" width="20">
+                <img src="./modules/core/client/site/assets/img/brand/favorited.png" width="20">
                   Remove from Favourites
               </span>
               </a>

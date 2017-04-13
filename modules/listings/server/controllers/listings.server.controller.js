@@ -66,7 +66,7 @@ exports.update = function(req, res) {
 
   listing.save(req, function(err) {
     if (err) {
-      return res.status(400).send({
+      return res.status(422).send({
         message: errorHandler.getErrorMessage(err)
       });
     } else {
@@ -214,7 +214,6 @@ exports.ordination = function (req, res) {
 exports.advancedSearch = function(req, res) {
   var qLocation = req.params.qLocation;
   var qCategory = req.params.qCategory;
-  var origRes = res;
   var categoryId;
 
   var getCategoryId = function(callback) {
@@ -275,7 +274,6 @@ exports.advancedSearch = function(req, res) {
     getGeoLocation,
     getCategoryId
   ], function(err, results) {
-    console.log(results);
     findByCategoryAndLocation(results[0], results[1]);
   });
 
@@ -309,12 +307,7 @@ exports.advancedSearch = function(req, res) {
             message: errorHandler.getErrorMessage(err)
           });
         } else {
-          // stats increase listing impression
-          // for (var x = 0; x < listings.length; x ++) {
-          //   listings[x].incImpressionsPerDay(new Date());
-          //   listings[x].save();
-          // }
-          origRes.jsonp(listings);
+          res.jsonp(listings);
         }
       });
 
@@ -638,6 +631,10 @@ exports.listingByID = function(req, res, next, id) {
     .populate({
       path: 'user',
       select: 'displayName'
+    })
+    .populate({
+      path: 'category',
+      select: 'name'
     })
     .populate({
       path: 'images',
