@@ -410,11 +410,11 @@
     function saveListing() {
       vm.listing.createOrUpdate()
         .then(function (res) {
-            $mdToast.show(
-              $mdToast.simple()
-                .textContent('Saved Success')
-                .position('top right')
-                .hideDelay(3000));
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Saved Success')
+              .position('top right')
+              .hideDelay(3000));
         })
         .catch(function (res) {
           $mdToast.show(
