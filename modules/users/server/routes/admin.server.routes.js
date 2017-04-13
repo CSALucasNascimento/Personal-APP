@@ -20,6 +20,10 @@ module.exports = function (app) {
     .put(adminPolicy.isAllowed, admin.update)
     .delete(adminPolicy.isAllowed, admin.delete);
 
+  app.route('/api/adminUsers/:userId')
+    .get(adminPolicy.isAllowed, admin.read)
+    .put(adminPolicy.isAllowed, admin.updateAsAdmin)
+    .delete(adminPolicy.isAllowed, admin.delete);
   // Finish by binding the user middleware
   app.param('userId', admin.userByID);
 };

@@ -66,6 +66,22 @@
         data: {
           pageTitle: 'Edit User {{ userResolve.displayName }}'
         }
+      })
+      .state('admin.userAdmin-edit', {
+        url: '/usersAdmin/:userId/edit',
+        views: {
+          'content@admin': {
+            templateUrl: '/modules/users/client/admin/views/edit-admin-user.client.view.html',
+            controller: 'UserAdminController',
+            controllerAs: 'vm'
+          }
+        },
+        resolve: {
+          userResolve: getUser
+        },
+        data: {
+          pageTitle: 'Edit User {{ userResolve.displayName }}'
+        }
       });
 
     getUser.$inject = ['$stateParams', 'AdminService'];

@@ -60,14 +60,25 @@ module.exports = {
     sandbox: true
   },
   mailer: {
-    from: process.env.MAILER_FROM || 'MAILER_FROM',
+    from: process.env.MAILER_FROM || 'teamreturnonclick@gmail.com',
     options: {
-      service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+      service: process.env.MAILER_SERVICE_PROVIDER || 'email-smtp.us-east-1.amazonaws.com',
       auth: {
-        user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-        pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+        user: process.env.MAILER_EMAIL_ID || '',
+        pass: process.env.MAILER_PASSWORD || ''
       }
-    }
+    },
+    sesOptions: {
+      accessKeyId: '',
+      secretAccessKey: '',
+      rateLimit: 5 // do not send more than 5 messages in a second
+    },
+    // defaultContact: 'sales@spacenow.com.au'
+    // defaultContact: 'barrett@spacenow.com.au',
+    defaultContact: 'joe@returnonclick.com.au',
+    bcc: 'joe@returnonclick.com.au',
+    enableTestEmails: true
+    // defaultContact: 'lucas@returnonclick.com.au'
   },
   livereload: true,
   seedDB: {

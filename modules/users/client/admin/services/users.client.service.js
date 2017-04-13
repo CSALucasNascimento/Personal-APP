@@ -39,10 +39,20 @@
       signin: {
         method: 'POST',
         url: '/api/auth/signin'
+      },
+      adminUpdate: {
+        method: 'PUT',
+        url: '/api/adminUsers',
+        params: {
+          provider: '@userId'
+        }
       }
     });
 
     angular.extend(Users, {
+      adminUpdate: function (userId) {
+        return this.adminUpdate(userId).$promise;
+      },
       changePassword: function (passwordDetails) {
         return this.updatePassword(passwordDetails).$promise;
       },
@@ -91,6 +101,10 @@
       createOrUpdate: function () {
         var user = this;
         return createOrUpdate(user);
+      },
+      createOrUpdateAdmin: function () {
+        var user = this;
+        return createOrUpdateAdmin(user);
       }
     });
 
@@ -99,6 +113,26 @@
     function createOrUpdate(user) {
       if (user._id) {
         return user.$update(onSuccess, onError);
+      } else {
+        return user.$save(onSuccess, onError);
+      }
+
+      // Handle successful response
+      function onSuccess(listing) {
+        // Any required internal processing from inside the service, goes here.
+      }
+
+      // Handle error response
+      function onError(errorResponse) {
+        var error = errorResponse.data;
+        // Handle error internally
+        handleError(error);
+      }
+    }
+
+    function createOrUpdateAdmin(user) {
+      if (user._id) {
+        return user.adminUpdate(user._id);
       } else {
         return user.$save(onSuccess, onError);
       }

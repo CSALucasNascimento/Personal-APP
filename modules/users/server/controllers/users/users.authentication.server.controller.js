@@ -7,6 +7,7 @@ var path = require('path'),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
   mongoose = require('mongoose'),
   passport = require('passport'),
+  emails = require(path.resolve('./modules/emails/server/controllers/emails.server.controller')),
   User = mongoose.model('User');
 
 // URLs for which user can't be redirected on signin
@@ -25,8 +26,10 @@ exports.signup = function (req, res) {
   // Init user and add missing fields
   var user = new User(req.body);
   user.provider = 'local';
-  user.username = user.phone;
   user.displayName = user.firstName + ' ' + user.lastName;
+
+  // user.emailHash = Math.floor((Math.random() * 100) + 54);
+  user.emailHash = ((Math.random() * 1000) + 54).toString(36);
 
   // Then save the user
   user.save(function (err) {
@@ -38,6 +41,11 @@ exports.signup = function (req, res) {
       // Remove sensitive data before login
       user.password = undefined;
       user.salt = undefined;
+
+      user.verificationlink = 'http://' + req.get('host') + '/verify/' + user.emailHash + '/user/' + user._id;
+
+      // send notification and verification email
+      emails.sendUserNew(req, user);
 
       req.login(user, function (err) {
         if (err) {

@@ -6,6 +6,7 @@
 var path = require('path'),
   mongoose = require('mongoose'),
   User = mongoose.model('User'),
+  emails = require(path.resolve('./modules/emails/server/controllers/emails.server.controller')),
   errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller'));
 
 /**
@@ -19,6 +20,44 @@ exports.read = function (req, res) {
  * Update a User
  */
 exports.update = function (req, res) {
+  var user = req.model;
+
+  // For security purposes only merge these parameters
+  user.firstName = req.body.firstName;
+  user.lastName = req.body.lastName;
+  user.displayName = user.firstName + ' ' + user.lastName;
+  user.phone = req.body.phone;
+  user.email = req.body.email;
+  user.username = req.body.username;
+  user.gender = req.body.gender;
+  user.profileImage = req.body.profileImage;
+  user.password = req.body.password;
+  user.verified = req.body.verified;
+
+  if (!user.verified) {
+    // user.emailHash = Math.floor((Math.random() * 100) + 54);
+    user.emailHash = ((Math.random() * 1000) + 54).toString(36);
+    user.verificationlink = 'http://' + req.get('host') + '/verify/' + user.emailHash + '/user/' + user._id;
+    // send notification and verification email
+    emails.sendUserNew(req, user);
+  }
+
+  user.save(function (err) {
+    if (err) {
+      return res.status(422).send({
+        message: errorHandler.getErrorMessage(err)
+      });
+    }
+    user.password = undefined;
+    res.json(user);
+  });
+};
+
+
+/**
+ * Update a User
+ */
+exports.updateAsAdmin = function (req, res) {
   var user = req.model;
 
   // For security purposes only merge these parameters
@@ -89,13 +128,13 @@ exports.userByID = function (req, res, next, id) {
   User.findById(id, '-salt -password -providerData')
     .populate('profileImage', 'thumbnail')
     .exec(function (err, user) {
-    if (err) {
-      return next(err);
-    } else if (!user) {
-      return next(new Error('Failed to load user ' + id));
-    }
+      if (err) {
+        return next(err);
+      } else if (!user) {
+        return next(new Error('Failed to load user ' + id));
+      }
 
-    req.model = user;
-    next();
-  });
+      req.model = user;
+      next();
+    });
 };

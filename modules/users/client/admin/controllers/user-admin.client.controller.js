@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('users.admin.controllers')
-    .controller('UserController', UserController);
+    .module('usersAdmin.admin.controllers')
+    .controller('UserAdminController', UserAdminController);
 
-  UserController.$inject = ['$scope', '$state', '$window', 'Authentication', 'userResolve'];  // , 'Notification'
+  UserAdminController.$inject = ['$scope', '$state', '$window', 'Authentication', 'userResolve'];  // , 'Notification'
 
-  function UserController($scope, $state, $window, Authentication, user) {  // , Notification
+  function UserAdminController($scope, $state, $window, Authentication, user) {  // , Notification
     var vm = this;
 
     vm.authentication = Authentication;
@@ -20,10 +20,10 @@
     vm.isFormValid = isFormValid;
     vm.toggle = toggle;
     vm.exists = exists;
+    vm.roles = ['admin', 'user'];
     vm.uploadComplete = uploadComplete;
     vm.fileSuccess = fileSuccess;
     vm.getProfileImage = getProfileImage;
-    vm.beforeEmail = vm.user.email;
 
     vm.ngFlowOptions = {
       // You can configure the ngFlow from here
@@ -44,9 +44,6 @@
      * Save user
      */
     function saveUser() {
-      if (vm.beforeEmail !== vm.user.email) {
-        vm.user.verified = false;
-      }
       vm.user.createOrUpdate()
         .then(function (res) {
           console.log(res);

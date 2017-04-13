@@ -69,7 +69,7 @@
     // Methods
     vm.gotoAddUser = gotoAddUser;
     vm.gotoUserDetail = gotoUserDetail;
-
+    vm.gotoUserAdminDetail = gotoUserAdminDetail;
     /**
      * Go to add product
      */
@@ -77,8 +77,8 @@
       $state.go('admin.users.create');
     }
 
-    function getProfileImage(user){
-      if(user.profileImage !== null && user.profileImage !== undefined){
+    function getProfileImage(user) {
+      if (user.profileImage !== null && user.profileImage !== undefined) {
         if (user.profileImage.thumbnail.startsWith('module')) {
           return '/' + user.profileImage.thumbnail;
         } else {
@@ -95,12 +95,21 @@
     }
 
     /**
-     * Go to product detail
+     * Go to user detail
      *
      * @param id
      */
     function gotoUserDetail(id) {
       $state.go('admin.user-edit', { userId: id });
+    }
+
+    /**
+     * Go to user admin detail
+     *
+     * @param id
+     */
+    function gotoUserAdminDetail(id) {
+      $state.go('admin.userAdmin-edit', { userId: id });
     }
     // function buildPager() {
     //   vm.pagedItems = [];

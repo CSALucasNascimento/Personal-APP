@@ -87,7 +87,6 @@
               <label>Email / Username</label>
               <input type="text" name="email" ng-model="vm.user.email"
                      placeholder="johnexample@company.com"
-                     ng-change="vm.user.username = vm.user.email"
                      required>
               <div ng-messages="userForm.email.$error" role="alert">
                 <div ng-message="required">
@@ -99,7 +98,6 @@
               <label>Username</label>
               <input type="text" name="username" ng-model="vm.user.username"
                      placeholder="johnexample@company.com"
-                     ng-disabled="true"
                      required>
               <div ng-messages="userForm.username.$error" role="alert">
                 <div ng-message="required">
@@ -149,7 +147,13 @@
               </div>
             </md-input-container>
           </div>
-          
+          <div layout="column" flex layout-gt-sm="row">
+            <label>Roles</label>
+            <md-input-container layout="column" flex ng-repeat="role in vm.roles">
+              <md-checkbox ng-checked="vm.exists(role, vm.user.roles)" ng-click="vm.toggle(role, vm.user.roles)">{{ role }}</md-checkbox>
+            </md-input-container>
+          </div>
+
         </form>
 
       </div>
