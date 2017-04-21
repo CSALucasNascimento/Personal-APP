@@ -55,9 +55,9 @@
   <!-- / HEADER -->
 
   <!-- CONTENT -->
-  <div class="content">
-
-    <md-tabs md-dynamic-height>
+  <div id="greenid-div" class="content">
+    <form id="userForm">
+      <md-tabs md-dynamic-height>
 
       <!-- ADDRESS -->
       <md-tab>
@@ -67,8 +67,6 @@
 
         <md-tab-body>
           <div class="user-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
-
               <div layout="column" layout-gt-sm="row">
                 <md-input-container flex>
                   <input vs-google-autocomplete="options"
@@ -158,7 +156,6 @@
                 <input name="lat" type="hidden" ng-model="vm.user.address.geo[0]" id="lat" class="form-control" placeholder="Latitude" required>
                 <input name="lon" type="hidden" ng-model="vm.user.address.geo[1]" id="lng" class="form-control" placeholder="Longitude" required>
               </div>
-            </form>
           </div>
         </md-tab-body>
       </md-tab>
@@ -172,7 +169,7 @@
 
         <md-tab-body>
           <div class="user-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
+            
               <div layout="column" flex layout-gt-sm="row">
                 <md-input-container flex>
                   <label>First Name</label>
@@ -247,7 +244,6 @@
 
         <md-tab-body>
           <div class="user-detail-form-container md-background-bg md-whiteframe-1dp">
-            <form>
               <div layout="column" flex layout-gt-sm="row">
                 <md-input-container flex>
                   <label>Email / Username</label>
@@ -294,14 +290,13 @@
 
                 </md-input-container>
               </div>
-            </form>
           </div>
         </md-tab-body>
       </md-tab>
       <!-- / RESET PASSWORD -->
 
     </md-tabs>
-
+    </div>
   </div>
   <!-- / CONTENT -->
 

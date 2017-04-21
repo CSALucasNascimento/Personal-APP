@@ -10,6 +10,21 @@
   function UserController($scope, $state, $window, Authentication, user) {  // , Notification
     var vm = this;
 
+    greenidJQuery('document').ready(function () {
+      greenidUI.setup({
+        environment: "test",
+        formId: "userForm",
+        frameId: "greenid-div",
+        country: "usethiscountry",
+        registerCallback: onRegister,
+        errorCallback: onError,
+        sessionCompleteCallback: onSessionComplete,
+        sourceAttemptCallback: onSourceAttempt,
+        sessionCancelledCallback: onSessionCancel,
+        preSubmitValidationCallback: myValidator
+      });
+    });
+
     vm.authentication = Authentication;
     vm.user = user;
     // vm.remove = remove;
@@ -44,6 +59,48 @@
       flow: {}
     };
     vm.dropping = false;
+
+    /**
+     * ON REGISTERING
+     */
+    function onRegister() {
+      console.log('registered');
+    }
+
+    /**
+     * ON REGISTERING
+     */
+    function onError() {
+      console.log('error');
+    }
+
+    /**
+     * ON REGISTERING
+     */
+    function onSessionComplete() {
+      console.log('Session Complete');
+    }
+
+    /**
+     * ON REGISTERING
+     */
+    function onSourceAttempt() {
+      console.log('Source Attempt');
+    }
+
+    /**
+     * ON REGISTERING
+     */
+    function onSessionCancel() {
+      console.log('Session Cancel');
+    }
+
+    /**
+     * ON REGISTERING
+     */
+    function myValidator() {
+      console.log('validator');
+    }
 
     /**
      * Save user
