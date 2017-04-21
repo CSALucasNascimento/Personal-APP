@@ -1,11 +1,3 @@
-<md-toolbar class="navigation-header md-whiteframe-1dp" layout="row" layout-align="space-between center">
-    <div class="logo" layout="row" layout-align="start center">
-        <span class="logo-image">
-            <img src="modules/core/client/site/assets/img/brand/space-now-logo-white.png">
-        </span>
-    </div>
-    <md-icon md-font-icon="icon-backburger" class="icon fold-toggle s18" show-gt-sm
-             ng-click="vm.toggleMsNavigationFolded()"></md-icon>
-</md-toolbar>
-
-<ms-navigation class="scrollable" folded="vm.folded" ms-scroll="vm.msScrollOptions"></ms-navigation>
+<div layout="row" layout-align="start center">
+    <ms-navigation-horizontal></ms-navigation-horizontal>
+</div>

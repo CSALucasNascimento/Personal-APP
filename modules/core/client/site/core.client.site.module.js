@@ -7,5 +7,5 @@
   app.registerModule('core.site.config.filter');
   app.registerModule('core.site.config.routes');
   app.registerModule('core.site.controllers');
-  app.registerModule('core.site.directives');
+  app.registerModule('core.site.directives', ['ngLoadingSpinner']);
 }(ApplicationConfiguration));

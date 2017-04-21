@@ -12,7 +12,6 @@
 
     vm.listings = listingListResolve;
 
-    vm.dtInstance = {};
     vm.dtOptions = {
       dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
       columnDefs: [

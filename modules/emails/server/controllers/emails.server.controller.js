@@ -309,6 +309,7 @@ exports.sendUserWelcome = function(req, user) {
   });
 
 };
+
 /**
 * Send Listing Report
 */

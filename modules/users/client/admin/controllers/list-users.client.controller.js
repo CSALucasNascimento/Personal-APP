@@ -5,19 +5,13 @@
     .module('users.admin.controllers')
     .controller('UserListController', UserListController);
 
-  UserListController.$inject = ['$scope', '$filter', 'AdminService', '$state'];
+  UserListController.$inject = ['$scope', '$filter', 'userListResolve', '$state'];
 
-  function UserListController($scope, $filter, AdminService, $state) {
+  function UserListController($scope, $filter, userListResolve, $state) {
     var vm = this;
-    // vm.buildPager = buildPager;
-    // vm.figureOutItemsToDisplay = figureOutItemsToDisplay;
-    // vm.pageChanged = pageChanged;
     vm.getProfileImage = getProfileImage;
 
-    AdminService.query(function (data) {
-      vm.users = data;
-      // vm.buildPager();
-    });
+    vm.users = userListResolve;
 
     vm.dtOptions = {
       dom: 'rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -85,11 +79,11 @@
           return user.profileImage.thumbnail;
         }
       } else {
-        var imgurl = user.profileImageURL.replace('client/img', 'client/site/img');
-        if (imgurl.startsWith('module')) {
-          return '/' + imgurl;
+        var imgUrl = user.profileImageURL.replace('client/img', 'client/site/img');
+        if (imgUrl.startsWith('module')) {
+          return '/' + imgUrl;
         } else {
-          return imgurl;
+          return imgUrl;
         }
       }
     }
@@ -111,25 +105,5 @@
     function gotoUserAdminDetail(id) {
       $state.go('admin.userAdmin-edit', { userId: id });
     }
-    // function buildPager() {
-    //   vm.pagedItems = [];
-    //   vm.itemsPerPage = 15;
-    //   vm.currentPage = 1;
-    //   vm.figureOutItemsToDisplay();
-    // }
-
-    // function figureOutItemsToDisplay() {
-    //   vm.filteredItems = $filter('filter')(vm.users, {
-    //     $: vm.search
-    //   });
-    //   vm.filterLength = vm.filteredItems.length;
-    //   var begin = ((vm.currentPage - 1) * vm.itemsPerPage);
-    //   var end = begin + vm.itemsPerPage;
-    //   vm.pagedItems = vm.filteredItems.slice(begin, end);
-    // }
-
-    // function pageChanged() {
-    //   vm.figureOutItemsToDisplay();
-    // }
   }
 }());

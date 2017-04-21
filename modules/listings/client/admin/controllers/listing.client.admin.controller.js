@@ -35,6 +35,7 @@
     vm.setListingFeaturedImage = setListingFeaturedImage;
     vm.setOpeningHours = setOpeningHours;
     vm.listing.amenity = vm.listing.amenity || [];
+    vm.listing.seo = vm.listing.seo || {};
     vm.listing.seo.keywords = vm.listing.seo.keywords || [];
     vm.listing.images = vm.listing.images || [];
     vm.listing.status = vm.listing.status || 'draft';

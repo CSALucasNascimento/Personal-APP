@@ -22,6 +22,11 @@ exports.read = function (req, res) {
 exports.update = function (req, res) {
   var user = req.model;
 
+  var geo = new Array();
+  geo[0] = req.body.address.geo[0];
+  geo[1] = req.body.address.geo[1];
+  user.address.geo = geo;
+
   // For security purposes only merge these parameters
   user.firstName = req.body.firstName;
   user.lastName = req.body.lastName;
@@ -33,6 +38,16 @@ exports.update = function (req, res) {
   user.profileImage = req.body.profileImage;
   user.password = req.body.password;
   user.verified = req.body.verified;
+  // Address
+  user.address.unit = req.body.address.unit;
+  user.address.streetNumber = req.body.address.streetNumber;
+  user.address.streetName = req.body.address.streetName;
+  user.address.suburb = req.body.address.suburb;
+  user.address.state = req.body.address.state;
+  user.address.postCode = req.body.address.postCode;
+  user.fullAddress = req.body.fullAddress;
+  user.dob = req.body.dob;
+  user.about = req.body.about;
 
   if (!user.verified) {
     // user.emailHash = Math.floor((Math.random() * 100) + 54);
@@ -53,12 +68,16 @@ exports.update = function (req, res) {
   });
 };
 
-
 /**
  * Update a User
  */
 exports.updateAsAdmin = function (req, res) {
   var user = req.model;
+
+  var geo = new Array();
+  geo[0] = req.body.address.geo[0];
+  geo[1] = req.body.address.geo[1];
+  user.address.geo = geo;
 
   // For security purposes only merge these parameters
   user.firstName = req.body.firstName;
@@ -71,6 +90,16 @@ exports.updateAsAdmin = function (req, res) {
   user.profileImage = req.body.profileImage;
   user.password = req.body.password;
   user.roles = req.body.roles;
+  // Address
+  user.address.unit = req.body.address.unit;
+  user.address.streetNumber = req.body.address.streetNumber;
+  user.address.streetName = req.body.address.streetName;
+  user.address.suburb = req.body.address.suburb;
+  user.address.state = req.body.address.state;
+  user.address.postCode = req.body.address.postCode;
+  user.fullAddress = req.body.fullAddress;
+  user.dob = req.body.dob;
+  user.about = req.body.about;
 
   user.save(function (err) {
     if (err) {

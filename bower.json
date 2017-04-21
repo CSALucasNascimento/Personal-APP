@@ -23,6 +23,7 @@
     "angular-nvd3": "1.0.7",
     "angular-resource": "1.5.11",
     "angular-sanitize": "1.5.11",
+    "angular-spinner": "^1.0.1",
     "angular-timer": "1.3.4",
     "angular-translate": "2.13.0",
     "angular-translate-loader-partial": "2.13.0",

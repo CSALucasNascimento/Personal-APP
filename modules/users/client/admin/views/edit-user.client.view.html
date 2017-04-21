@@ -2,32 +2,30 @@
 
   <!-- HEADER -->
   <div class="header md-accent-bg" layout="row" layout-align="start center">
-    <div class="white-fg" layout="row" layout-align="start center" flex>
+    <div layout="row" layout-align="start center" flex>
       <md-button class="goto-users-button md-icon-button" aria-label="Go to users"
                  ng-click="vm.gotoUsers()">
-        <md-icon md-font-icon="icon-arrow-left"></md-icon>
+        <md-icon md-font-icon="icon-arrow-left" style="color: #ffffff"></md-icon>
       </md-button>
 
       <div layout="row" layout-align="start center">
-        <div>
-          <!-- <img class="product-image" ng-src="{{vm.getProfileImage()}}"> -->
-          <div 
-              flow-init="vm.ngFlowOptions"
-              flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" 
-              flow-files-submitted="$flow.upload()"
-              flow-file-success="vm.fileSuccess($file, $message)"
-              flow-complete="vm.uploadComplete($file, $message, $flow)"
-              class="user-profile-picture-box">
-              <div class="text-center" ng-show="!$flow.files.length">
-                <img src="{{vm.getProfileImage()}}" class="user-profile-picture">
-              </div>
-              <div class="text-center ng-hide" ng-show="$flow.files.length">
-                <img flow-img="$flow.files[0]" class="user-profile-picture">
-              </div>
-              <div class="text-center">
-                <span flow-btn="" class="user-change-btn">Change<input type="file" style="visibility: hidden; position: absolute;"></span>
-              </div>
+        <div class="user-image" hide-xs>
+          <div
+            flow-init="vm.ngFlowOptions"
+            flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]"
+            flow-files-submitted="$flow.upload()"
+            flow-file-success="vm.fileSuccess($file, $message)"
+            flow-complete="vm.uploadComplete($file, $message, $flow)">
+            <div class="text-center" ng-show="!$flow.files.length">
+              <img src="{{vm.getProfileImage()}}">
             </div>
+            <div class="text-center ng-hide" ng-show="$flow.files.length">
+              <img flow-img="$flow.files[0]">
+            </div>
+            <div class="btn-upload">
+              <md-button flow-btn><span>Change</span><input type="file" style="visibility: hidden; position: absolute;"></md-button>
+            </div>
+          </div>
         </div>
 
         <div layout="column" layout-align="start start">
@@ -35,15 +33,21 @@
             {{vm.user.displayName}}
           </div>
           <div class="subtitle secondary-text">
-            <span>User Details</span>
+            <span>User Detail</span>
           </div>
         </div>
       </div>
     </div>
-
+    
+    <md-menu-bar id="status-menu">
+      <md-menu md-position-mode="left bottom">
+        <span class="status" hide show-gt-sm>{{vm.user.status}}</span>
+        <md-icon md-font-icon="icon-chevron-down"
+                 class="icon s16" hide-xs></md-icon>
+      </md-menu>
+    </md-menu-bar>
     <div>
-      <md-button class="md-raised md-background" ng-click="vm.saveUser()"
-                 ng-disabled="!vm.isFormValid('userForm')">
+      <md-button class="md-raised md-background" ng-click="vm.saveUser()">
         <span>SAVE</span>
       </md-button>
     </div>
@@ -51,111 +55,252 @@
   <!-- / HEADER -->
 
   <!-- CONTENT -->
-  <div class="content" layout="column">
-    <div layout="row">
-      <!-- BASIC FORM -->
-      <div class="form-wrapper md-whiteframe-1dp" flex>
+  <div class="content">
 
-        <form name="userForm" class="md-inline-form" ng-submit="vm.save(userForm.$valid)" novalidate>
+    <md-tabs md-dynamic-height>
 
-          <div layout="column" flex layout-gt-sm="row">
-            <md-input-container flex>
-              <label>First Name</label>
-              <input type="text" name="firstName" ng-model="vm.user.firstName"
-                     placeholder="John "
-                     required>
-              <div ng-messages="userForm.firstName.$error" role="alert">
-                <div ng-message="required">
-                  <span>First Name field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-            <md-input-container flex>
-              <label>Last Name</label>
-              <input type="text" name="lastName" ng-model="vm.user.lastName"
-                     placeholder="Example"
-                     required>
-              <div ng-messages="userForm.lastName.$error" role="alert">
-                <div ng-message="required">
-                  <span>Last Name field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </div>
-          <div layout="column" flex layout-gt-sm="row">
-            <md-input-container flex>
-              <label>Email / Username</label>
-              <input type="text" name="email" ng-model="vm.user.email"
-                     placeholder="johnexample@company.com"
-                     ng-change="vm.user.username = vm.user.email"
-                     required>
-              <div ng-messages="userForm.email.$error" role="alert">
-                <div ng-message="required">
-                  <span>Email field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-            <md-input-container flex>
-              <label>Username</label>
-              <input type="text" name="username" ng-model="vm.user.username"
-                     placeholder="johnexample@company.com"
-                     ng-disabled="true"
-                     required>
-              <div ng-messages="userForm.username.$error" role="alert">
-                <div ng-message="required">
-                  <span>Username field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </div>
-          <div layout="column" flex layout-gt-sm="row">
-            <md-input-container flex>
-              <label>New Password</label>
-              <input type="password" name="password" ng-model="vm.user.password" >
-              <!-- <div ng-messages="userForm.password.$error" role="alert">
-                <div ng-message="required">
-                  <span>Email field is required.</span>
-                </div>
-              </div> -->
-            </md-input-container>
-            <md-input-container flex>
-              <label for="verifyPassword">Verify Password</label>
-              <input type="password" id="verifyPassword" name="verifyPassword" class="form-control" ng-model="vm.user.verifyPassword" password-verify="vm.user.password" >
-              <div ng-messages="userForm.verifyPassword.$error" role="alert">
-                <p class="help-block error-text" ng-message="required">Enter the password again to verify.</p>
-                <p class="help-block error-text" ng-show="userForm.verifyPassword.$error.passwordVerify">Passwords do not match.</p>
-              </div>
-              
-            </md-input-container>
-          </div>
-          <div layout="column" flex layout-gt-sm="row">
-            <md-input-container flex>
-              <label>Gender</label>
-              <md-select ng-model="vm.user.gender" >
-                <md-option value=""></md-option>
-                <md-option value="male">Male</md-option>
-                <md-option value="female">Female</md-option>
-                <md-option value="other">Other</md-option>
-              </md-select>
-            </md-input-container>
-            <md-input-container flex>
-              <label>Phone</label>
-              <input type="text" name="phone" ng-model="vm.user.phone"
-                     placeholder="(02) 1231 7958" >
-              <div ng-messages="userForm.phone.$error" role="alert">
-                <div ng-message="required">
-                  <span>Phone number field is required.</span>
-                </div>
-              </div>
-            </md-input-container>
-          </div>
-          
-        </form>
+      <!-- ADDRESS -->
+      <md-tab>
+        <md-tab-label>
+          <span>Address</span>
+        </md-tab-label>
 
-      </div>
-      <!-- / BASIC FORM -->
+        <md-tab-body>
+          <div class="user-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
 
-    </div>
+              <div layout="column" layout-gt-sm="row">
+                <md-input-container flex>
+                  <input vs-google-autocomplete="options"
+                         ng-model="vm.user.fullAddress"
+                         vs-place="address.place"
+                         vs-place-id="address.components.placeId"
+                         vs-home-number="vm.user.address.unit"
+                         vs-street-number="vm.user.address.streetNumber"
+                         vs-street="vm.user.address.streetName"
+                         vs-city="vm.user.address.suburb"
+                         vs-state="vm.user.address.state"
+                         vs-post-code="vm.user.address.postCode"
+                         vs-latitude="vm.user.address.geo[0]"
+                         vs-longitude="vm.user.address.geo[1]"
+                         name="fulladdress"
+                         type="text"
+                         id="street"
+                         required
+                         aria-label="Full Address"
+                  >
+                </md-input-container>
+              </div>
+
+              <div layout="column" layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>Unit Number</label>
+                  <input name="unitNumber" ng-model="vm.user.address.unit" placeholder="1234"
+                         required ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                  <div ng-messages="basicForm.unitNumber.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a unit number.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid unit number.</span></div>
+                    <div ng-message="md-maxlength">
+                      <span>Unit number can't be longer than 4 characters.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+
+                <md-input-container flex>
+                  <label>Street Number</label>
+                  <input name="streetNumber" ng-model="vm.user.address.streetNumber" placeholder="1234567"
+                         required ng-pattern="/^[0-9]{7}$/" md-maxlength="7">
+                  <div ng-messages="basicForm.streetNumber.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a street number.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid street number.</span></div>
+                    <div ng-message="md-maxlength">
+                      <span>Street number code can't be longer than 7 characters.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+
+                <md-input-container flex>
+                  <input type="text" name="streetName" ng-model="vm.user.address.streetName"
+                         placeholder="Street Name"
+                         required>
+                  <div ng-messages="basicForm.streetName.$error"
+                       role="alert">
+                    <div ng-message="required">
+                      <span>Street Name field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+              </div>
+
+              <div layout="column" layout-gt-xs="row">
+                <md-input-container flex>
+                  <label>Suburb</label>
+                  <input type="text" name="suburb" ng-model="vm.user.address.suburb">
+                </md-input-container>
+
+                <md-input-container flex>
+                  <label>State</label>
+                  <input type="text" name="state" ng-model="vm.user.address.state">
+                </md-input-container>
+
+                <md-input-container flex>
+                  <label>Postal Code</label>
+                  <input name="postcode" ng-model="vm.user.address.postCode" placeholder="1234"
+                         required ng-pattern="/^[0-9]{4}$/" md-maxlength="4">
+                  <div ng-messages="basicForm.postcode.$error" role="alert" multiple>
+                    <div ng-message="required"><span>You must supply a post code.</span></div>
+                    <div ng-message="pattern"><span>That doesn't look like a valid post code.</span></div>
+                    <div ng-message="md-maxlength">
+                      <span>Post code can't be longer than 4 characters.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+                <input name="lat" type="hidden" ng-model="vm.user.address.geo[0]" id="lat" class="form-control" placeholder="Latitude" required>
+                <input name="lon" type="hidden" ng-model="vm.user.address.geo[1]" id="lng" class="form-control" placeholder="Longitude" required>
+              </div>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+      <!-- / ADDRESS -->
+
+      <!-- DETAILS -->
+      <md-tab>
+        <md-tab-label>
+          <span>Details</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="user-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout="column" flex layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>First Name</label>
+                  <input type="text" name="firstName" ng-model="vm.user.firstName"
+                         placeholder="John "
+                         required>
+                  <div ng-messages="userForm.firstName.$error" role="alert">
+                    <div ng-message="required">
+                      <span>First Name field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+                <md-input-container flex>
+                  <label>Last Name</label>
+                  <input type="text" name="lastName" ng-model="vm.user.lastName"
+                         placeholder="Example"
+                         required>
+                  <div ng-messages="userForm.lastName.$error" role="alert">
+                    <div ng-message="required">
+                      <span>Last Name field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+              </div>
+              <div layout="column" flex layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>Gender</label>
+                  <md-select ng-model="vm.user.gender" >
+                    <md-option value=""></md-option>
+                    <md-option value="male">Male</md-option>
+                    <md-option value="female">Female</md-option>
+                    <md-option value="other">Other</md-option>
+                  </md-select>
+                </md-input-container>
+                <md-input-container flex>
+                  <label>Phone</label>
+                  <input type="text" name="phone" ng-model="vm.user.phone"
+                         placeholder="(02) 1231 7958" >
+                  <div ng-messages="userForm.phone.$error" role="alert">
+                    <div ng-message="required">
+                      <span>Phone number field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+              </div>
+              <div layout="column" flex layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>DOB</label>
+                  <md-datepicker name="userDOB" ms-datepicker-fix ng-model="vm.user.dob"
+                                 md-placeholder="Select Date" ng-required>
+                  </md-datepicker>
+                </md-input-container>
+              </div>
+              <div layout="column" layout-gt-sm="row">
+                <md-input-container flex>
+                  <p>Tell us about you</p>
+                  <text-angular ta-toolbar="vm.taToolbar" ng-model="vm.user.about"
+                                class="pb-32"></text-angular>
+                </md-input-container>
+              </div>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+      <!-- / DETAILS -->
+
+      <!-- RESET PASSWORD -->
+      <md-tab>
+        <md-tab-label>
+          <span>Reset Password</span>
+        </md-tab-label>
+
+        <md-tab-body>
+          <div class="user-detail-form-container md-background-bg md-whiteframe-1dp">
+            <form>
+              <div layout="column" flex layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>Email / Username</label>
+                  <input type="text" name="email" ng-model="vm.user.email"
+                         placeholder="johnexample@company.com"
+                         ng-change="vm.user.username = vm.user.email"
+                         required>
+                  <div ng-messages="userForm.email.$error" role="alert">
+                    <div ng-message="required">
+                      <span>Email field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+                <md-input-container flex>
+                  <label>Username</label>
+                  <input type="text" name="username" ng-model="vm.user.username"
+                         placeholder="johnexample@company.com"
+                         ng-disabled="true"
+                         required>
+                  <div ng-messages="userForm.username.$error" role="alert">
+                    <div ng-message="required">
+                      <span>Username field is required.</span>
+                    </div>
+                  </div>
+                </md-input-container>
+              </div>
+              <div layout="column" flex layout-gt-sm="row">
+                <md-input-container flex>
+                  <label>New Password</label>
+                  <input type="password" name="password" ng-model="vm.user.password" >
+                  <!-- <div ng-messages="userForm.password.$error" role="alert">
+                    <div ng-message="required">
+                      <span>Email field is required.</span>
+                    </div>
+                  </div> -->
+                </md-input-container>
+                <md-input-container flex>
+                  <label for="verifyPassword">Verify Password</label>
+                  <input type="password" id="verifyPassword" name="verifyPassword" class="form-control" ng-model="vm.user.verifyPassword" password-verify="vm.user.password" >
+                  <div ng-messages="userForm.verifyPassword.$error" role="alert">
+                    <p class="help-block error-text" ng-message="required">Enter the password again to verify.</p>
+                    <p class="help-block error-text" ng-show="userForm.verifyPassword.$error.passwordVerify">Passwords do not match.</p>
+                  </div>
+
+                </md-input-container>
+              </div>
+            </form>
+          </div>
+        </md-tab-body>
+      </md-tab>
+      <!-- / RESET PASSWORD -->
+
+    </md-tabs>
 
   </div>
   <!-- / CONTENT -->

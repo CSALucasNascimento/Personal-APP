@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('usersAdmin.admin.controllers')
+    .module('users.admin.controllers')
     .controller('UserAdminController', UserAdminController);
 
   UserAdminController.$inject = ['$scope', '$state', '$window', 'Authentication', 'userResolve'];  // , 'Notification'

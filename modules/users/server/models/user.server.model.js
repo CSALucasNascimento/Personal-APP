@@ -127,6 +127,9 @@ var UserSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'Media'
   },
+  about: {
+    type: String
+  },
   provider: {
     type: String,
     required: 'Provider is required'
@@ -141,6 +144,9 @@ var UserSchema = new Schema({
     default: ['user'],
     required: 'Please provide at least one role'
   },
+  dob: {
+    type: Date
+  },
   updated: {
     type: Date
   },
@@ -154,6 +160,60 @@ var UserSchema = new Schema({
   },
   resetPasswordExpires: {
     type: Date
+  },
+  fullAddress: {
+    type: String,
+    default: '',
+    trim: true
+  },
+  emailHash: {
+    type: String
+  },
+  verified: {
+    type: Boolean,
+    default: false
+  },
+  greenId: {
+    type: Boolean,
+    default: false
+  },
+  address: {
+    unit: {
+      type: String,
+      trim: true
+    },
+    streetNumber: {
+      type: String,
+      default: '',
+      required: 'Please fill address street number',
+      trim: true
+    },
+    streetName: {
+      type: String,
+      default: '',
+      required: 'Please fill address street name',
+      trim: true
+    },
+    suburb: {
+      type: String,
+      default: '',
+      required: 'Please fill address suburb',
+      trim: true
+    },
+    state: {
+      type: String,
+      default: '',
+      // required: 'Please fill address state',
+      trim: true
+    },
+    postCode: {
+      type: Number,
+      required: 'Please fill address post code'
+    },
+    geo: {
+      type: [Number],  // [<latitude>, <longitude>]
+      index: '2d'      // create the geospatial index
+    }
   }
 });
 

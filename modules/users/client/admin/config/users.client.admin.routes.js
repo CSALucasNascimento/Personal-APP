@@ -31,6 +31,9 @@
             controllerAs: 'vm'
           }
         },
+        resolve: {
+          userListResolve: getUserList
+        },
         data: {
           pageTitle: 'Users List'
         }
@@ -91,5 +94,12 @@
         userId: $stateParams.userId
       }).$promise;
     }
+
+    getUserList.$inject = ['AdminService'];
+
+    function getUserList(AdminService) {
+      return AdminService.query().$promise;
+    }
+
   }
 }());

@@ -14,7 +14,7 @@
           <md-icon md-font-icon="icon-cube-outline"></md-icon>
           <span>Users</span>
         </div>
-        <div class="product-count secondary-text">
+        <div class="user-count secondary-text">
           <span>Total users:</span>
           <span>{{vm.users.length}}</span>
         </div>
@@ -82,7 +82,7 @@
           <tbody>
             <tr ng-repeat="user in ::vm.users">
               <!-- <td>{{ user._id }}</td> -->
-              <td><img class="product-image" ng-src="{{ vm.getProfileImage(user) }}"></td>
+              <td><img class="user-image" ng-src="{{ vm.getProfileImage(user) }}"></td>
               <td>{{ user.displayName }}</td>
               <td>{{ user.username }}</td>
               <td>{{ user.email }}</td>

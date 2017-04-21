@@ -24,6 +24,11 @@
     vm.fileSuccess = fileSuccess;
     vm.getProfileImage = getProfileImage;
     vm.beforeEmail = vm.user.email;
+    // Data
+    vm.taToolbar = [
+      ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'pre', 'quote', 'bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+      ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'indent', 'outdent', 'html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
+    ];
 
     vm.ngFlowOptions = {
       // You can configure the ngFlow from here

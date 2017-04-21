@@ -43090,138 +43090,46 @@ img {
 /**
 * Admin Core
 */
-#vertical-navigation {
-  width: 240px;
-  min-width: 240px;
-  max-width: 240px;
-  overflow-x: hidden;
-  -webkit-transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2), width 0.1s linear, min-width 0.1s linear, max-width 0.1s linear;
-  transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2), width 0.1s linear, min-width 0.1s linear, max-width 0.1s linear;
-  box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12); }
-  #vertical-navigation .navigation-header {
+#layout-horizontal-navigation #toolbar-navigation-container {
+  z-index: 55; }
+  #layout-horizontal-navigation #toolbar-navigation-container #toolbar {
     height: 64px;
     min-height: 64px;
-    background-color: rgba(255, 255, 255, 0.05);
-    padding: 0 16px 0 24px; }
-    #vertical-navigation .navigation-header .logo .logo-image {
-      display: block;
-      height: 50px;
-      line-height: 50px;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 500;
-      color: #FFFFFF;
-      border-radius: 2px; }
-      #vertical-navigation .navigation-header .logo .logo-image img {
-        max-height: 70%;
-        margin-top: 7px; }
-    #vertical-navigation .navigation-header .fold-toggle {
-      -webkit-transition: -webkit-transform 0.3s ease-in-out 0.1s;
-      transition: -webkit-transform 0.3s ease-in-out 0.1s;
-      transition: transform 0.3s ease-in-out 0.1s;
-      transition: transform 0.3s ease-in-out 0.1s, -webkit-transform 0.3s ease-in-out 0.1s;
-      -webkit-transform: rotate(0deg);
-              transform: rotate(0deg);
-      margin: 0;
-      padding: 8px;
-      width: 34px !important;
-      height: 34px !important;
-      cursor: pointer; }
-  #vertical-navigation:not(._md-locked-open) {
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12); }
-
-@media only screen and (min-width: 960px) {
-  .ms-navigation-folded #content-container {
-    margin-left: 64px; }
-  .ms-navigation-folded #vertical-navigation {
-    position: absolute; }
-    .ms-navigation-folded #vertical-navigation .navigation-header .fold-toggle {
-      -webkit-transform: rotate(180deg);
-              transform: rotate(180deg);
-      opacity: 0; }
-  .ms-navigation-folded.ms-navigation-folded-open #vertical-navigation .navigation-header .fold-toggle {
-    -webkit-transition: opacity 0.3s ease-in-out 0.2s, -webkit-transform 0.3s ease-in-out 0.1s;
-    transition: opacity 0.3s ease-in-out 0.2s, -webkit-transform 0.3s ease-in-out 0.1s;
-    transition: transform 0.3s ease-in-out 0.1s, opacity 0.3s ease-in-out 0.2s;
-    transition: transform 0.3s ease-in-out 0.1s, opacity 0.3s ease-in-out 0.2s, -webkit-transform 0.3s ease-in-out 0.1s;
-    opacity: 1; }
-  .ms-navigation-folded:not(.ms-navigation-folded-open) #vertical-navigation {
-    position: absolute;
-    width: 64px;
-    min-width: 64px;
-    max-width: 64px; }
-    .ms-navigation-folded:not(.ms-navigation-folded-open) #vertical-navigation .navigation-header {
-      padding: 0 16px; }
-      .ms-navigation-folded:not(.ms-navigation-folded-open) #vertical-navigation .navigation-header .logo-text {
-        display: none; } }
-
-#toolbar {
-  height: 64px;
-  min-height: 64px;
-  max-height: 64px;
-  z-index: 55 !important; }
-  #toolbar #navigation-toggle {
-    width: 64px;
-    min-width: 64px;
-    height: 64px;
-    margin: 0;
-    border-right: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 0; }
-  #toolbar #user-menu {
-    height: 64px;
-    padding: 0; }
-    #toolbar #user-menu md-menu-item .md-button {
-      font-size: 15px; }
-      #toolbar #user-menu md-menu-item .md-button md-icon {
-        margin: auto 16px auto 0; }
-    #toolbar #user-menu .user-button {
-      margin: 0;
-      padding: 0 16px;
+    max-height: 64px;
+    box-shadow: none; }
+    #layout-horizontal-navigation #toolbar-navigation-container #toolbar .top-row .navigation-toggle {
       height: 64px;
-      text-transform: none; }
-      #toolbar #user-menu .user-button .avatar-wrapper {
-        position: relative; }
-        #toolbar #user-menu .user-button .avatar-wrapper .status {
-          position: absolute;
-          bottom: -3px;
-          right: 5px; }
-      #toolbar #user-menu .user-button .username {
-        margin: 0 12px 0 8px; }
-  #toolbar #language-menu {
-    height: 64px; }
-    #toolbar #language-menu .language-button {
-      min-width: 64px;
-      height: 64px;
-      margin: 0;
-      padding: 0 16px;
-      border-radius: 0; }
-      #toolbar #language-menu .language-button .iso {
-        text-transform: uppercase; }
-      #toolbar #language-menu .language-button .flag {
-        margin-right: 8px; }
-  #toolbar #quick-panel-toggle {
-    width: 64px;
+      border-right: 1px solid rgba(0, 0, 0, 0.12); }
+      #layout-horizontal-navigation #toolbar-navigation-container #toolbar .top-row .navigation-toggle .md-button {
+        margin: 0;
+        width: 64px;
+        height: 64px; }
+    #layout-horizontal-navigation #toolbar-navigation-container #toolbar .top-row .logo {
+      margin: 0 16px; }
+      #layout-horizontal-navigation #toolbar-navigation-container #toolbar .top-row .logo .logo-image {
+        display: block;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: 500;
+        color: #FFFFFF;
+        border-radius: 2px; }
+        #layout-horizontal-navigation #toolbar-navigation-container #toolbar .top-row .logo .logo-image img {
+          max-height: 70%;
+          margin-top: 7px; }
+      #layout-horizontal-navigation #toolbar-navigation-container #toolbar .top-row .logo .logo-text {
+        color: rgba(0, 0, 0, 0.87);
+        margin-left: 16px;
+        font-size: 16px; }
+
+@media only screen and (max-width: 960px) {
+  #layout-horizontal-navigation #toolbar-navigation-container {
     height: 64px;
-    margin: 0;
-    border-radius: 0; }
-  #toolbar .toolbar-separator {
-    height: 64px;
-    width: 1px;
-    background: rgba(0, 0, 0, 0.12); }
-
-#language-menu-content md-menu-item .flag {
-  margin-right: 16px; }
-
-#language-message {
-  min-height: 88px;
-  max-width: 600px; }
-  #language-message .md-toast-content {
-    height: 90px; }
-
-@media screen and (max-width: 600px) {
-  #toolbar #user-menu .user-button {
-    min-width: 64px;
-    padding: 0 2px 0 10px; } }
+    min-height: 64px;
+    max-height: 64px; }
+    #layout-horizontal-navigation #toolbar-navigation-container #toolbar {
+      padding: 0; } }
 
 #quick-panel {
   width: 330px;
@@ -43730,6 +43638,179 @@ img {
     z-index: 2;
     box-shadow: none;
     background: #EEEEEE; }
+
+/**
+* Users
+*/
+#users_list .center .header {
+  height: 136px !important;
+  min-height: 136px !important;
+  max-height: 136px !important;
+  padding: 24px 0; }
+  #users_list .center .header .h1 md-icon {
+    margin-right: 12px; }
+  #users_list .center .header .user-count {
+    margin: 6px 0 0 36px; }
+  #users_list .center .header .search {
+    position: relative;
+    padding-left: 24px;
+    max-width: 480px; }
+    #users_list .center .header .search .search-icon {
+      margin: 0 -24px 0 0; }
+    #users_list .center .header .search .search-input {
+      margin: 0 0 0 32px;
+      background: none;
+      font-size: 16px;
+      line-height: 40px;
+      height: 40px;
+      color: #FFFFFF;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+      -webkit-transition: border-color 300ms ease;
+      transition: border-color 300ms ease; }
+      #users_list .center .header .search .search-input:focus {
+        border-color: white; }
+      #users_list .center .header .search .search-input::-webkit-input-placeholder {
+        color: rgba(255, 255, 255, 0.5); }
+
+#users_list .center .content-card .toolbar {
+  padding: 8px; }
+
+#users_list .center .content-card .content {
+  padding: 0; }
+  #users_list .center .content-card .content .dataTables_wrapper .dataTables_scrollHead {
+    min-height: 64px; }
+    #users_list .center .content-card .content .dataTables_wrapper .dataTables_scrollHead table th {
+      padding-top: 20px;
+      padding-bottom: 20px; }
+  #users_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .user-image {
+    width: 52px;
+    height: 52px;
+    border: 1px solid rgba(0, 0, 0, 0.12); }
+  #users_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .quantity-indicator {
+    display: inline-block;
+    vertical-align: middle;
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 8px; }
+    #users_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .quantity-indicator + div {
+      display: inline-block;
+      vertical-align: middle; }
+  #users_list .center .content-card .content .dataTables_wrapper .dataTables_scrollBody .edit-button {
+    margin: 0; }
+
+#user {
+  position: relative; }
+  #user .header {
+    height: 120px;
+    min-height: 120px;
+    max-height: 120px; }
+    #user .header .goto-users-button {
+      margin-right: 16px; }
+    #user .header .user-image {
+      overflow: hidden;
+      width: 56px;
+      max-width: 56px;
+      height: 56px;
+      max-height: 56px;
+      margin-right: 16px;
+      border: 3px solid rgba(0, 0, 0, 0.12); }
+      #user .header .user-image img {
+        height: 100%;
+        width: 100%;
+        max-width: none; }
+      #user .header .user-image .btn-upload {
+        margin-left: -27px;
+        position: absolute; }
+    #user .header .subtitle {
+      margin: 6px 0 0 0; }
+    #user .header span.status {
+      margin: 0 12px 0 8px; }
+  #user .sidenav {
+    margin-right: 24px;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px; }
+  #user .user-detail-form-container {
+    padding: 24px; }
+    #user .user-detail-form-container .drop-text {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 16px;
+      text-align: center;
+      border: 2px dashed rgba(0, 0, 0, 0.12);
+      background: #FFFFFF;
+      font-size: 20px;
+      z-index: 100; }
+    #user .user-detail-form-container .upload-button {
+      margin-bottom: 16px; }
+    #user .user-detail-form-container .user-image {
+      position: relative;
+      width: 100px;
+      min-height: 100px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      margin: 8px; }
+      #user .user-detail-form-container .user-image.uploading .overlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.87); }
+      #user .user-detail-form-container .user-image .media {
+        cursor: pointer;
+        max-height: 100%; }
+    #user .user-detail-form-container .agenda-list > md-list-item > .md-list-item-inner {
+      height: 60px; }
+    #user .user-detail-form-container md-datepicker {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin: 16px 0; }
+    #user .user-detail-form-container #user-image-uploader {
+      position: relative; }
+      #user .user-detail-form-container #user-image-uploader.dropping .drop-text {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex; }
+      #user .user-detail-form-container #user-image-uploader .drop-text {
+        display: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 16px;
+        text-align: center;
+        border: 2px dashed rgba(0, 0, 0, 0.12);
+        background: #FFFFFF;
+        font-size: 20px;
+        z-index: 100; }
+      #user .user-detail-form-container #user-image-uploader .upload-button {
+        margin-bottom: 16px; }
+      #user .user-detail-form-container #user-image-uploader .image-zoom-area {
+        border: 2px solid rgba(0, 0, 0, 0.12);
+        width: 500px; }
+      #user .user-detail-form-container #user-image-uploader .user-image {
+        position: relative;
+        width: 100px;
+        min-height: 100px;
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        margin: 8px; }
+        #user .user-detail-form-container #user-image-uploader .user-image.uploading .overlay {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          background: rgba(0, 0, 0, 0.87); }
+        #user .user-detail-form-container #user-image-uploader .user-image .media {
+          cursor: pointer;
+          max-height: 100%; }
 
 /**
 * Directives

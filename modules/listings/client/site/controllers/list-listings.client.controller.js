@@ -86,7 +86,7 @@
       vm.pagedItems.forEach(function (listing) {
         var latLng = new google.maps.LatLng(parseFloat(listing.address.geo[0]), parseFloat(listing.address.geo[1]));
         var markerLabel = returnPrice(listing);
-        var imageIcon = 'modules/listings/client/site/assets/img/background_icon_map.png';
+        var imageIcon = './modules/listings/client/site/assets/img/background_icon_map.png';
         vm.marker[listing._id] = new MarkerWithLabel({
           map: vm.map,
           position: latLng,
@@ -146,9 +146,10 @@
     }
 
     function cleanMarkers() {
-      for (var i = $scope.beginPrevious; i < $scope.endPrevious; i++) {
-        vm.marker[i].setMap(null);
-      }
+      if (vm.marker)
+        vm.marker.forEach(function(marker) {
+          marker.setMap(null);
+        });
     }
 
     vm.listings.$promise.then(function (result) {

@@ -19,7 +19,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-xs-12" style="border-left: 1px solid #CCC;" >
+        <div class="col-md-7 col-xs-12" style="border-left: 1px solid #CCC;" >
           <div class="row">
             <input placeholder="Location..."
              vs-google-autocomplete="options"
@@ -53,7 +53,7 @@
     </div>
     <div class="row" ng-hide="!vm.listings.$promise.$resolved">
       <div class="vertical-align-center horizontal-align-center">
-        <img src="./modules/listings/client/common/assets/img/loading_dots.gif" width="100">
+        <img src="modules/listings/client/common/assets/img/loading_dots.gif" width="100">
       </div>
     </div>
     <div class="row" ng-hide="vm.listings.length > 0">
@@ -65,8 +65,8 @@
       <div class="filtered-listings"> 
         <div class="margin-top-25 col col-lg-6 col-md-6 col-sm-6 col-xs-12 padding-bottom-20 pointer"
              ng-repeat="listing in vm.pagedItems"
-             ng-mouseover="vm.setMarkerHover(listing._id)" >
-             <!-- ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })" -->
+             ng-mouseover="vm.setMarkerHover(listing._id)"
+             ui-sref="listings.view({ listingId: listing._id, streetName: slugify(listing.address.streetName), category: slugify(listing.category.name), suburb: slugify(listing.address.suburb) })">
           <div class="listing">
             <div class="image-panel" style="background: url('{{listing.images[0].extra_small}}') center center; background-size: cover; text-align: right">
               <div class="text-price">

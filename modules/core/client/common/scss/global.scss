@@ -55,6 +55,12 @@
 @import 'modules/listings/client/admin/scss/dashboard-listing';
 
 /**
+* Users
+*/
+@import 'modules/users/client/admin/scss/users_list';
+@import 'modules/users/client/admin/scss/user';
+
+/**
 * Directives
 */
 @import 'modules/core/client/common/directives/ms-card/ms-card';

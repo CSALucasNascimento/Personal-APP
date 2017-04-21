@@ -31,7 +31,7 @@
         url: '/admin',
         views: {
           'main@': {
-            templateUrl: 'modules/core/client/admin/views/vertical-navigation.html',
+            templateUrl: 'modules/core/client/admin/views/horizontal-navigation.html',
             controller: 'MainController',
             controllerAs: 'vm'
           },
@@ -43,11 +43,6 @@
           'navigation@admin': {
             templateUrl: 'modules/core/client/admin/views/navigation/navigation.html',
             controller: 'NavigationController',
-            controllerAs: 'vm'
-          },
-          'quickPanel@admin': {
-            templateUrl: 'modules/core/client/admin/views/quick-panel/quick-panel.html',
-            controller: 'QuickPanelController',
             controllerAs: 'vm'
           },
           'content@admin': {
