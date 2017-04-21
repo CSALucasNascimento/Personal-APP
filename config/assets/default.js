@@ -116,7 +116,10 @@ module.exports = {
         'public/lib/angular-touch/angular-touch.js',
         'public/lib/wip-image-zoom/dist/wip-image-zoom.js',
         '//maps.googleapis.com/maps/api/js?key=AIzaSyDgxlpA4sdSzSFFC1iitqzJ_wRe0hdsdDg&libraries=places',
-        'public/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js'
+        'public/lib/vsGoogleAutocomplete/dist/vs-google-autocomplete.js',
+
+        '//simpleui-test-au.vixverify.com/df/javascripts/greenidConfig.js',
+        '//simpleui-test-au.vixverify.com/df/javascripts/greenidui.min.js'
       ],
       cssSite: [
         'public/lib/bootstrap/dist/css/bootstrap.css',
